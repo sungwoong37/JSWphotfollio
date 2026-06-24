@@ -39,7 +39,7 @@
       <div class="hidden md:flex items-center gap-8">
         <a href="#about" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">About</a>
         <a href="#features" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Features</a>
-        <a href="#faq" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">FAQ</a>
+        <a href="#faq" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">소개</a>
         <a href="#contact" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Contact</a>
       </div>
 
@@ -55,7 +55,7 @@
       <div class="px-6 py-4 flex flex-col gap-4">
         <a href="#about" class="mobile-link text-sm font-medium text-gray-300">About</a>
         <a href="#features" class="mobile-link text-sm font-medium text-gray-300">Features</a>
-        <a href="#faq" class="mobile-link text-sm font-medium text-gray-300">FAQ</a>
+        <a href="#faq" class="mobile-link text-sm font-medium text-gray-300">소개</a>
         <a href="#contact" class="mobile-link text-sm font-medium text-gray-300">Contact</a>
         <a href="#features" class="mobile-link bg-[#1F1F22] text-white text-sm font-medium px-5 py-2.5 rounded-full border border-white/5 text-center">프로젝트 보기</a>
       </div>
@@ -64,20 +64,19 @@
 
   <!-- ===== HERO ===== -->
   <section id="about" class="min-h-screen flex flex-col items-center justify-center pt-32 pb-20 relative z-0 overflow-hidden px-6">
-    <video class="absolute inset-0 -z-10 object-cover min-w-full min-h-full opacity-90" autoplay muted loop playsinline>
-      <source src="https://cdn.sceneai.art/Hero%20Section%20Video/50b4f304-cdca-4e12-8735-580d225834be.mp4" type="video/mp4">
-    </video>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black/30 via-transparent to-black"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-br from-blue-950 via-black to-emerald-950"></div>
 
     <span class="fade-up px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-300 mb-8 backdrop-blur-sm">✨ 게임 2편 제작 · Stove 출시 1편</span>
 
     <h1 class="fade-up text-5xl md:text-7xl font-medium tracking-tight mb-6 text-center leading-[1.1]">
-      끈기로 직접 만드는<br>나만의 게임.
+      끈기로 직접 만드는<br>나만의 게임
     </h1>
 
     <p class="fade-up text-[16px] text-gray-400 max-w-2xl text-center">
-      혼자였던 시간을 게임으로 버티며 끈기를 배웠습니다. 이제 그 끈기로 기획부터 개발·아트까지 직접 완성하며, Unity와 C#으로 두 편의 게임을 만들었습니다.
+      혼자였던 시간을 게임으로 버티며 끈기를 배웠습니다.<br>이제 그 끈기로 기획부터 개발·아트까지 직접 완성하며,<br>Unity와 C#으로 두 편의 게임을 만들었습니다.
     </p>
+
+    <p class="fade-up text-sm font-semibold text-blue-300 mt-5">지원 포지션 — 게임 개발자</p>
 
     <div class="fade-up flex flex-wrap items-center justify-center gap-3 mt-8">
       <a href="#features" class="bg-white text-black text-sm font-medium px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">프로젝트 보기</a>
@@ -85,7 +84,7 @@
     </div>
 
     <!-- marquee -->
-    <p class="fade-up text-sm text-gray-500 font-medium mb-8 text-center mt-24">내가 다루는 기술</p>
+    <p class="fade-up text-sm text-gray-500 font-medium mb-8 text-center mt-24">기술 스펙</p>
     <div class="fade-up w-full max-w-5xl overflow-hidden edge-fade">
       <div id="marquee" class="flex w-max marquee-track"></div>
     </div>
@@ -94,8 +93,9 @@
   <!-- ===== FEATURE 1: Rat-errible Climb ===== -->
   <section id="features" class="grid lg:grid-cols-2 gap-16 py-24 px-6 max-w-7xl mx-auto items-center">
     <div class="fade-up">
-      <span class="text-sm font-medium text-yellow-400">✨ Rat-errible Climb</span>
-      <h2 class="text-4xl md:text-5xl font-semibold mt-4 mb-5 tracking-tight">함정을 피해 끝까지 오르는 2D 등반 플랫포머.</h2>
+      <span class="text-sm font-medium text-blue-400">✨ Rat-errible Climb</span>
+      <h2 class="text-4xl md:text-5xl font-semibold mt-4 mb-3 tracking-tight">함정을 피해 끝까지 오르는<br>2D 등반 플랫포머</h2>
+      <p class="text-sm font-medium text-gray-500 mb-4">3인 팀 · 포지션: 게임 개발(기획·개발·아트) · 개발 기여도 100%</p>
       <p class="text-gray-400 text-[16px] leading-relaxed mb-6">하수구 속 쥐가 되어 프로펠러·가시·고양이 발 같은 함정을 피해 꼭대기까지 오릅니다. Unity 6로 제작했고, TrapBase 상속 상태머신(Warning→Active→Cooldown)으로 함정 시스템을 직접 설계했습니다. Stove Indie에 출시했습니다.</p>
       <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="inline-block bg-white text-black text-sm font-medium px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">자세히 보기</a>
     </div>
@@ -142,8 +142,9 @@
       </div>
     </div>
     <div class="fade-up order-1 lg:order-2">
-      <span class="text-sm font-medium text-green-400">✨ SoulSync</span>
-      <h2 class="text-4xl md:text-5xl font-semibold mt-4 mb-5 tracking-tight">둘이 함께 살아남는 협동 로그라이크.</h2>
+      <span class="text-sm font-medium text-emerald-400">✨ SoulSync</span>
+      <h2 class="text-4xl md:text-5xl font-semibold mt-4 mb-3 tracking-tight">둘이 함께 살아남는<br>협동 로그라이크</h2>
+      <p class="text-sm font-medium text-gray-500 mb-4">3인 팀 · 포지션: 게임 개발(기획·개발·아트) · 기여도 95%</p>
       <p class="text-gray-400 text-[16px] leading-relaxed mb-6">두 플레이어가 Unity Relay로 연결해 몬스터 웨이브를 돌파합니다. 속성(불꽃/얼음)과 무기(검/활)를 조합해 직업을 만들고, 레벨업 스킬·상점·가챠로 성장합니다. Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이를 구현했습니다.</p>
       <a href="#contact" class="inline-block bg-white text-black text-sm font-medium px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">자세히 보기</a>
     </div>
@@ -151,19 +152,16 @@
 
   <!-- ===== FAQ ===== -->
   <section id="faq" class="py-32 px-6 max-w-3xl mx-auto">
-    <h2 class="fade-up text-4xl md:text-5xl font-semibold mb-12 text-center">자주 받는 질문</h2>
+    <h2 class="fade-up text-4xl md:text-5xl font-semibold mb-12 text-center">상세 소개</h2>
     <div id="faqWrap" class="fade-up border border-white/10 rounded-xl bg-transparent overflow-hidden"></div>
   </section>
 
   <!-- ===== FOOTER ===== -->
   <footer id="contact" class="relative z-0 pt-32 pb-10 px-6 border-t border-white/5 overflow-hidden">
-    <video class="absolute inset-0 -z-10 object-cover w-full h-full opacity-40" autoplay muted loop playsinline>
-      <source src="https://cdn.sceneai.art/Hero%20Section%20Video/50b4f304-cdca-4e12-8735-580d225834be.mp4" type="video/mp4">
-    </video>
-    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-black via-black/60 to-black"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-t from-blue-950 via-black to-black"></div>
 
     <div class="text-center mb-32">
-      <h2 class="fade-up text-4xl md:text-6xl font-medium tracking-tight mb-8">함께 만들고 싶은 게임이 있으신가요?</h2>
+      <h2 class="fade-up text-4xl md:text-6xl font-medium tracking-tight mb-8">지금, 함께 일할 준비가 되어 있습니다</h2>
       <div class="fade-up flex flex-wrap items-center justify-center gap-3">
         <a href="mailto:j03j03j03@naver.com" class="bg-white text-black text-sm font-medium px-6 py-3 rounded-full hover:bg-gray-200 transition-colors">연락하기</a>
         <a href="#features" class="bg-[#1F1F22] hover:bg-[#2A2A2D] text-white text-sm font-medium px-6 py-3 rounded-full border border-white/5 transition-colors">프로젝트 보기</a>
@@ -176,7 +174,7 @@
           <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3 L27 9.5 V22.5 L16 29 L5 22.5 V9.5 Z"/><path d="M16 3 V16 L27 9.5"/><path d="M16 16 L5 22.5"/></svg>
           <span class="text-xl font-bold">SEONGWOONG</span>
         </div>
-        <p class="text-sm text-gray-400">끈기로 완성하는 게임 개발자.</p>
+        <p class="text-sm text-gray-400">끈기로 완성하는 게임 개발자</p>
       </div>
       <div>
         <h4 class="text-sm font-semibold mb-4 text-gray-200">Projects</h4>
@@ -191,7 +189,7 @@
         <h4 class="text-sm font-semibold mb-4 text-gray-200">Info</h4>
         <ul class="space-y-3">
           <li><a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">기술 스택</a></li>
-          <li><a href="#faq" class="text-sm text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="#faq" class="text-sm text-gray-400 hover:text-white transition-colors">소개</a></li>
           <li><a href="#contact" class="text-sm text-gray-400 hover:text-white transition-colors">연락처</a></li>
         </ul>
       </div>
@@ -250,11 +248,11 @@
 
   /* ---- FAQ accordion (grid-rows trick) ---- */
   const FAQS = [
-    ["어떤 게임을 만들었나요?","두 편을 완성했습니다. 'Rat-errible Climb(쥐독한 등반)'은 Unity 6로 만든 2D 수직 등반 플랫포머로 Stove Indie에 출시했고, 'SoulSync'는 2인 협동 로그라이크 던전 크롤러입니다."],
-    ["팀에서 어떤 역할을 맡았나요?","두 프로젝트 모두 3인 팀에서 기획·개발·아트에 폭넓게 기여했습니다. 핵심 게임플레이 시스템 설계와 구현을 주도했습니다."],
-    ["다루는 기술은 무엇인가요?","Unity 6, C#, URP, Cinemachine을 기본으로, 멀티플레이는 Unity Netcode for GameObjects와 Relay Services를 사용합니다."],
-    ["멀티플레이는 어떻게 구현했나요?","Netcode for GameObjects + Relay로 실시간 2인 협동을 구현했습니다. 클라이언트 검증 후 ServerRpc를 호출하고 서버가 NetworkVariable에 권위적으로 기록하는 서버 권위 패턴을 따랐습니다."],
-    ["가장 큰 강점은 무엇인가요?","끈기입니다. 막히는 부분이 있으면 원인을 찾을 때까지 공식 문서와 디버깅으로 끝까지 파고듭니다."],
+    ["제작한 게임","두 편을 완성했습니다. 'Rat-errible Climb(쥐독한 등반)'은 Unity 6로 만든 2D 수직 등반 플랫포머로 Stove Indie에 출시했고, 'SoulSync'는 2인 협동 로그라이크 던전 크롤러입니다."],
+    ["맡은 역할","두 프로젝트 모두 3인 팀에서 기획·개발·아트에 폭넓게 기여했습니다. 핵심 게임플레이 시스템 설계와 구현을 주도했습니다."],
+    ["기술 스펙","Unity 6, C#, URP, Cinemachine을 기본으로, 멀티플레이는 Unity Netcode for GameObjects와 Relay Services를 사용합니다."],
+    ["가장 큰 강점","끈기입니다. 막히는 부분이 있으면 원인을 찾을 때까지 공식 문서와 디버깅으로 끝까지 파고듭니다."],
+    ["멀티플레이 구현","Netcode for GameObjects + Relay로 실시간 2인 협동을 구현했습니다. 클라이언트 검증 후 ServerRpc를 호출하고 서버가 NetworkVariable에 권위적으로 기록하는 서버 권위 패턴을 따랐습니다."],
   ];
   const faqWrap = document.getElementById("faqWrap");
   faqWrap.innerHTML = FAQS.map(([q,a],i)=>`
