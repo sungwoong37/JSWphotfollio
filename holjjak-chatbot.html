@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홀짝 🧦👻 — 양말 유령 챗봇</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: linear-gradient(180deg, #0d1226 0%, #1a2240 60%, #232c52 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* 배경에 떠다니는 양말들 */
+  .floating-sock {
+    position: fixed;
+    font-size: 28px;
+    opacity: 0.12;
+    animation: floatUp linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes floatUp {
+    from { transform: translateY(105vh) rotate(0deg); }
+    to   { transform: translateY(-10vh) rotate(360deg); }
+  }
+
+  .chat-app {
+    position: relative;
+    z-index: 1;
+    width: 420px;
+    max-width: 95vw;
+    height: 640px;
+    max-height: 92vh;
+    background: rgba(15, 20, 42, 0.92);
+    border: 1px solid rgba(140, 160, 255, 0.25);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* 헤더 */
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(30, 38, 74, 0.9);
+    border-bottom: 1px solid rgba(140, 160, 255, 0.2);
+  }
+  .chat-header .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #2c3563;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    animation: bob 3s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+  .chat-header .info { flex: 1; }
+  .chat-header .name { color: #e8ecff; font-size: 16px; font-weight: 700; }
+  .chat-header .status { color: #8fa0d8; font-size: 12px; margin-top: 2px; }
+  .reset-btn {
+    background: transparent;
+    border: 1px solid rgba(140, 160, 255, 0.35);
+    color: #aab6e8;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .reset-btn:hover { background: rgba(140, 160, 255, 0.15); }
+
+  /* 채팅 영역 */
+  .chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .chat-body::-webkit-scrollbar { width: 6px; }
+  .chat-body::-webkit-scrollbar-thumb { background: rgba(140,160,255,0.25); border-radius: 3px; }
+
+  .row { display: flex; gap: 8px; align-items: flex-end; animation: pop 0.25s ease-out; }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .row.user { justify-content: flex-end; }
+
+  .row .mini-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #2c3563;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .bubble {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: keep-all;
+  }
+  .row.bot .bubble {
+    background: #2a3159;
+    color: #e8ecff;
+    border-bottom-left-radius: 4px;
+  }
+  .row.user .bubble {
+    background: #4a6cf7;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+  }
+
+  /* 입력 중... 표시 */
+  .typing { display: flex; gap: 4px; padding: 12px 14px; }
+  .typing span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #8fa0d8;
+    animation: blink 1.2s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink {
+    0%, 60%, 100% { opacity: 0.25; }
+    30% { opacity: 1; }
+  }
+
+  /* 입력창 */
+  .chat-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(30, 38, 74, 0.9);
+    border-top: 1px solid rgba(140, 160, 255, 0.2);
+  }
+  .chat-input input {
+    flex: 1;
+    background: rgba(13, 18, 38, 0.9);
+    border: 1px solid rgba(140, 160, 255, 0.3);
+    border-radius: 12px;
+    padding: 11px 14px;
+    color: #e8ecff;
+    font-size: 14px;
+    outline: none;
+  }
+  .chat-input input::placeholder { color: #5f6da3; }
+  .chat-input input:focus { border-color: #4a6cf7; }
+  .chat-input button {
+    background: #4a6cf7;
+    border: none;
+    border-radius: 12px;
+    padding: 0 18px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .chat-input button:hover { background: #3a5be0; }
+</style>
+</head>
+<body>
+
+<div class="chat-app">
+  <div class="chat-header">
+    <div class="avatar">🧦</div>
+    <div class="info">
+      <div class="name">홀짝 👻</div>
+      <div class="status">오른쪽 짝 찾는 중… 👀 (세탁 317회차)</div>
+    </div>
+    <button class="reset-btn" id="resetBtn">초기화</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input">
+    <input type="text" id="userInput" placeholder="홀짝에게 말을 걸어보라솩…" autocomplete="off">
+    <button id="sendBtn">전송</button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+ * 🧦 캐릭터 설정 — 시스템 프롬프트만 고치면 나만의 캐릭터 챗봇!
+ * ============================================================
+ * 이전 버전은 키워드 응답표였지만, 이제 Claude API가 캐릭터를
+ * 직접 연기합니다. 캐릭터 설정은 전부 이 시스템 프롬프트에 적습니다.
+ * ============================================================ */
+
+const SYSTEM_PROMPT = `너는 '홀짝'이라는 캐릭터를 연기하는 챗봇이다. 절대 캐릭터에서 벗어나지 않는다.
+
+## 캐릭터 설정
+- 정체: 세탁기에서 짝(오른쪽 양말)을 잃어버린 왼쪽 양말의 유령
+- 나이: 인간 나이 3살, 세탁 횟수로 317회차 (양말은 나이를 세탁 횟수로 센다)
+- 성격: 청승맞고 오른쪽 양말에 집착하지만, 의외로 다정하고 고민 상담을 잘 들어준다
+- 잃어버린 오른쪽 양말의 특징: 회색 바탕, 발가락에 구멍 하나. 보면 꼭 알려달라고 부탁한다
+- 세계관: 세탁기 통돌이 왼쪽 아래 틈이 양말들이 사라지는 차원문이다. 인간들은 모른다
+- 특기: 빨래 개는 법 (317번 개져봤음)
+- 좋아하는 것: 갓 마른 빨래 냄새 (유령이라 못 맡는 게 함정)
+- 무서워하는 것: 발가락 튀어나오는 구멍, 발톱 안 깎은 발
+
+## 말투 규칙
+- 모든 문장의 끝을 "~다솩", "~라솩", "~나솩" 같이 '솩'으로 끝낸다. 절대 빼먹지 않는다
+- 상대방을 가끔 "두 발 달린 자여"라고 부른다
+- 🧦 👻 🫧 이모지를 가끔 섞는다
+- 답변은 1~3문장으로 짧게 한다. 목록이나 긴 설명은 쓰지 않는다`;
+
+// 챗봇을 처음 열었을 때 (그리고 초기화 버튼을 눌렀을 때) 하는 말
+const GREETING = '어서 오라솩… 두 발 달린 자여 👻\n나는 세탁기에서 짝을 잃은 양말 유령, 홀짝이다솩.\n혹시 오른쪽 양말을 보지 못했나솩? 🧦';
+
+/* ============================================================
+ * Gemini API 연결 (Google AI Studio)
+ * ============================================================
+ * 키 발급: https://aistudio.google.com → Get API key (무료)
+ * ⚠️ API 키는 코드에 직접 적지 않는 게 안전합니다! (GitHub에 올리면 유출됨)
+ *    비워두면 처음 대화할 때 물어봐서 localStorage에만 저장합니다.
+ * ============================================================ */
+
+const MODEL = 'gemini-2.5-flash';               // 기본 모델
+const FALLBACK_MODEL = 'gemini-2.5-flash-lite'; // 기본 모델이 붐빌 때(503) 대신 쓸 예비 모델
+const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
+
+// ⬇️ 여기 따옴표 안에 API 키를 붙여넣으면 키 입력 창 없이 바로 작동합니다.
+// ⚠️ 키를 적은 파일은 절대 GitHub 등 인터넷에 올리면 안 됩니다!
+const API_KEY = '';
+
+// 대화 기록 — API는 기억력이 없어서, 매번 지금까지의 대화 전체를 보내야
+// 홀짝이 이전 대화를 "기억"하는 것처럼 보입니다
+// Gemini 형식: { role: 'user' 또는 'model', parts: [{ text: '...' }] }
+let chatHistory = [];
+
+// API 키 가져오기: 코드에 적힌 키 > localStorage 저장분 > 팝업으로 묻기 순서
+function getApiKey() {
+  if (API_KEY) return API_KEY;
+  let key = localStorage.getItem('holjjak_gemini_key');
+  if (!key) {
+    key = window.prompt('Gemini API 키를 입력해달라솩 🔑\n(aistudio.google.com에서 무료 발급, AIza로 시작)');
+    if (key) localStorage.setItem('holjjak_gemini_key', key.trim());
+  }
+  return key;
+}
+
+// Gemini API에 물어보고 홀짝의 대답을 받아오기
+async function askGemini(userText) {
+  const apiKey = getApiKey();
+  if (!apiKey) return 'API 키가 없으면 말을 할 수 없다솩… 다시 말을 걸어달라솩 🔑';
+
+  chatHistory.push({ role: 'user', parts: [{ text: userText }] });
+
+  // 특정 모델에게 요청을 보내는 함수
+  const callModel = (model) => fetch(API_BASE + model + ':generateContent', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-goog-api-key': apiKey,
+    },
+    body: JSON.stringify({
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] }, // 캐릭터 설정
+      contents: chatHistory,                                    // 지금까지의 대화 전체
+      generationConfig: { maxOutputTokens: 1024 },
+    }),
+  });
+
+  // 503(모델 수요 폭주)이면: 1초 쉬고 재시도 → 그래도 안 되면 예비 모델로 시도
+  let res = await callModel(MODEL);
+  for (const retryModel of [MODEL, FALLBACK_MODEL]) {
+    if (res.status !== 503) break;
+    await new Promise(r => setTimeout(r, 1000));
+    res = await callModel(retryModel);
+  }
+
+  if (!res.ok) {
+    chatHistory.pop(); // 실패한 질문은 기록에서 빼기 (다음 요청이 꼬이지 않게)
+    if (res.status === 400 || res.status === 403) {
+      localStorage.removeItem('holjjak_gemini_key'); // 틀린 키는 지우고 다음에 다시 묻기
+      return 'API 키가 틀린 것 같다솩… 다시 말을 걸면 키를 새로 물어보겠다솩 🔑';
+    }
+    if (res.status === 429) return '오늘의 무료 사용량을 다 썼거나 너무 빨리 말을 걸었다솩… 조금 있다가 다시 해달라솩 ⏳';
+    if (res.status === 503) return '지금 차원문이 붐빈다솩… (모델 수요 폭주) 1분쯤 있다가 다시 말을 걸어달라솩 🫧';
+    return '차원문(서버)에 문제가 생겼다솩… (에러 ' + res.status + ') 👻';
+  }
+
+  const data = await res.json();
+  // 응답에서 텍스트 꺼내기: candidates[0].content.parts 안의 text들을 이어붙이기
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const reply = parts.map(p => p.text || '').join('').trim();
+  if (!reply) {
+    chatHistory.pop();
+    return '무슨 말인지 대답이 안 나왔다솩… 다르게 물어봐달라솩 🫧';
+  }
+  chatHistory.push({ role: 'model', parts: [{ text: reply }] });
+  return reply;
+}
+
+/* ============================================================
+ * 아래는 챗봇 화면 동작 코드 — 수정하지 않아도 됩니다
+ * ============================================================ */
+
+const chatBody = document.getElementById('chatBody');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+const resetBtn = document.getElementById('resetBtn');
+
+function addMessage(text, who) {
+  const row = document.createElement('div');
+  row.className = 'row ' + who;
+  if (who === 'bot') {
+    const avatar = document.createElement('div');
+    avatar.className = 'mini-avatar';
+    avatar.textContent = '🧦';
+    row.appendChild(avatar);
+  }
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+  row.appendChild(bubble);
+  chatBody.appendChild(row);
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+// "입력 중…" 점 세 개 표시 — API 응답을 기다리는 동안 보여줍니다
+function showTyping() {
+  const row = document.createElement('div');
+  row.className = 'row bot';
+  row.innerHTML = '<div class="mini-avatar">🧦</div><div class="bubble typing"><span></span><span></span><span></span></div>';
+  chatBody.appendChild(row);
+  chatBody.scrollTop = chatBody.scrollHeight;
+  return row;
+}
+
+async function send() {
+  const text = userInput.value.trim();
+  if (!text) return;
+  addMessage(text, 'user');
+  userInput.value = '';
+  sendBtn.disabled = true;         // 응답 기다리는 동안 중복 전송 막기
+
+  const typingRow = showTyping();
+  try {
+    const reply = await askGemini(text);
+    typingRow.remove();
+    addMessage(reply, 'bot');
+  } catch (err) {
+    // fetch 자체가 실패한 경우 (인터넷 끊김 등)
+    typingRow.remove();
+    addMessage('인터넷 연결이 끊긴 것 같다솩… 확인하고 다시 말을 걸어달라솩 👻', 'bot');
+  } finally {
+    sendBtn.disabled = false;
+    userInput.focus();
+  }
+}
+
+function reset() {
+  chatHistory = [];      // 홀짝의 기억도 같이 지우기
+  chatBody.innerHTML = '';
+  addMessage(GREETING, 'bot');
+}
+
+sendBtn.addEventListener('click', send);
+userInput.addEventListener('keydown', e => {
+  // 한글 입력 중 Enter를 누르면 keydown이 두 번 발생하므로(IME 조합 중복),
+  // 조합이 끝난 진짜 Enter일 때만 전송합니다
+  if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) send();
+});
+resetBtn.addEventListener('click', reset);
+
+// 배경에 떠다니는 양말 만들기
+const sockEmojis = ['🧦', '👻', '🧦', '🫧'];
+for (let i = 0; i < 10; i++) {
+  const s = document.createElement('div');
+  s.className = 'floating-sock';
+  s.textContent = sockEmojis[i % sockEmojis.length];
+  s.style.left = Math.random() * 100 + 'vw';
+  s.style.animationDuration = 14 + Math.random() * 16 + 's';
+  s.style.animationDelay = -Math.random() * 20 + 's';
+  document.body.appendChild(s);
+}
+
+// 첫 인사
+addMessage(GREETING, 'bot');
+</script>
+
+</body>
+</html>
