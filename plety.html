@@ -14,14 +14,18 @@
 <style>
   :root { --accent: #4a83c2; }
   html { scroll-behavior: smooth; }
-  body { font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; letter-spacing: -0.01em; }
+  body { font-family: Pretendard, "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif; letter-spacing: -0.01em; font-size: 17px; }
   h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
   .accent { color: var(--accent); }
   a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary::after { content: " ▾"; }
+  details[open] > summary::after { content: " ▴"; }
 </style>
 </head>
-<body class="bg-black text-neutral-300 antialiased">
+<body class="bg-black text-neutral-200 antialiased">
 
   <!-- ===== NAV ===== -->
   <nav id="nav" class="fixed top-0 inset-x-0 z-50 border-b border-transparent transition-colors duration-200">
@@ -43,8 +47,8 @@
       <h1 class="text-4xl md:text-5xl leading-snug text-white mb-8 max-w-2xl">
         게임을 직접 만들고<br>끝까지 완성하는 개발자
       </h1>
-      <div class="text-[17px] leading-relaxed text-neutral-400 max-w-xl space-y-4">
-        <p>Unity와 C#으로 게임 세 편을 만들었습니다. 2D 등반 플랫포머 <span class="text-neutral-200">Rat-errible Climb</span>은 Stove에 출시했고, 나머지 두 편은 온라인 협동 게임입니다.</p>
+      <div class="text-[17px] leading-relaxed text-neutral-300 max-w-xl space-y-4">
+        <p>Unity와 C#으로 게임 세 편을 만들었습니다. 2D 등반 플랫포머 <span class="text-white">Rat-errible Climb</span>은 Stove에 출시했고, 나머지 두 편은 온라인 협동 게임입니다.</p>
         <p>막히면 증상에서 멈추지 않고 원인을 찾을 때까지 파고드는 편입니다. 팀 프로젝트 두 편, 2인 개발 한 편입니다.</p>
       </div>
       <div class="flex flex-wrap items-center gap-5 mt-9">
@@ -65,77 +69,101 @@
       <article class="grid md:grid-cols-[1fr_11rem] gap-x-10 gap-y-5 py-10 border-t border-white/10">
         <div class="max-w-xl">
           <h3 class="text-xl text-white">Pill Agents</h3>
-          <p class="text-sm text-neutral-500 mt-1 mb-4">2~4인 온라인 협동 3D 액션 · 2인 개발(모델링 1인 협업) · 개발 중</p>
-          <p class="text-[15px] leading-relaxed text-neutral-400 mb-3">
+          <p class="text-sm text-neutral-400 mt-1 mb-4">2~4인 온라인 협동 3D 액션 · 2인 개발(모델링 1인 협업) · 개발 중</p>
+          <p class="text-base leading-relaxed text-neutral-300 mb-4">
             위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 탈출구까지 살아남는 게임입니다.
             보스에 붙은 구슬을 때려 그로기 게이지를 채우면 딜 구간이 열리는, 팀이 직접 공격 타이밍을 만드는 구조를 설계했습니다.
           </p>
-          <p class="text-[15px] leading-relaxed text-neutral-400 mb-3">
-            <span class="text-neutral-200 font-medium mr-1.5">맡은 부분</span>기획, 서버 권위 네트워킹(Netcode for GameObjects + Relay),
-            기생충 보스 3페이즈 상태머신, 밸런스 수치를 한 파일에서만 관리하는 GameBalanceConfig 구조,
-            물리 콜백 대신 SphereCast·OverlapSphere로 매 프레임 검사하는 판정 구조.
-          </p>
-          <p class="text-[15px] leading-relaxed text-neutral-400">
-            <span class="text-neutral-200 font-medium mr-1.5">개발 방식</span>Claude Code로 설계, Codex로 구현, Antigravity(Gemini)로 구현 전 반론 검증.
-            51일간 546커밋. 현재 그레이박스 단계입니다.
-          </p>
+          <details class="mb-1">
+            <summary class="inline-block text-sm accent hover:underline underline-offset-4">자세히 보기</summary>
+            <div class="mt-3 space-y-3">
+              <p class="text-base leading-relaxed text-neutral-300">
+                <span class="text-neutral-100 font-medium mr-1.5">맡은 부분</span>기획, 서버 권위 네트워킹(Netcode for GameObjects + Relay),
+                기생충 보스 3페이즈 상태머신, 밸런스 수치를 한 파일에서만 관리하는 GameBalanceConfig 구조,
+                물리 콜백 대신 SphereCast·OverlapSphere로 매 프레임 검사하는 판정 구조.
+              </p>
+              <p class="text-base leading-relaxed text-neutral-300">
+                <span class="text-neutral-100 font-medium mr-1.5">개발 방식</span>Claude Code로 설계, Codex로 구현, Antigravity(Gemini)로 구현 전 반론 검증.
+                51일간 546커밋. 현재 그레이박스 단계입니다.
+              </p>
+            </div>
+          </details>
           <a href="pill-agents.html" class="inline-block text-sm accent hover:underline underline-offset-4 mt-4">개발 과정 자세히 보기 →</a>
         </div>
-        <dl class="text-sm text-neutral-400 space-y-1 self-start md:text-right">
-          <div><dt class="inline text-neutral-500">엔진</dt> <dd class="inline">Unity 6</dd></div>
-          <div><dt class="inline text-neutral-500">네트워킹</dt> <dd class="inline">Netcode + Relay</dd></div>
-          <div><dt class="inline text-neutral-500">아트</dt> <dd class="inline">로우폴리 절차 생성</dd></div>
-          <div><dt class="inline text-neutral-500">규모</dt> <dd class="inline">C# 266개 파일</dd></div>
-        </dl>
+        <div class="self-start">
+          <img src="assets/pillagents.png" alt="Pill Agents 게임 내 화면" width="176" height="99" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10 mb-3">
+          <dl class="text-sm text-neutral-400 space-y-1 md:text-right">
+            <div><dt class="inline text-neutral-500">엔진</dt> <dd class="inline">Unity 6</dd></div>
+            <div><dt class="inline text-neutral-500">네트워킹</dt> <dd class="inline">Netcode + Relay</dd></div>
+            <div><dt class="inline text-neutral-500">아트</dt> <dd class="inline">로우폴리 절차 생성</dd></div>
+            <div><dt class="inline text-neutral-500">규모</dt> <dd class="inline">C# 266개 파일</dd></div>
+          </dl>
+        </div>
       </article>
 
       <!-- Rat-errible Climb -->
       <article class="grid md:grid-cols-[1fr_11rem] gap-x-10 gap-y-5 py-10 border-t border-white/10">
         <div class="max-w-xl">
-          <h3 class="text-xl text-white">Rat-errible Climb <span class="text-neutral-500 text-base">(쥐독한 등반)</span></h3>
-          <p class="text-sm text-neutral-500 mt-1 mb-4">2D 등반 플랫포머 · 3인 팀 · Stove Indie 출시</p>
-          <p class="text-[15px] leading-relaxed text-neutral-400 mb-3">
+          <h3 class="text-xl text-white">Rat-errible Climb <span class="text-neutral-400 text-base">(쥐독한 등반)</span></h3>
+          <p class="text-sm text-neutral-400 mt-1 mb-4">2D 등반 플랫포머 · 3인 팀 · Stove Indie 출시 · 추천율 100%(9명 참여)</p>
+          <p class="text-base leading-relaxed text-neutral-300 mb-4">
             하수구 속 쥐가 프로펠러·가시·고양이 발 같은 함정을 피해 꼭대기까지 오르는 게임입니다.
           </p>
-          <p class="text-[15px] leading-relaxed text-neutral-400">
-            <span class="text-neutral-200 font-medium mr-1.5">맡은 부분</span>기획·개발·아트에 두루 참여했고, 함정 시스템을 직접 설계했습니다.
-            TrapBase를 상속해 Warning → Active → Cooldown 상태를 도는 구조로 함정을 만들었고,
-            Cinemachine 카메라 전환과 사다리·수중·끈적한 벽 같은 상호작용을 구현했습니다.
-          </p>
+          <details class="mb-1">
+            <summary class="inline-block text-sm accent hover:underline underline-offset-4">자세히 보기</summary>
+            <p class="text-base leading-relaxed text-neutral-300 mt-3">
+              <span class="text-neutral-100 font-medium mr-1.5">맡은 부분</span>기획·개발·아트에 두루 참여했고, 함정 시스템을 직접 설계했습니다.
+              TrapBase를 상속해 Warning → Active → Cooldown 상태를 도는 구조로 함정을 만들었고,
+              Cinemachine 카메라 전환과 사다리·수중·끈적한 벽 같은 상호작용을 구현했습니다.
+            </p>
+          </details>
           <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="inline-block text-sm accent hover:underline underline-offset-4 mt-4">Stove 스토어 페이지 →</a>
         </div>
-        <dl class="text-sm text-neutral-400 space-y-1 self-start md:text-right">
-          <div><dt class="inline text-neutral-500">엔진</dt> <dd class="inline">Unity 6</dd></div>
-          <div><dt class="inline text-neutral-500">장르</dt> <dd class="inline">2D 등반 플랫포머</dd></div>
-          <div><dt class="inline text-neutral-500">출시</dt> <dd class="inline">Stove Indie</dd></div>
-          <div><dt class="inline text-neutral-500">팀</dt> <dd class="inline">3인</dd></div>
-        </dl>
+        <div class="self-start">
+          <img src="assets/onlyuprat.png" alt="Rat-errible Climb 컨셉아트" width="176" height="99" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10 mb-1">
+          <p class="text-xs text-neutral-500 mb-3">컨셉아트</p>
+          <dl class="text-sm text-neutral-400 space-y-1 md:text-right">
+            <div><dt class="inline text-neutral-500">엔진</dt> <dd class="inline">Unity 6</dd></div>
+            <div><dt class="inline text-neutral-500">장르</dt> <dd class="inline">2D 등반 플랫포머</dd></div>
+            <div><dt class="inline text-neutral-500">출시</dt> <dd class="inline">Stove Indie</dd></div>
+            <div><dt class="inline text-neutral-500">팀</dt> <dd class="inline">3인</dd></div>
+            <div><dt class="inline text-neutral-500">추천율</dt> <dd class="inline">100%(9명)</dd></div>
+          </dl>
+        </div>
       </article>
 
       <!-- SoulSync -->
       <article class="grid md:grid-cols-[1fr_11rem] gap-x-10 gap-y-5 py-10 border-t border-white/10">
         <div class="max-w-xl">
           <h3 class="text-xl text-white">SoulSync</h3>
-          <p class="text-sm text-neutral-500 mt-1 mb-4">2인 협동 로그라이크 · 3인 팀</p>
-          <p class="text-[15px] leading-relaxed text-neutral-400 mb-3">
+          <p class="text-sm text-neutral-400 mt-1 mb-4">2인 협동 로그라이크 · 3인 팀</p>
+          <p class="text-base leading-relaxed text-neutral-300 mb-4">
             두 사람이 Unity Relay로 연결해 몬스터 웨이브를 돌파하는 던전 크롤러입니다.
             속성(불꽃·얼음)과 무기(검·활)를 조합해 직업을 만들고, 레벨업 스킬·상점·가챠로 성장합니다.
           </p>
-          <p class="text-[15px] leading-relaxed text-neutral-400">
-            <span class="text-neutral-200 font-medium mr-1.5">맡은 부분</span>기획·개발·아트에 참여했고, Netcode for GameObjects 기반
-            서버 권위 패턴으로 실시간 멀티플레이를 구현했습니다. 보스 3종과 솔로 모드 분기를 포함한 게임플레이 루프를 만들었습니다.
-          </p>
+          <details class="mb-1">
+            <summary class="inline-block text-sm accent hover:underline underline-offset-4">자세히 보기</summary>
+            <p class="text-base leading-relaxed text-neutral-300 mt-3">
+              <span class="text-neutral-100 font-medium mr-1.5">맡은 부분</span>기획·개발·아트에 참여했고, Netcode for GameObjects 기반
+              서버 권위 패턴으로 실시간 멀티플레이를 구현했습니다. 보스 3종과 솔로 모드 분기를 포함한 게임플레이 루프를 만들었습니다.
+            </p>
+          </details>
+          <a href="soulsync.html" class="inline-block text-sm accent hover:underline underline-offset-4 mt-4">개발 과정 자세히 보기 →</a>
         </div>
-        <dl class="text-sm text-neutral-400 space-y-1 self-start md:text-right">
-          <div><dt class="inline text-neutral-500">엔진</dt> <dd class="inline">Unity 6</dd></div>
-          <div><dt class="inline text-neutral-500">네트워킹</dt> <dd class="inline">Netcode + Relay</dd></div>
-          <div><dt class="inline text-neutral-500">플레이</dt> <dd class="inline">2인 온라인 협동</dd></div>
-          <div><dt class="inline text-neutral-500">팀</dt> <dd class="inline">3인</dd></div>
-        </dl>
+        <div class="self-start">
+          <img src="assets/soulsync.png" alt="SoulSync 컨셉아트" width="176" height="99" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10 mb-1">
+          <p class="text-xs text-neutral-500 mb-3">컨셉아트</p>
+          <dl class="text-sm text-neutral-400 space-y-1 md:text-right">
+            <div><dt class="inline text-neutral-500">엔진</dt> <dd class="inline">Unity 6</dd></div>
+            <div><dt class="inline text-neutral-500">네트워킹</dt> <dd class="inline">Netcode + Relay</dd></div>
+            <div><dt class="inline text-neutral-500">플레이</dt> <dd class="inline">2인 온라인 협동</dd></div>
+            <div><dt class="inline text-neutral-500">팀</dt> <dd class="inline">3인</dd></div>
+          </dl>
+        </div>
       </article>
 
       <p class="text-sm text-neutral-500 pt-8 border-t border-white/10">
-        각 프로젝트의 플레이 화면은 정리해서 추가할 예정입니다.
+        실제 플레이 화면은 정리해서 추가할 예정이고, 컨셉아트로 표시된 이미지는 실제 게임 화면이 아닙니다.
       </p>
     </section>
 
@@ -144,31 +172,35 @@
       <h2 class="text-2xl text-white mb-8">상세</h2>
       <dl class="max-w-2xl space-y-8">
         <div>
-          <dt class="text-neutral-200 mb-2">왜 게임을 만드나요</dt>
-          <dd class="text-[15px] leading-relaxed text-neutral-400">
-            형에게 게임을 배웠고, 화면 속 캐릭터가 처음 움직였을 때부터 직접 만드는 쪽에 관심을 뒀습니다.
-            지금은 사람들에게 즐거움을 주는 게임을 완성해 출시하는 것을 목표로 하고 있습니다.
+          <dt class="text-white mb-2">가장 오래 붙잡았던 문제는</dt>
+          <dd class="text-base leading-relaxed text-neutral-300 space-y-3">
+            <p>적 AI가 의도대로 움직이지 않던 문제를 로그와 공식 문서를 오가며 원인을 찾을 때까지 파고들어 고친 적이 있습니다.
+            증상만 덮지 않고 원인을 확인해야 다음으로 넘어가는 편입니다.</p>
+            <p>먼저 상태머신의 전이 조건을 하나씩 로그로 찍어 실제로 어느 상태에서 멈추는지부터 확인했습니다.
+            의심 가는 조건을 코드에서 고치는 대신, Unity 공식 문서에서 해당 컴포넌트의 이벤트 호출 시점을 다시 읽고
+            제가 가정한 호출 순서가 실제와 다르다는 걸 확인한 뒤에야 조건문을 고쳤습니다. 증상만 보고 코드를 바꿨다면
+            같은 문제가 다른 상태에서 다시 나왔을 것입니다.</p>
           </dd>
         </div>
         <div>
-          <dt class="text-neutral-200 mb-2">가장 오래 붙잡았던 문제는</dt>
-          <dd class="text-[15px] leading-relaxed text-neutral-400">
-            적 AI가 의도대로 움직이지 않던 문제를 로그와 공식 문서를 오가며 원인을 찾을 때까지 파고들어 고친 적이 있습니다.
-            증상만 덮지 않고 원인을 확인해야 다음으로 넘어가는 편입니다.
-          </dd>
-        </div>
-        <div>
-          <dt class="text-neutral-200 mb-2">팀에서는 어떤 역할을 하나요</dt>
-          <dd class="text-[15px] leading-relaxed text-neutral-400">
+          <dt class="text-white mb-2">팀에서는 어떤 역할을 하나요</dt>
+          <dd class="text-base leading-relaxed text-neutral-300">
             주로 개발을 맡습니다. 말수는 적은 편이지만 맡은 부분은 끝까지 책임지고,
             팀원과 일정·구조를 맞추는 데 문제는 없었습니다.
           </dd>
         </div>
         <div>
-          <dt class="text-neutral-200 mb-2">다음에 배우려는 것은</dt>
-          <dd class="text-[15px] leading-relaxed text-neutral-400">
+          <dt class="text-white mb-2">다음에 배우려는 것은</dt>
+          <dd class="text-base leading-relaxed text-neutral-300">
             Unreal Engine과 셰이더입니다. 지금은 Unity에서 URP로 화면을 다루는 수준이고,
             셰이더를 직접 써서 표현의 폭을 넓히려 합니다.
+          </dd>
+        </div>
+        <div>
+          <dt class="text-white mb-2">게임은 얼마나 플레이해봤나요</dt>
+          <dd class="text-base leading-relaxed text-neutral-300">
+            Xbox·Steam 통합 351개 게임, 7,792.9시간입니다.
+            <a href="game-history.html" class="accent hover:underline underline-offset-4">플레이 이력 자세히 보기 →</a>
           </dd>
         </div>
       </dl>
@@ -179,19 +211,21 @@
   <!-- ===== FOOTER / CONTACT ===== -->
   <footer id="contact" class="max-w-4xl mx-auto px-6 py-16 border-t border-white/10">
     <h2 class="text-2xl text-white mb-3">연락처</h2>
-    <p class="text-[15px] text-neutral-400 mb-8 max-w-xl">
+    <p class="text-base text-neutral-400 mb-8 max-w-xl">
       연락 주시면 이력서와 프로젝트 자료를 더 보내드리겠습니다.
     </p>
     <div class="grid sm:grid-cols-2 gap-x-10 gap-y-3 text-sm max-w-xl mb-12">
       <div><span class="text-neutral-500">이메일</span> <a href="mailto:j03j03j03@naver.com" class="text-neutral-300 hover:text-white underline underline-offset-4">j03j03j03@naver.com</a></div>
       <div><span class="text-neutral-500">전화</span> <a href="tel:01086163731" class="text-neutral-300 hover:text-white underline underline-offset-4">010-8616-3731</a></div>
+      <div><span class="text-neutral-500">GitHub</span> <a href="https://github.com/sungwoong37" target="_blank" rel="noopener" class="text-neutral-300 hover:text-white underline underline-offset-4">github.com/sungwoong37</a></div>
       <div><span class="text-neutral-500">출시작</span> <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="text-neutral-300 hover:text-white underline underline-offset-4">Rat-errible Climb · Stove Indie</a></div>
       <div><span class="text-neutral-500">상세 개발기</span> <a href="pill-agents.html" class="text-neutral-300 hover:text-white underline underline-offset-4">Pill Agents 개발 과정</a></div>
+      <div><span class="text-neutral-500">게임 플레이 이력</span> <a href="game-history.html" class="text-neutral-300 hover:text-white underline underline-offset-4">351개 게임 · 7,792.9시간</a></div>
     </div>
     <div class="text-xs text-neutral-500 border-t border-white/10 pt-6 flex flex-wrap gap-x-6 gap-y-1">
       <span>© 2026 장성웅</span>
       <span>Game Developer · Unity &amp; C#</span>
-      <span>마지막 업데이트: 2026-09-03</span>
+      <span>마지막 업데이트: 2026-09-17</span>
     </div>
   </footer>
 
