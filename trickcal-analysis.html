@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>트릭컬 교감 시스템 분석</title>
+<meta name="description" content="트릭컬 리바이브의 볼따구 교감·친밀도 시스템이 사용자를 사로잡는 방식 분석">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbf8f3;
+    --surface: #ffffff;
+    --text: #1f1a17;
+    --muted: #6b625b;
+    --line: #e8e0d6;
+    --accent: #e8577a;
+    --accent-soft: #fde7ec;
+    --accent2: #f2a33a;
+    --accent2-soft: #fdf0dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #151214;
+      --surface: #1f1b1d;
+      --text: #f2ece8;
+      --muted: #a89f99;
+      --line: #342d30;
+      --accent: #ff7b9a;
+      --accent-soft: #3a1f27;
+      --accent2: #f6b55c;
+      --accent2-soft: #3a2c18;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #151214; --surface: #1f1b1d; --text: #f2ece8; --muted: #a89f99; --line: #342d30;
+    --accent: #ff7b9a; --accent-soft: #3a1f27; --accent2: #f6b55c; --accent2-soft: #3a2c18;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Noto Sans KR", system-ui, sans-serif; line-height: 1.75; font-size: 16px;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+  header.hero { padding: 72px 0 48px; border-bottom: 1px solid var(--line); }
+  .tag { display: inline-block; font-size: 13px; font-weight: 700; color: var(--accent);
+    background: var(--accent-soft); padding: 4px 12px; border-radius: 999px; }
+  h1 { font-size: clamp(30px, 6vw, 48px); line-height: 1.25; margin: 16px 0 12px; font-weight: 900; letter-spacing: -0.02em; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lead { font-size: 18px; color: var(--muted); margin: 0; }
+  .meta { margin-top: 20px; font-size: 14px; color: var(--muted); }
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  nav.toc a { font-size: 14px; color: var(--text); text-decoration: none; border: 1px solid var(--line);
+    padding: 6px 12px; border-radius: 8px; background: var(--surface); }
+  nav.toc a:hover { border-color: var(--accent); color: var(--accent); }
+  section { padding: 56px 0 8px; }
+  h2 { font-size: 26px; margin: 0 0 8px; font-weight: 900; letter-spacing: -0.01em; }
+  h2 .num { color: var(--accent); margin-right: 8px; }
+  h3 { font-size: 19px; margin: 0 0 8px; }
+  p { margin: 0 0 14px; }
+  .sub { color: var(--muted); margin-bottom: 24px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .fact dt { font-size: 13px; color: var(--muted); }
+  .fact dd { margin: 0 0 12px; font-weight: 700; }
+  .callout { border-left: 4px solid var(--accent); background: var(--accent-soft); padding: 18px 20px; border-radius: 0 12px 12px 0; margin: 20px 0; }
+  .callout strong { color: var(--accent); }
+  .hook { margin-bottom: 18px; }
+  .hook-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+  .hook-head .n { font-size: 28px; font-weight: 900; color: var(--accent); line-height: 1; }
+  .hook-head h3 { margin: 0; }
+  .why { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--line); font-size: 15px; color: var(--muted); }
+  .why b { color: var(--text); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: center; }
+  th { background: var(--accent2-soft); font-weight: 700; }
+  td:first-child, th:first-child { text-align: left; }
+  .table-scroll { overflow-x: auto; border-radius: 12px; }
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  .steps li { position: relative; padding: 0 0 18px 44px; }
+  .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 0;
+    width: 30px; height: 30px; border-radius: 50%; background: var(--accent2); color: #fff;
+    font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+  .steps li::after { content: ""; position: absolute; left: 14px; top: 34px; bottom: 4px; width: 2px; background: var(--line); }
+  .steps li:last-child::after { display: none; }
+  .loop svg { width: 100%; height: auto; display: block; }
+  .loop text { font-family: "Noto Sans KR", sans-serif; fill: var(--text); }
+  .loop .box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+  .loop .box.hot { stroke: var(--accent); stroke-width: 2; fill: var(--accent-soft); }
+  .loop .arrow { stroke: var(--muted); stroke-width: 2; fill: none; }
+  .loop .ah { fill: var(--muted); }
+  .loop .small { font-size: 12px; fill: var(--muted); }
+  .pill { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--accent2-soft); color: var(--text); margin: 2px 4px 2px 0; }
+  ul.clean { padding-left: 20px; margin: 0; }
+  ul.clean li { margin-bottom: 6px; }
+  .rel { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 14px 0; }
+  .rel span { font-size: 13px; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
+  .rel span:last-child { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+  .rel i { font-style: normal; color: var(--muted); }
+  footer { padding: 56px 0 72px; color: var(--muted); font-size: 13px; }
+  footer a { color: var(--muted); }
+  .src li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="tag">게임 시스템 분석 · 트릭컬 리바이브 (Google Play)</span>
+    <h1>볼따구 한 번에<br><em>애착</em>을 쌓게 하는 법</h1>
+    <p class="lead">트릭컬 리바이브의 <b>교감(볼 당기기) × 친밀도 시스템</b>이 사용자를 붙잡는 방식</p>
+    <p class="meta">장성웅 · 2026.10</p>
+    <nav class="toc">
+      <a href="#overview">1. 게임 개요</a>
+      <a href="#why">2. 왜 이 시스템인가</a>
+      <a href="#structure">3. 시스템 구조</a>
+      <a href="#hooks">4. 사로잡는 재미요소</a>
+      <a href="#limits">5. 한계</a>
+      <a href="#apply">6. 내 게임에 적용</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="overview">
+  <h2><span class="num">01</span>게임 개요</h2>
+  <p class="sub">"수집형 RPG"지만, 사람들이 이 게임을 이야기할 때 먼저 꺼내는 말은 전투가 아니라 <b>"볼따구"</b>입니다.</p>
+  <div class="card">
+    <dl class="fact grid">
+      <div><dt>개발 / 유통</dt><dd>에피드게임즈 (글로벌: 빌리빌리 게임 공동)</dd></div>
+      <div><dt>장르</dt><dd>수집형 RPG · 전략 오토배틀러</dd></div>
+      <div><dt>서비스</dt><dd>2023.09.27~ (2021년 원작 '트릭컬'을 리뉴얼해 재출시)</dd></div>
+      <div><dt>플레이어 역할</dt><dd>동화 세계 '엘리아스'에 나타난 <b>교주</b></dd></div>
+      <div><dt>캐릭터</dt><dd><b>사도</b> — 성격(순수·냉정·광기·활발·우울·공명) / 종족 / 전·중·후열</dd></div>
+      <div><dt>슬로건</dt><dd>"볼따구 라이프"</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section id="why">
+  <h2><span class="num">02</span>왜 이 시스템을 골랐나</h2>
+  <p>수집형 RPG는 대부분 "강한 캐릭터를 뽑아서 키운다"는 같은 뼈대를 공유합니다. 그 뼈대만으로는 다른 게임과 차별이 안 됩니다. 트릭컬 리바이브가 남다른 지점은 <b>캐릭터를 '전력'이 아니라 '관계'로 느끼게 만드는 장치</b>가 게임의 얼굴(로비)에 걸려 있다는 것입니다.</p>
+  <div class="callout">
+    <strong>핵심 주장 —</strong> 교감·친밀도 시스템은 "귀여운 연출"이 아니라, <b>① 매일 접속할 이유</b>, <b>② 약한 캐릭터를 버리지 않을 이유</b>, <b>③ 커뮤니티에서 공유할 이야깃거리</b>를 동시에 만들어내는 리텐션 엔진입니다.
+  </div>
+</section>
+
+<section id="structure">
+  <h2><span class="num">03</span>시스템 구조</h2>
+  <p class="sub">두 개의 입력(로비 터치 교감, 연회장 음식 대접)이 하나의 수치(친밀도)로 모이고, 그 수치가 연출·보상·성장으로 돌아오는 순환 구조입니다.</p>
+
+  <div class="card loop" role="img" aria-label="교감·친밀도 순환 구조 다이어그램">
+    <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" class="ah"/>
+        </marker>
+      </defs>
+      <!-- inputs -->
+      <rect class="box" x="20" y="40" width="200" height="86" rx="12"/>
+      <text x="120" y="74" text-anchor="middle" font-size="16" font-weight="700">로비 교감</text>
+      <text x="120" y="98" text-anchor="middle" class="small">볼 당기기 · 쓰다듬기 · 꿀밤 · 간지럼</text>
+
+      <rect class="box" x="20" y="200" width="200" height="86" rx="12"/>
+      <text x="120" y="234" text-anchor="middle" font-size="16" font-weight="700">연회장</text>
+      <text x="120" y="258" text-anchor="middle" class="small">선호 음식 대접 + 대화 선택지</text>
+
+      <!-- core -->
+      <rect class="box hot" x="290" y="120" width="180" height="96" rx="14"/>
+      <text x="380" y="160" text-anchor="middle" font-size="18" font-weight="900">친밀도</text>
+      <text x="380" y="186" text-anchor="middle" class="small">Lv.1 → 50 · 관계 6단계</text>
+
+      <!-- outputs -->
+      <rect class="box" x="540" y="20" width="200" height="72" rx="12"/>
+      <text x="640" y="50" text-anchor="middle" font-size="15" font-weight="700">반응 변화</text>
+      <text x="640" y="72" text-anchor="middle" class="small">Lv.10·20 구간별 대사 변화</text>
+
+      <rect class="box" x="540" y="132" width="200" height="72" rx="12"/>
+      <text x="640" y="162" text-anchor="middle" font-size="15" font-weight="700">성장 보상</text>
+      <text x="640" y="184" text-anchor="middle" class="small">치명 스탯 상승 · 단골 쿠폰</text>
+
+      <rect class="box" x="540" y="244" width="200" height="72" rx="12"/>
+      <text x="640" y="274" text-anchor="middle" font-size="15" font-weight="700">관계 콘텐츠</text>
+      <text x="640" y="296" text-anchor="middle" class="small">편지·선물 · 차임벨 · 꽁냥콜</text>
+
+      <path class="arrow" d="M220 83 C255 83 260 150 288 158" marker-end="url(#m)"/>
+      <path class="arrow" d="M220 243 C255 243 260 190 288 182" marker-end="url(#m)"/>
+      <path class="arrow" d="M470 150 C505 140 505 60 538 56" marker-end="url(#m)"/>
+      <path class="arrow" d="M470 168 L538 168" marker-end="url(#m)"/>
+      <path class="arrow" d="M470 190 C505 200 505 280 538 280" marker-end="url(#m)"/>
+      <!-- loop back -->
+      <path class="arrow" d="M640 316 C640 352 120 352 120 288" stroke-dasharray="5 5" marker-end="url(#m)"/>
+      <text x="380" y="344" text-anchor="middle" class="small">"다음 반응이 보고 싶다" → 다시 접속 · 다시 대접</text>
+    </svg>
+  </div>
+
+  <h3 style="margin-top:28px">관계 단계 (친밀도 Lv.6부터 5레벨마다 승급)</h3>
+  <div class="rel">
+    <span>아는 사이</span><i>→</i><span>같이 노는 사이</span><i>→</i><span>친한 사이</span><i>→</i><span>비밀을 아는 사이</span><i>→</i><span>기댈 수 있는 사이</span><i>→</i><span>영혼의 단짝</span>
+  </div>
+
+  <h3 style="margin-top:28px">연회장 음식별 친밀도 증가량</h3>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>선호도 \ 등급</th><th>일반</th><th>고급</th><th>희귀</th><th>전설</th><th>개쩜</th></tr></thead>
+      <tbody>
+        <tr><td>싫어함</td><td>15</td><td>20</td><td>25</td><td>30</td><td>35</td></tr>
+        <tr><td>보통</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td></tr>
+        <tr><td>좋아함</td><td>25</td><td>40</td><td>55</td><td>70</td><td>85</td></tr>
+        <tr><td>매우 좋아함</td><td>–</td><td>46</td><td>64</td><td>82</td><td>100</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:10px;font-size:14px;color:var(--muted)">+ 1:1 대화 선택지에 따라 1~3 추가. 만찬장(최대 12명 단체 배식)은 대화 없이 일괄 +2. 누적 필요량은 Lv.30 약 4,312 / Lv.40 약 8,585 / Lv.50 약 15,839.</p>
+</section>
+
+<section id="hooks">
+  <h2><span class="num">04</span>사용자를 사로잡는 재미요소 5가지</h2>
+  <p class="sub">각 요소마다 "무엇이 있는가"와 "왜 사람을 붙잡는가"를 나눠서 봅니다.</p>
+
+  <div class="card hook">
+    <div class="hook-head"><span class="n">1</span><h3>손끝으로 느끼는 즉각 피드백 — 볼 당기기</h3></div>
+    <p>로비에 서 있는 사도의 볼을 손가락으로 <b>직접 잡아당기면</b> 볼이 늘어나고, 표정이 바뀌고, 음성으로 반응합니다. 쓰다듬기·꿀밤·간지럼도 있어서 같은 캐릭터에게 여러 방식으로 장난을 칠 수 있습니다.</p>
+    <div class="why"><b>왜 붙잡나:</b> 모바일의 가장 원초적인 입력(터치·드래그)을 캐릭터의 신체 반응에 바로 연결했습니다. 버튼을 눌러 "호감도 +10" 팝업을 보는 것과 달리, 조작 → 반응 사이에 지연이 없어 <b>'만지고 있다'는 감각</b>이 생깁니다. 비용도 0이고 실패도 없어서, 할 일이 없는 날에도 로비에 머무를 이유가 됩니다.</div>
+  </div>
+
+  <div class="card hook">
+    <div class="hook-head"><span class="n">2</span><h3>반응이 변한다 — 관계의 서사화</h3></div>
+    <p>같은 볼 당기기라도 친밀도 <b>Lv.10 미만 / 10 이상 / 20 이상</b>에서 대사가 달라집니다. 처음엔 항의하던 사도가 레벨이 오르면 반응이 누그러집니다. 관계 단계도 숫자가 아니라 "비밀을 아는 사이", "영혼의 단짝" 같은 <b>이름</b>으로 표시됩니다.</p>
+    <div class="why"><b>왜 붙잡나:</b> 숫자 성장을 <b>캐릭터의 태도 변화</b>로 번역했습니다. 플레이어는 "Lv.20을 찍었다"가 아니라 "얘가 이제 나를 덜 싫어한다"를 경험합니다. 다음 구간의 대사는 미리 알 수 없으므로, 자연스럽게 <b>"다음엔 뭐라고 할까?"</b>라는 호기심이 다음 투자를 끌어냅니다.</div>
+  </div>
+
+  <div class="card hook">
+    <div class="hook-head"><span class="n">3</span><h3>취향 맞추기 퍼즐 — 연회장</h3></div>
+    <p>사도마다 좋아하는 음식이 다르고, "매우 좋아함" 음식은 고급 등급만으로도 46을 줍니다(보통 선호의 고급 음식은 30). 주방에서 재료로 요리를 만들어 대접하고, 1:1로 먹이면 대화 선택지까지 붙습니다.</p>
+    <div class="why"><b>왜 붙잡나:</b> 효율을 높이려면 <b>"이 아이는 뭘 좋아하지?"</b>를 알아야 합니다. 이 정보 탐색 자체가 캐릭터를 더 깊이 알게 만드는 행동이고, 공략 공유(선호 음식표)로 커뮤니티 활동까지 유도합니다. 반면 만찬장 단체 배식은 편하지만 일괄 +2라서, <b>"정성 들여 1:1로 줄까, 효율적으로 한꺼번에 줄까"</b>라는 작은 선택이 생깁니다.</div>
+  </div>
+
+  <div class="card hook">
+    <div class="hook-head"><span class="n">4</span><h3>애정이 손해가 아니다 — 성장과의 연결</h3></div>
+    <p>친밀도가 오르면 <b>치명타 관련 능력치</b>가 오르고, 레벨업마다 <b>단골 쿠폰</b>을 받습니다. 30레벨이 되면 사도가 보낸 편지와 선물이 배달되고, 30레벨 사도가 늘어날수록 <b>교주의 책상이 채워집니다</b>.</p>
+    <div class="why"><b>왜 붙잡나:</b> 많은 게임에서 "좋아하는 캐릭터"와 "강한 캐릭터"가 갈려서, 애정을 쏟을수록 효율에서 손해를 봅니다. 여기서는 감정적 투자가 <b>실질 스탯과 재화</b>로 돌아오므로 플레이어가 죄책감 없이 애정을 쏟을 수 있습니다. 교주 책상은 <b>"내가 쌓은 관계의 진열장"</b> 역할을 해서 수집 욕구까지 자극합니다.</div>
+  </div>
+
+  <div class="card hook">
+    <div class="hook-head"><span class="n">5</span><h3>모두가 쓰는 공통 언어 — '볼따구' 밈</h3></div>
+    <p>게임 슬로건부터 "볼따구 라이프"이고, 커뮤니티에서는 '볼따구'가 게임을 상징하는 키워드가 되어 노래(볼팝)와 2차 창작, 밈이 꾸준히 생겨났습니다.</p>
+    <div class="why"><b>왜 붙잡나:</b> 시스템이 단순하고 시각적이어서 <b>스크린샷 한 장, 짤 하나로 설명이 끝납니다</b>. 게임을 해본 적 없는 사람도 "볼 늘어나는 게임"으로 기억할 수 있어서 바이럴 진입 장벽이 낮습니다. 공성전처럼 커뮤니티를 <i>강제로</i> 묶는 시스템은 아니지만, <b>공유하고 싶은 순간을 계속 만들어</b> 커뮤니티를 자발적으로 키우는 시스템입니다.</div>
+  </div>
+
+  <div class="callout">
+    <strong>정리 —</strong> 다섯 요소는 따로 노는 게 아니라 하나의 루프입니다.
+    <b>만진다(1)</b> → <b>반응이 바뀐다(2)</b> → <b>더 알고 싶어 취향을 맞춘다(3)</b> → <b>그 애정이 성장으로 돌아온다(4)</b> → <b>그 순간을 공유한다(5)</b> → 새 유저가 들어와 다시 (1).
+  </div>
+</section>
+
+<section id="limits">
+  <h2><span class="num">05</span>한계와 리스크</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>후반 곡선이 가파름</h3>
+      <p style="margin:0">Lv.30(약 4,312) → Lv.50(약 15,839)으로 필요량이 3배 넘게 뜁니다. 음식 1회 최대 100이라 고레벨은 사실상 장기 숙제가 되고, 보유 사도가 많을수록 "다 못 챙긴다"는 피로가 생길 수 있습니다.</p>
+    </div>
+    <div class="card">
+      <h3>반응 콘텐츠의 소진</h3>
+      <p style="margin:0">대사 변화는 구간 단위(10·20 등)라 한 번 다 보면 새로움이 줄어듭니다. 운영 측도 Lv.50 확장과 차임벨·꽁냥콜 추가, 볼 당기기 대사 구간 추가(2026.01) 등으로 계속 보충해야 하는 구조입니다.</p>
+    </div>
+    <div class="card">
+      <h3>캐릭터 IP 의존</h3>
+      <p style="margin:0">시스템의 힘이 캐릭터 매력에서 나오기 때문에, 신규 사도의 디자인·연출이 기대에 못 미치면 루프 전체가 약해집니다. 연출 퀄리티를 계속 유지하는 비용이 큽니다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="apply">
+  <h2><span class="num">06</span>내 게임에 적용한다면</h2>
+  <p class="sub">게임 개발을 공부하는 입장에서 뽑아낸 설계 원칙입니다.</p>
+  <ol class="steps">
+    <li><b>숫자를 태도로 번역하기</b> — 수치가 오를 때 팝업 대신 캐릭터의 말투·표정·행동이 바뀌게 만든다.</li>
+    <li><b>비용 0짜리 상호작용을 메인 화면에 두기</b> — 할 게 없어도 "잠깐 만져보는" 행동이 매일 접속을 습관으로 만든다.</li>
+    <li><b>애정과 효율을 같은 방향으로</b> — 좋아하는 캐릭터에 쏟은 시간이 실제 성장으로 돌아오게 해서 선택의 죄책감을 없앤다.</li>
+    <li><b>탐색할 정보를 남겨두기</b> — 선호 음식처럼 "알아낼 거리"가 있으면 그 자체가 몰입이고 커뮤니티 공략 거리가 된다.</li>
+    <li><b>한 장면으로 설명되는 시스템</b> — 공유하기 쉬운 순간이 곧 마케팅이다. 협동 게임(예: 내 프로젝트 Pill Agents)이라면 팀원끼리 주고받는 짧은 상호작용 연출이 같은 역할을 할 수 있다.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>출처</b> (수치·업데이트 정보는 아래 자료 기준이며 최신 패치와 다를 수 있음)</p>
+    <ul class="clean src">
+      <li><a href="https://play.google.com/store/apps/details?id=com.epidgames.trickcalrevive">트릭컬 리바이브 — Google Play</a></li>
+      <li><a href="https://namu.wiki/w/%ED%8A%B8%EB%A6%AD%EC%BB%AC%20%EB%A6%AC%EB%B0%94%EC%9D%B4%EB%B8%8C">나무위키 — 트릭컬 리바이브</a></li>
+      <li><a href="https://namu.wiki/w/%ED%8A%B8%EB%A6%AD%EC%BB%AC%20%EB%A6%AC%EB%B0%94%EC%9D%B4%EB%B8%8C/%EC%BD%98%ED%85%90%EC%B8%A0">나무위키 — 트릭컬 리바이브/콘텐츠 (연회장·친밀도)</a></li>
+      <li><a href="https://www.mumuplayer.com/kr/blog/trickcal-revive-september-character-guide.html">MuMu Player — 트릭컬 리바이브 초보자 가이드</a></li>
+    </ul>
+    <p style="margin-top:20px">© 2026 장성웅 · <a href="./">포트폴리오</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
