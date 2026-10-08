@@ -528,7 +528,7 @@
   function draw(t) {
     const g = geo();
     ctx.clearRect(0, 0, W, H);
-    const skin = '#ffe3cf', hair = '#3f6fa8', blush = '#f1c3a2', ink = '#3a2a2a';
+    const skin = '#ffe3cf', hair = '#7a5cc4', blush = '#ff9db3', ink = '#3a2a2a';
     const pulling = cheeks.some(c => Math.hypot(c.dx, c.dy) > 6);
     const bob = Math.sin(t * 2) * 2 + (petT > 0 ? Math.sin(petT * 25) * 2 : 0);
     ctx.save(); ctx.translate(0, bob);
@@ -609,14 +609,14 @@
     }
     // anger mark / hearts
     if (mood === 'angry') {
-      ctx.strokeStyle = '#2f6fb5'; ctx.lineWidth = 3;
+      ctx.strokeStyle = '#e8577a'; ctx.lineWidth = 3;
       const ax = g.cx + g.R * 0.75, ay = g.cy - g.R * 0.8;
       ctx.beginPath();
       [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy]) => { ctx.moveTo(ax + sx*4, ay + sy*12); ctx.lineTo(ax + sx*4, ay + sy*4); ctx.lineTo(ax + sx*12, ay + sy*4); });
       ctx.stroke();
     }
     if (mood === 'happy' || (petT > 0 && tier() > 0)) {
-      ctx.fillStyle = '#2f6fb5';
+      ctx.fillStyle = '#e8577a';
       const hx = g.cx + g.R * 0.85, hy = g.cy - g.R * 0.85 - (1.2 - moodT) * 20, s = 7;
       ctx.beginPath(); ctx.moveTo(hx, hy + s);
       ctx.bezierCurveTo(hx - s*2, hy - s*0.5, hx - s*0.6, hy - s*2, hx, hy - s*0.6);
