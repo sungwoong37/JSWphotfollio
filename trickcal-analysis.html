@@ -102,6 +102,33 @@
   footer { padding: 56px 0 72px; color: var(--muted); font-size: 13px; }
   footer a { color: var(--muted); }
   .src li { margin-bottom: 4px; }
+
+  .sim { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: start; }
+  @media (max-width: 680px) { .sim { grid-template-columns: 1fr; } }
+  .stage { position: relative; background: var(--accent2-soft); border-radius: 14px; overflow: hidden; }
+  .stage canvas { display: block; width: 100%; height: 340px; touch-action: none; cursor: grab; }
+  .stage canvas.dragging { cursor: grabbing; }
+  .bubble { position: absolute; left: 50%; top: 14px; transform: translateX(-50%); max-width: 88%;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px;
+    font-size: 15px; font-weight: 700; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,.08);
+    transition: opacity .2s; }
+  .hint { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 12px; color: var(--muted); pointer-events: none; }
+  .panel h3 { font-size: 16px; margin: 0 0 6px; }
+  .lv { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .lv b { font-size: 28px; font-weight: 900; color: var(--accent); }
+  .stagename { font-size: 14px; font-weight: 700; }
+  .bar { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; margin: 8px 0 4px; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width .35s; }
+  .tiers { display: flex; gap: 6px; margin: 12px 0; }
+  .tiers span { flex: 1; text-align: center; font-size: 12px; padding: 6px 4px; border-radius: 8px; border: 1px solid var(--line); color: var(--muted); }
+  .tiers span.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .btns button { font: inherit; font-size: 14px; padding: 10px 8px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--text); cursor: pointer; }
+  .btns button:hover { border-color: var(--accent); }
+  .btns button.ghost { color: var(--muted); }
+  .log { margin-top: 12px; font-size: 13px; color: var(--muted); min-height: 3.6em; }
+  .note { font-size: 13px; color: var(--muted); margin-top: 14px; }
 </style>
 </head>
 <body>
@@ -116,6 +143,7 @@
       <a href="#overview">1. 게임 개요</a>
       <a href="#why">2. 왜 이 시스템인가</a>
       <a href="#structure">3. 시스템 구조</a>
+      <a href="#sim">▶ 직접 당겨보기</a>
       <a href="#hooks">4. 사로잡는 재미요소</a>
       <a href="#counter">5. 반론과 재검토</a>
       <a href="#limits">6. 한계</a>
@@ -210,6 +238,38 @@
     </table>
   </div>
   <p style="margin-top:10px;font-size:14px;color:var(--muted)">+ 1:1 대화 선택지에 따라 1~3 추가. 만찬장(최대 12명 단체 배식)은 대화 없이 일괄 +2. 누적 필요량은 Lv.30 약 4,312 / Lv.40 약 8,585 / Lv.50 약 15,839.</p>
+</section>
+
+<section id="sim">
+  <h2><span class="num">▶</span>직접 당겨보기 — 볼 당기기 시뮬레이터</h2>
+  <p class="sub">분석한 구조를 그대로 축소해 만든 체험판입니다. <b>볼을 잡고 끌어당겨 보세요</b>(머리를 톡 치면 쓰다듬기). 같은 행동인데 친밀도 구간에 따라 반응이 어떻게 바뀌는지가 핵심입니다.</p>
+  <div class="card sim">
+    <div class="stage">
+      <canvas id="cv" aria-label="볼 당기기 캐릭터. 볼을 드래그하면 늘어납니다."></canvas>
+      <div class="bubble" id="bubble">…누구세요?</div>
+      <div class="hint">볼을 드래그 · 머리를 탭</div>
+    </div>
+    <div class="panel">
+      <h3>친밀도</h3>
+      <div class="lv"><b id="lvNum">Lv.1</b><span class="stagename" id="stageName">아는 사이</span></div>
+      <div class="bar"><i id="bar"></i></div>
+      <div style="font-size:12px;color:var(--muted)" id="xpText">0 / 0</div>
+      <div class="tiers" aria-label="대사 구간">
+        <span id="t0">Lv.10 미만</span><span id="t1">Lv.10~19</span><span id="t2">Lv.20+</span>
+      </div>
+      <h3 style="margin-top:4px">연회장 — 음식 대접</h3>
+      <div class="btns">
+        <button data-food="30" data-name="보통 · 고급">보통 · 고급 (+30)</button>
+        <button data-food="40" data-name="좋아함 · 고급">좋아함 · 고급 (+40)</button>
+        <button data-food="64" data-name="매우 좋아함 · 희귀">매우 좋아함 · 희귀 (+64)</button>
+        <button data-food="100" data-name="매우 좋아함 · 개쩜">매우 좋아함 · 개쩜 (+100)</button>
+        <button class="ghost" id="ff">⏩ 빨리 감기 (+5 Lv)</button>
+        <button class="ghost" id="reset">↺ 처음부터</button>
+      </div>
+      <div class="log" id="log">볼을 아무리 당겨도 친밀도는 오르지 않습니다. 올리는 곳은 연회장뿐입니다(반론 ① 반영).</div>
+    </div>
+  </div>
+  <p class="note">※ 캐릭터와 대사는 실제 게임 에셋이 아니라 설명용 창작입니다. 음식 수치는 연회장 표를 따랐고, 대화 보너스는 1~3 무작위입니다. 레벨업에 필요한 양은 실제 곡선(Lv.30 약 4,312)을 단순화했습니다. 관계 단계는 Lv.6부터 5레벨마다 바뀝니다.</p>
 </section>
 
 <section id="hooks">
@@ -336,5 +396,301 @@
   </div>
 </footer>
 
+
+<script>
+(() => {
+  const cv = document.getElementById('cv');
+  const ctx = cv.getContext('2d');
+  const bubble = document.getElementById('bubble');
+  const $ = id => document.getElementById(id);
+
+  // ---------- affinity model ----------
+  const MAX = 50;
+  const need = L => Math.round(20 + 8.6 * L);          // xp to go from L -> L+1 (simplified)
+  const STAGES = ['아는 사이','같이 노는 사이','친한 사이','비밀을 아는 사이','기댈 수 있는 사이','영혼의 단짝'];
+  const stageOf = L => STAGES[Math.min(5, Math.max(0, Math.floor((L - 1) / 5)))];
+  let lv = 1, xp = 0;
+  const tier = () => lv >= 20 ? 2 : lv >= 10 ? 1 : 0;
+
+  const LINES = {
+    pull: [
+      ['아야! 누, 누구세요?!', '볼 놔! 처음 보는 사이잖아!', '으으… 교주라도 이건 아니지!'],
+      ['또 볼이야? …조금만이다?', '아프다니까~ 진짜 조금만!', '흥, 이번만 봐준다.'],
+      ['헤헤, 교주는 내 볼 진짜 좋아하네~', '늘어나는 거 재밌어? 나도 재밌어!', '반대쪽도 해도 돼!']
+    ],
+    hard: ['너무 세게 당기잖아!!', '야야야! 찢어진다고!', '으앗, 세다 세! …그래도 좋아.'],
+    pet: [
+      ['…뭐야, 갑자기.', '머리 만지지 마!'],
+      ['흠… 나쁘진 않네.', '칭찬해 주는 거야?'],
+      ['더 쓰다듬어 줘~', '교주 손 따뜻해…']
+    ],
+    food: [
+      ['…먹을 건 받아줄게.', '이걸로 친해질 수 있을 것 같아?'],
+      ['오, 맛있다! 고마워.', '이거 내가 좋아하는 거 어떻게 알았어?'],
+      ['역시 교주밖에 없어!', '같이 먹자, 응?']
+    ],
+    up: ['…조금 친해진 것 같기도?', '어? 우리 사이가 바뀐 느낌!']
+  };
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  function say(t) { bubble.textContent = t; bubble.style.opacity = 1; }
+
+  function renderUI() {
+    $('lvNum').textContent = 'Lv.' + lv;
+    $('stageName').textContent = stageOf(lv);
+    const n = lv >= MAX ? 1 : need(lv);
+    $('bar').style.width = (lv >= MAX ? 100 : (xp / n) * 100) + '%';
+    $('xpText').textContent = lv >= MAX ? 'MAX' : `${xp} / ${n}`;
+    [0,1,2].forEach(i => $('t' + i).classList.toggle('on', tier() === i));
+  }
+  function gain(amount) {
+    const before = { lv, tier: tier(), stage: stageOf(lv) };
+    xp += amount;
+    while (lv < MAX && xp >= need(lv)) { xp -= need(lv); lv++; }
+    if (lv >= MAX) xp = 0;
+    renderUI();
+    const msgs = [];
+    if (lv > before.lv) msgs.push(`Lv.${before.lv} → Lv.${lv}`);
+    if (stageOf(lv) !== before.stage) msgs.push(`관계: ${before.stage} → ${stageOf(lv)}`);
+    if (tier() !== before.tier) msgs.push('🔓 볼 당기기·쓰다듬기 대사가 바뀌었습니다. 당겨보세요!');
+    return msgs;
+  }
+  document.querySelectorAll('[data-food]').forEach(b => b.addEventListener('click', () => {
+    const base = +b.dataset.food, bonus = 1 + Math.floor(Math.random() * 3);
+    const msgs = gain(base + bonus);
+    say(msgs.length > 1 ? pick(LINES.up) : pick(LINES.food[tier()]));
+    $('log').innerHTML = `🍽 ${b.dataset.name} 대접: 친밀도 +${base} (음식) +${bonus} (대화)` + (msgs.length ? '<br>' + msgs.join('<br>') : '');
+    mood = 'happy'; moodT = 1.2;
+  }));
+  $('ff').addEventListener('click', () => {
+    const from = lv, fromTier = tier(), fromStage = stageOf(lv);
+    lv = Math.min(MAX, lv + 5); xp = 0; renderUI();
+    const m = [`⏩ Lv.${from} → Lv.${lv}`];
+    if (stageOf(lv) !== fromStage) m.push(`관계: ${fromStage} → ${stageOf(lv)}`);
+    if (tier() !== fromTier) m.push('🔓 대사 구간이 바뀌었습니다. 다시 당겨보세요!');
+    $('log').innerHTML = m.join('<br>');
+  });
+  $('reset').addEventListener('click', () => {
+    lv = 1; xp = 0; renderUI(); say('…누구세요?');
+    $('log').textContent = '처음 만난 사이로 돌아갔습니다.';
+  });
+
+  // ---------- drawing ----------
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    const r = cv.getBoundingClientRect();
+    W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  window.addEventListener('resize', resize);
+
+  const geo = () => {
+    const R = Math.min(W * 0.26, H * 0.3);
+    return { cx: W / 2, cy: H * 0.58, R };
+  };
+  // cheek state: offset from its anchor, with spring physics
+  const cheeks = [
+    { side: -1, dx: 0, dy: 0, vx: 0, vy: 0, held: false },
+    { side: 1, dx: 0, dy: 0, vx: 0, vy: 0, held: false }
+  ];
+  const anchor = (c, g) => ({ x: g.cx + c.side * g.R * 0.58, y: g.cy + g.R * 0.32 });
+  let mood = 'idle', moodT = 0, petT = 0, blinkT = 2.5, maxPull = 0;
+
+  function drawCheekLobe(c, g) {
+    const a = anchor(c, g);
+    const len = Math.hypot(c.dx, c.dy);
+    if (len < 2) return null;
+    const tx = a.x + c.dx, ty = a.y + c.dy;
+    const ang = Math.atan2(ty - g.cy, tx - g.cx);
+    const spread = 0.62;
+    const b1 = { x: g.cx + Math.cos(ang - spread) * g.R * 0.98, y: g.cy + Math.sin(ang - spread) * g.R * 0.98 };
+    const b2 = { x: g.cx + Math.cos(ang + spread) * g.R * 0.98, y: g.cy + Math.sin(ang + spread) * g.R * 0.98 };
+    const tr = Math.max(g.R * 0.2, g.R * 0.3 - len * 0.05);   // tip gets thinner as it stretches
+    const nx = -(ty - a.y) / len, ny = (tx - a.x) / len;
+    const p1 = { x: tx - nx * tr, y: ty - ny * tr }, p2 = { x: tx + nx * tr, y: ty + ny * tr };   // same side as b1/b2 so the outline doesn't cross
+    const mx = (a.x + tx) / 2, my = (a.y + ty) / 2;
+    const neck = Math.max(0.35, 1 - len / (g.R * 2.2));          // waist pinches as it stretches
+    ctx.beginPath();
+    ctx.moveTo(b1.x, b1.y);
+    const w = 0.25 + neck * 0.55;
+    ctx.quadraticCurveTo(mx + (b1.x - mx) * w, my + (b1.y - my) * w, p1.x, p1.y);
+    ctx.lineTo(p2.x, p2.y);
+    ctx.quadraticCurveTo(mx + (b2.x - mx) * w, my + (b2.y - my) * w, b2.x, b2.y);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath(); ctx.arc(tx, ty, tr, 0, Math.PI * 2); ctx.fill();
+    return { x: tx, y: ty, r: tr };
+  }
+
+  function draw(t) {
+    const g = geo();
+    ctx.clearRect(0, 0, W, H);
+    const skin = '#ffe3cf', hair = '#7a5cc4', blush = '#ff9db3', ink = '#3a2a2a';
+    const pulling = cheeks.some(c => Math.hypot(c.dx, c.dy) > 6);
+    const bob = Math.sin(t * 2) * 2 + (petT > 0 ? Math.sin(petT * 25) * 2 : 0);
+    ctx.save(); ctx.translate(0, bob);
+
+    // shadow
+    ctx.fillStyle = 'rgba(0,0,0,.08)';
+    ctx.beginPath(); ctx.ellipse(g.cx, g.cy + g.R * 1.12, g.R * 0.8, g.R * 0.14, 0, 0, Math.PI * 2); ctx.fill();
+    // back hair
+    ctx.fillStyle = hair;
+    ctx.beginPath(); ctx.ellipse(g.cx, g.cy - g.R * 0.05, g.R * 1.08, g.R * 1.05, 0, Math.PI * 0.95, Math.PI * 2.05); ctx.fill();
+    ctx.fillRect(g.cx - g.R * 1.08, g.cy - g.R * 0.05, g.R * 0.3, g.R * 0.75);
+    ctx.fillRect(g.cx + g.R * 0.78, g.cy - g.R * 0.05, g.R * 0.3, g.R * 0.75);
+
+    // face + stretched cheeks
+    ctx.fillStyle = skin;
+    ctx.beginPath(); ctx.arc(g.cx, g.cy, g.R, 0, Math.PI * 2); ctx.fill();
+    const tips = cheeks.map(c => drawCheekLobe(c, g));
+
+    // bangs
+    ctx.fillStyle = hair;
+    ctx.beginPath();
+    ctx.moveTo(g.cx - g.R * 1.0, g.cy - g.R * 0.1);
+    ctx.quadraticCurveTo(g.cx - g.R * 0.9, g.cy - g.R * 1.15, g.cx, g.cy - g.R * 1.08);
+    ctx.quadraticCurveTo(g.cx + g.R * 0.9, g.cy - g.R * 1.15, g.cx + g.R * 1.0, g.cy - g.R * 0.1);
+    ctx.quadraticCurveTo(g.cx + g.R * 0.55, g.cy - g.R * 0.62, g.cx + g.R * 0.2, g.cy - g.R * 0.42);
+    ctx.quadraticCurveTo(g.cx, g.cy - g.R * 0.7, g.cx - g.R * 0.22, g.cy - g.R * 0.4);
+    ctx.quadraticCurveTo(g.cx - g.R * 0.6, g.cy - g.R * 0.65, g.cx - g.R * 1.0, g.cy - g.R * 0.1);
+    ctx.fill();
+    // ahoge
+    ctx.strokeStyle = hair; ctx.lineWidth = g.R * 0.07; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(g.cx, g.cy - g.R * 1.06);
+    ctx.quadraticCurveTo(g.cx + g.R * 0.25, g.cy - g.R * 1.45 + Math.sin(t * 3) * 3, g.cx + g.R * 0.05, g.cy - g.R * 1.5); ctx.stroke();
+
+    // blush (follows tips)
+    ctx.fillStyle = blush;
+    cheeks.forEach((c, i) => {
+      const a = anchor(c, g), tp = tips[i];
+      const x = tp ? tp.x : a.x, y = tp ? tp.y : a.y;
+      const k = tier() === 2 ? 0.75 : 0.5;
+      ctx.globalAlpha = k;
+      ctx.beginPath(); ctx.ellipse(x, y, g.R * 0.16, g.R * 0.09, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+
+    // eyes
+    ctx.strokeStyle = ink; ctx.fillStyle = ink; ctx.lineWidth = g.R * 0.055;
+    const ey = g.cy - g.R * 0.02, ex = g.R * 0.36;
+    [-1, 1].forEach(s => {
+      const x = g.cx + s * ex;
+      ctx.beginPath();
+      if (pulling) {                       // >  <
+        ctx.moveTo(x - s * g.R * 0.1, ey - g.R * 0.09); ctx.lineTo(x + s * g.R * 0.06, ey); ctx.lineTo(x - s * g.R * 0.1, ey + g.R * 0.09);
+        ctx.stroke();
+      } else if (mood === 'happy' || petT > 0) {   // ^ ^
+        ctx.moveTo(x - g.R * 0.1, ey + g.R * 0.04); ctx.quadraticCurveTo(x, ey - g.R * 0.1, x + g.R * 0.1, ey + g.R * 0.04); ctx.stroke();
+      } else if (blinkT < 0.12) {
+        ctx.moveTo(x - g.R * 0.09, ey); ctx.lineTo(x + g.R * 0.09, ey); ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.ellipse(x, ey, g.R * 0.075, g.R * 0.11, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x + g.R * 0.025, ey - g.R * 0.04, g.R * 0.028, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = ink;
+      }
+    });
+    // mouth
+    ctx.beginPath(); ctx.lineWidth = g.R * 0.045;
+    const my = g.cy + g.R * 0.3;
+    if (pulling) {                          // wobbly stretched mouth
+      const w = g.R * (0.22 + Math.min(0.2, Math.hypot(cheeks[0].dx, cheeks[1].dx) / g.R * 0.1));
+      ctx.moveTo(g.cx - w, my);
+      for (let i = 1; i <= 6; i++) ctx.lineTo(g.cx - w + (2 * w * i) / 6, my + (i % 2 ? -1 : 1) * g.R * 0.04);
+      ctx.stroke();
+    } else if (mood === 'happy' || petT > 0 || tier() === 2) {
+      ctx.moveTo(g.cx - g.R * 0.12, my - g.R * 0.02); ctx.quadraticCurveTo(g.cx, my + g.R * 0.14, g.cx + g.R * 0.12, my - g.R * 0.02); ctx.stroke();
+    } else if (mood === 'angry' || tier() === 0) {
+      ctx.moveTo(g.cx - g.R * 0.1, my + g.R * 0.04); ctx.quadraticCurveTo(g.cx, my - g.R * 0.05, g.cx + g.R * 0.1, my + g.R * 0.04); ctx.stroke();
+    } else {
+      ctx.moveTo(g.cx - g.R * 0.08, my); ctx.lineTo(g.cx + g.R * 0.08, my); ctx.stroke();
+    }
+    // anger mark / hearts
+    if (mood === 'angry') {
+      ctx.strokeStyle = '#e8577a'; ctx.lineWidth = 3;
+      const ax = g.cx + g.R * 0.75, ay = g.cy - g.R * 0.8;
+      ctx.beginPath();
+      [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy]) => { ctx.moveTo(ax + sx*4, ay + sy*12); ctx.lineTo(ax + sx*4, ay + sy*4); ctx.lineTo(ax + sx*12, ay + sy*4); });
+      ctx.stroke();
+    }
+    if (mood === 'happy' || (petT > 0 && tier() > 0)) {
+      ctx.fillStyle = '#e8577a';
+      const hx = g.cx + g.R * 0.85, hy = g.cy - g.R * 0.85 - (1.2 - moodT) * 20, s = 7;
+      ctx.beginPath(); ctx.moveTo(hx, hy + s);
+      ctx.bezierCurveTo(hx - s*2, hy - s*0.5, hx - s*0.6, hy - s*2, hx, hy - s*0.6);
+      ctx.bezierCurveTo(hx + s*0.6, hy - s*2, hx + s*2, hy - s*0.5, hx, hy + s); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // ---------- input ----------
+  let active = null, downAt = null;
+  function pos(e) { const r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+  cv.addEventListener('pointerdown', e => {
+    const p = pos(e), g = geo();
+    downAt = { ...p, t: performance.now() };
+    let best = null, bd = g.R * 0.5;
+    cheeks.forEach(c => { const a = anchor(c, g); const d = Math.hypot(p.x - a.x, p.y - a.y); if (d < bd) { bd = d; best = c; } });
+    if (best) {
+      active = best; best.held = true; best.grab = { x: p.x - best.dx, y: p.y - best.dy };
+      maxPull = 0; cv.classList.add('dragging'); cv.setPointerCapture(e.pointerId);
+    }
+  });
+  cv.addEventListener('pointermove', e => {
+    if (!active) return;
+    const p = pos(e), g = geo();
+    let dx = p.x - active.grab.x, dy = p.y - active.grab.y;
+    const len = Math.hypot(dx, dy), lim = g.R * 1.3;
+    if (len > 0) { const k = lim * (1 - Math.exp(-len / lim)) / len; dx *= k; dy *= k; }  // rubbery resistance
+    active.dx = dx; active.dy = dy;
+    maxPull = Math.max(maxPull, Math.hypot(dx, dy));
+  });
+  function release(e) {
+    const g = geo();
+    if (active) {
+      active.held = false; cv.classList.remove('dragging');
+      if (maxPull > g.R * 0.15) {
+        const hard = maxPull > g.R * 0.9;
+        say(hard ? (tier() === 2 ? LINES.hard[2] : pick(LINES.hard.slice(0, 2))) : pick(LINES.pull[tier()]));
+        mood = tier() === 0 || (hard && tier() < 2) ? 'angry' : tier() === 2 ? 'happy' : 'idle'; moodT = 1.2;
+        $('log').innerHTML = `볼 당기기 (Lv.${lv} · ${['10 미만','10~19','20+'][tier()]} 구간 대사) — 친밀도 변화 없음`;
+      }
+      active = null;
+      return;
+    }
+    // tap on head = pet
+    if (downAt && e) {
+      const p = pos(e);
+      const short = performance.now() - downAt.t < 400 && Math.hypot(p.x - downAt.x, p.y - downAt.y) < 10;
+      if (short && Math.hypot(p.x - g.cx, p.y - (g.cy - g.R * 0.55)) < g.R * 0.7) {
+        petT = 0.6; say(pick(LINES.pet[tier()]));
+        $('log').innerHTML = `쓰다듬기 (Lv.${lv} 구간 대사) — 친밀도 변화 없음`;
+      }
+    }
+    downAt = null;
+  }
+  cv.addEventListener('pointerup', release);
+  cv.addEventListener('pointercancel', () => release(null));
+
+  // ---------- loop ----------
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.033, (now - last) / 1000); last = now;
+    cheeks.forEach(c => {
+      if (c.held) return;
+      const k = 260, damp = 11;                       // spring back with a little wobble
+      c.vx += (-k * c.dx - damp * c.vx) * dt; c.vy += (-k * c.dy - damp * c.vy) * dt;
+      c.dx += c.vx * dt; c.dy += c.vy * dt;
+      if (Math.abs(c.dx) + Math.abs(c.dy) + Math.abs(c.vx) + Math.abs(c.vy) < 0.3) c.dx = c.dy = c.vx = c.vy = 0;
+    });
+    if (moodT > 0) { moodT -= dt; if (moodT <= 0) mood = 'idle'; }
+    if (petT > 0) petT = Math.max(0, petT - dt);
+    blinkT -= dt; if (blinkT < 0) blinkT = 2 + Math.random() * 3;
+    draw(now / 1000);
+    requestAnimationFrame(frame);
+  }
+  resize(); renderUI(); requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
