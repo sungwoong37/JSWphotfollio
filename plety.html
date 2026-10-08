@@ -54,21 +54,26 @@
       </p>
 
       <!-- 한눈에 보기 -->
-      <dl class="grid grid-cols-3 gap-px bg-white/10 border border-white/10 rounded mt-10 max-w-2xl overflow-hidden">
+      <dl class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 border border-white/10 rounded mt-10 overflow-hidden">
         <div class="bg-black px-4 py-4">
           <dt class="text-xs text-neutral-500 mb-1">개발한 게임</dt>
           <dd class="text-2xl text-white font-bold">3편</dd>
-          <dd class="text-xs text-neutral-400 mt-1">팀 2 · 2인 개발 1</dd>
+          <dd class="text-xs text-neutral-400 mt-1">세 편 모두 개발 1인 전담</dd>
+        </div>
+        <div class="bg-black px-4 py-4">
+          <dt class="text-xs text-neutral-500 mb-1">직접 작성한 C# 코드</dt>
+          <dd class="text-2xl text-white font-bold">172,623줄</dd>
+          <dd class="text-xs text-neutral-400 mt-1">게임 코드 기여 100%</dd>
+        </div>
+        <div class="bg-black px-4 py-4">
+          <dt class="text-xs text-neutral-500 mb-1">커밋</dt>
+          <dd class="text-2xl text-white font-bold">1,261회</dd>
+          <dd class="text-xs text-neutral-400 mt-1">세 저장소 합계</dd>
         </div>
         <div class="bg-black px-4 py-4">
           <dt class="text-xs text-neutral-500 mb-1">상용 출시</dt>
           <dd class="text-2xl text-white font-bold">Stove</dd>
           <dd class="text-xs text-neutral-400 mt-1">추천율 100%</dd>
-        </div>
-        <div class="bg-black px-4 py-4">
-          <dt class="text-xs text-neutral-500 mb-1">온라인 협동</dt>
-          <dd class="text-2xl text-white font-bold">2편</dd>
-          <dd class="text-xs text-neutral-400 mt-1">Netcode + Relay</dd>
         </div>
       </dl>
 
@@ -81,13 +86,13 @@
     <!-- ===== WORK ===== -->
     <section id="work" class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
       <h2 class="text-2xl text-white mb-2">프로젝트</h2>
-      <p class="text-sm text-neutral-500 mb-6">최신순. 각 게임마다 직접 맡은 부분을 따로 적었습니다.</p>
+      <p class="text-sm text-neutral-500 mb-6">최신순. 각 게임마다 직접 맡은 부분과 git 기록으로 집계한 기여 수치를 적었습니다.</p>
 
       <!-- 목차 -->
       <ol class="grid sm:grid-cols-3 gap-3 mb-4 text-sm">
-        <li><a href="#p-pill" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
+        <li><a href="#p-digestor" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
           <span class="text-neutral-500 text-xs">01 · 개발 중</span>
-          <span class="block text-white font-medium mt-0.5">Pill Agents</span>
+          <span class="block text-white font-medium mt-0.5">Digestor</span>
           <span class="block text-neutral-400 text-xs mt-0.5">2~4인 협동 3D 액션</span>
         </a></li>
         <li><a href="#p-rat" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
@@ -96,25 +101,25 @@
           <span class="block text-neutral-400 text-xs mt-0.5">2D 등반 플랫포머</span>
         </a></li>
         <li><a href="#p-soul" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-neutral-500 text-xs">03 · 팀 프로젝트</span>
+          <span class="text-neutral-500 text-xs">03 · 개발 1인 전담</span>
           <span class="block text-white font-medium mt-0.5">SoulSync</span>
           <span class="block text-neutral-400 text-xs mt-0.5">2인 협동 로그라이크</span>
         </a></li>
       </ol>
 
-      <!-- Pill Agents -->
-      <article id="p-pill" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10 mt-10">
+      <!-- Digestor -->
+      <article id="p-digestor" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10 mt-10">
         <figure class="self-start">
-          <img src="assets/pillagents.png" alt="Pill Agents 게임 내 화면" width="1600" height="900" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10">
-          <figcaption class="text-xs text-neutral-500 mt-2">게임 내 화면 · 그레이박스 단계</figcaption>
+          <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10">
+          <figcaption class="text-xs text-neutral-500 mt-2">메인 메뉴 · 개발 중(버전 0.4)</figcaption>
         </figure>
         <div>
           <div class="flex flex-wrap gap-2 mb-3 text-xs">
             <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">개발 중</span>
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">2인 개발</span>
+            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">개발 1인 · 모델링 협업</span>
           </div>
-          <h3 class="text-2xl text-white">Pill Agents</h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">2~4인 온라인 협동 3D 액션 · 모델링 1인 협업</p>
+          <h3 class="text-2xl text-white">Digestor <span class="text-neutral-400 text-base font-normal">(이전 이름 Pill Agents)</span></h3>
+          <p class="text-sm text-neutral-400 mt-1 mb-4">2~4인 온라인 협동 3D 액션 · Unity 6 · URP · Netcode + Relay</p>
           <p class="text-base leading-relaxed text-neutral-300 mb-6">
             위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 탈출구까지 살아남는 게임입니다.
             보스에 붙은 구슬을 때려 그로기 게이지를 채우면 딜 구간이 열리는, 팀이 직접 공격 타이밍을 만드는 구조를 설계했습니다.
@@ -127,15 +132,15 @@
             <li>물리 콜백 대신 SphereCast·OverlapSphere로 매 프레임 검사하는 판정 구조</li>
           </ul>
           <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">엔진</dt><dd class="text-neutral-300">Unity 6 · URP</dd></div>
-            <div><dt class="text-xs text-neutral-500">네트워킹</dt><dd class="text-neutral-300">Netcode + Relay</dd></div>
-            <div><dt class="text-xs text-neutral-500">규모</dt><dd class="text-neutral-300">C# 266개 파일</dd></div>
-            <div><dt class="text-xs text-neutral-500">기간</dt><dd class="text-neutral-300">51일 · 546커밋</dd></div>
+            <div><dt class="text-xs text-neutral-500">개발 기여</dt><dd class="text-lg text-white font-semibold">100%</dd></div>
+            <div><dt class="text-xs text-neutral-500">C# 코드</dt><dd class="text-lg text-white font-semibold">141,068줄</dd></div>
+            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">486개 · 테스트 561건</dd></div>
+            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">1,120회</dd></div>
           </dl>
           <p class="text-sm text-neutral-400 mb-5">
             <span class="text-neutral-500">개발 방식</span> Claude Code로 설계, Codex로 구현.
           </p>
-          <a href="pill-agents.html" class="inline-block text-sm accent hover:underline underline-offset-4">개발 과정 자세히 보기 →</a>
+          <a href="digestor.html" class="inline-block text-sm accent hover:underline underline-offset-4">개발 과정 자세히 보기 →</a>
         </div>
       </article>
 
@@ -148,10 +153,10 @@
         <div>
           <div class="flex flex-wrap gap-2 mb-3 text-xs">
             <span class="border tag-accent rounded px-2 py-0.5">Stove Indie 출시</span>
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">3인 팀</span>
+            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">3인 팀 · 프로그래밍 전담</span>
           </div>
           <h3 class="text-2xl text-white">Rat-errible Climb <span class="text-neutral-400 text-base font-normal">(쥐독한 등반)</span></h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">2D 등반 플랫포머 · 추천율 100%(9명 참여)</p>
+          <p class="text-sm text-neutral-400 mt-1 mb-4">2D 등반 플랫포머 · Unity 6 · URP · 추천율 100%(9명 참여)</p>
           <p class="text-base leading-relaxed text-neutral-300 mb-6">
             하수구 속 쥐가 프로펠러·가시·고양이 발 같은 함정을 피해 꼭대기까지 오르는 게임입니다.
           </p>
@@ -160,13 +165,13 @@
             <li>함정 시스템 설계 — <span class="text-neutral-100">TrapBase</span>를 상속해 Warning → Active → Cooldown 상태를 도는 구조</li>
             <li>Cinemachine 카메라 전환</li>
             <li>사다리·수중·끈적한 벽 같은 상호작용 구현</li>
-            <li>기획·개발·아트에 두루 참여</li>
+            <li>게임 코드 100% 직접 작성 — 함정·장애물 스크립트 30개 포함</li>
           </ul>
           <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">엔진</dt><dd class="text-neutral-300">Unity 6 · URP</dd></div>
-            <div><dt class="text-xs text-neutral-500">장르</dt><dd class="text-neutral-300">2D 플랫포머</dd></div>
-            <div><dt class="text-xs text-neutral-500">출시</dt><dd class="text-neutral-300">Stove Indie</dd></div>
-            <div><dt class="text-xs text-neutral-500">팀</dt><dd class="text-neutral-300">3인</dd></div>
+            <div><dt class="text-xs text-neutral-500">개발 기여</dt><dd class="text-lg text-white font-semibold">100%</dd></div>
+            <div><dt class="text-xs text-neutral-500">C# 코드</dt><dd class="text-lg text-white font-semibold">8,405줄</dd></div>
+            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">66개</dd></div>
+            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">64회 / 팀 89회</dd></div>
           </dl>
           <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="inline-block text-sm accent hover:underline underline-offset-4">Stove 스토어 페이지 →</a>
         </div>
@@ -180,10 +185,10 @@
         </figure>
         <div>
           <div class="flex flex-wrap gap-2 mb-3 text-xs">
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">3인 팀</span>
+            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">3인 팀 · 개발 1인 전담</span>
           </div>
           <h3 class="text-2xl text-white">SoulSync</h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">2인 온라인 협동 로그라이크</p>
+          <p class="text-sm text-neutral-400 mt-1 mb-4">2인 온라인 협동 로그라이크 · Unity 6 · Netcode + Relay</p>
           <p class="text-base leading-relaxed text-neutral-300 mb-6">
             두 사람이 Unity Relay로 연결해 몬스터 웨이브를 돌파하는 던전 크롤러입니다.
             속성(불꽃·얼음)과 무기(검·활)를 조합해 직업을 만들고, 레벨업 스킬·상점·가챠로 성장합니다.
@@ -193,19 +198,20 @@
             <li>Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이 구현</li>
             <li>보스 3종 패턴, 검·활 계열 스킬 시스템</li>
             <li>솔로 모드 분기를 포함한 게임플레이 루프</li>
-            <li>기획·개발·아트에 두루 참여</li>
+            <li>3인 팀 프로젝트지만 게임 코드는 100% 혼자 작성</li>
           </ul>
           <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">엔진</dt><dd class="text-neutral-300">Unity 6</dd></div>
-            <div><dt class="text-xs text-neutral-500">네트워킹</dt><dd class="text-neutral-300">Netcode + Relay</dd></div>
-            <div><dt class="text-xs text-neutral-500">플레이</dt><dd class="text-neutral-300">2인 협동 · 솔로</dd></div>
-            <div><dt class="text-xs text-neutral-500">팀</dt><dd class="text-neutral-300">3인</dd></div>
+            <div><dt class="text-xs text-neutral-500">개발 기여</dt><dd class="text-lg text-white font-semibold">100%</dd></div>
+            <div><dt class="text-xs text-neutral-500">C# 코드</dt><dd class="text-lg text-white font-semibold">23,150줄</dd></div>
+            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">119개</dd></div>
+            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">77회 / 팀 79회</dd></div>
           </dl>
           <a href="soulsync.html" class="inline-block text-sm accent hover:underline underline-offset-4">개발 과정 자세히 보기 →</a>
         </div>
       </article>
 
       <p class="text-sm text-neutral-500 pt-8 border-t border-white/10">
+        기여 수치는 각 게임의 git 저장소 기준입니다(2026-10-08 집계). C# 줄 수는 git blame으로 작성자별로 셌고, 외부 에셋 코드는 뺐습니다.<br>
         실제 플레이 화면은 정리해서 추가할 예정이고, 컨셉아트로 표시된 이미지는 실제 게임 화면이 아닙니다.
       </p>
     </section>
@@ -290,7 +296,7 @@
         <h3 class="text-xs text-neutral-500 mb-2 font-normal">더 보기</h3>
         <ul class="text-sm space-y-2">
           <li><a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="text-neutral-200 hover:text-white underline underline-offset-4">Rat-errible Climb · Stove Indie</a></li>
-          <li><a href="pill-agents.html" class="text-neutral-200 hover:text-white underline underline-offset-4">Pill Agents 개발 과정</a></li>
+          <li><a href="digestor.html" class="text-neutral-200 hover:text-white underline underline-offset-4">Digestor 개발 과정</a></li>
           <li><a href="soulsync.html" class="text-neutral-200 hover:text-white underline underline-offset-4">SoulSync 개발 과정</a></li>
           <li><a href="game-history.html" class="text-neutral-200 hover:text-white underline underline-offset-4">게임 플레이 이력</a></li>
         </ul>
