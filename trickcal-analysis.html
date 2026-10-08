@@ -9,32 +9,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fbf8f3;
+    --bg: #f5f9fc;
     --surface: #ffffff;
-    --text: #1f1a17;
-    --muted: #6b625b;
-    --line: #e8e0d6;
-    --accent: #e8577a;
-    --accent-soft: #fde7ec;
-    --accent2: #f2a33a;
-    --accent2-soft: #fdf0dc;
+    --text: #16202a;
+    --muted: #5d6b78;
+    --line: #dde6ee;
+    --accent: #2f6fb5;
+    --accent-soft: #e6f1fa;
+    --accent2: #6aaed6;
+    --accent2-soft: #eaf5fb;
+    --on-accent: #ffffff;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #151214;
-      --surface: #1f1b1d;
-      --text: #f2ece8;
-      --muted: #a89f99;
-      --line: #342d30;
-      --accent: #ff7b9a;
-      --accent-soft: #3a1f27;
-      --accent2: #f6b55c;
-      --accent2-soft: #3a2c18;
+      --bg: #10151b;
+      --surface: #18202a;
+      --text: #e8eef4;
+      --muted: #9aa8b5;
+      --line: #2a3542;
+      --accent: #7ab8e8;
+      --accent-soft: #1a2c3d;
+      --accent2: #8cc8ea;
+      --accent2-soft: #182a36;
+      --on-accent: #0f1a24;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #151214; --surface: #1f1b1d; --text: #f2ece8; --muted: #a89f99; --line: #342d30;
-    --accent: #ff7b9a; --accent-soft: #3a1f27; --accent2: #f6b55c; --accent2-soft: #3a2c18;
+    --bg: #10151b; --surface: #18202a; --text: #e8eef4; --muted: #9aa8b5; --line: #2a3542;
+    --accent: #7ab8e8; --accent-soft: #1a2c3d; --accent2: #8cc8ea; --accent2-soft: #182a36; --on-accent: #0f1a24;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -81,7 +83,7 @@
   .steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
   .steps li { position: relative; padding: 0 0 18px 44px; }
   .steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: 0;
-    width: 30px; height: 30px; border-radius: 50%; background: var(--accent2); color: #fff;
+    width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--on-accent);
     font-weight: 700; display: grid; place-items: center; font-size: 14px; }
   .steps li::after { content: ""; position: absolute; left: 14px; top: 34px; bottom: 4px; width: 2px; background: var(--line); }
   .steps li:last-child::after { display: none; }
@@ -97,7 +99,7 @@
   ul.clean li { margin-bottom: 6px; }
   .rel { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 14px 0; }
   .rel span { font-size: 13px; padding: 6px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); }
-  .rel span:last-child { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 700; }
+  .rel span:last-child { background: var(--accent); color: var(--on-accent); border-color: var(--accent); font-weight: 700; }
   .rel i { font-style: normal; color: var(--muted); }
   footer { padding: 56px 0 72px; color: var(--muted); font-size: 13px; }
   footer a { color: var(--muted); }
@@ -121,7 +123,7 @@
   .bar i { display: block; height: 100%; width: 0; background: var(--accent); border-radius: 999px; transition: width .35s; }
   .tiers { display: flex; gap: 6px; margin: 12px 0; }
   .tiers span { flex: 1; text-align: center; font-size: 12px; padding: 6px 4px; border-radius: 8px; border: 1px solid var(--line); color: var(--muted); }
-  .tiers span.on { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+  .tiers span.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 700; }
   .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .btns button { font: inherit; font-size: 14px; padding: 10px 8px; border-radius: 10px; border: 1px solid var(--line);
     background: var(--surface); color: var(--text); cursor: pointer; }
@@ -526,7 +528,7 @@
   function draw(t) {
     const g = geo();
     ctx.clearRect(0, 0, W, H);
-    const skin = '#ffe3cf', hair = '#7a5cc4', blush = '#ff9db3', ink = '#3a2a2a';
+    const skin = '#ffe3cf', hair = '#3f6fa8', blush = '#f1c3a2', ink = '#3a2a2a';
     const pulling = cheeks.some(c => Math.hypot(c.dx, c.dy) > 6);
     const bob = Math.sin(t * 2) * 2 + (petT > 0 ? Math.sin(petT * 25) * 2 : 0);
     ctx.save(); ctx.translate(0, bob);
@@ -607,14 +609,14 @@
     }
     // anger mark / hearts
     if (mood === 'angry') {
-      ctx.strokeStyle = '#e8577a'; ctx.lineWidth = 3;
+      ctx.strokeStyle = '#2f6fb5'; ctx.lineWidth = 3;
       const ax = g.cx + g.R * 0.75, ay = g.cy - g.R * 0.8;
       ctx.beginPath();
       [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([sx,sy]) => { ctx.moveTo(ax + sx*4, ay + sy*12); ctx.lineTo(ax + sx*4, ay + sy*4); ctx.lineTo(ax + sx*12, ay + sy*4); });
       ctx.stroke();
     }
     if (mood === 'happy' || (petT > 0 && tier() > 0)) {
-      ctx.fillStyle = '#e8577a';
+      ctx.fillStyle = '#2f6fb5';
       const hx = g.cx + g.R * 0.85, hy = g.cy - g.R * 0.85 - (1.2 - moodT) * 20, s = 7;
       ctx.beginPath(); ctx.moveTo(hx, hy + s);
       ctx.bezierCurveTo(hx - s*2, hy - s*0.5, hx - s*0.6, hy - s*2, hx, hy - s*0.6);
