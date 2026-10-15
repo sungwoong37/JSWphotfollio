@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digestor 개발 과정 · 장성웅</title>
-<meta name="description" content="2~4인 온라인 협동 3D 액션 Digestor의 개발 과정. 개발 1인 전담으로 C# 141,068줄·1,120커밋. 서버 권위 네트워킹, 보스 그로기 시스템, 직접 내린 엔지니어링 판단을 게임 화면과 함께 정리했습니다.">
+<meta name="description" content="2~4인 온라인 협동 3D 액션 Digestor의 개발 과정. 기획·설계 1인, 구현은 AI 도구 위주로 C# 155,469줄·1,217커밋. 서버 권위 네트워킹, 보스 그로기 시스템, 직접 내린 엔지니어링 판단을 게임 화면과 함께 정리했습니다.">
 <meta property="og:title" content="Digestor 개발 과정 · 장성웅">
-<meta property="og:description" content="개발 1인 전담, 86일간 1,120커밋. 서버 권위 네트워킹과 보스 그로기 시스템.">
+<meta property="og:description" content="기획·설계 1인 + AI 도구 구현, 93일간 1,217커밋. 서버 권위 네트워킹과 보스 그로기 시스템.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="assets/digestor/title.jpg">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -60,7 +60,7 @@
         위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 동료와 함께 탈출구까지 살아남는 온라인 협동 게임입니다.
       </p>
       <p class="text-sm text-neutral-400 max-w-xl">
-        개발 1인 전담(게임 코드 기여 100%) · 모델링 1인 협업 · Unity 6 · URP · Netcode for GameObjects + Relay
+        기획·설계 1인(구현은 AI 도구 위주) · 모델링 1인 협업 · Unity 6 · URP · Netcode for GameObjects + Relay
       </p>
 
       <figure class="mt-10">
@@ -69,13 +69,13 @@
       </figure>
 
       <dl class="grid grid-cols-2 sm:grid-cols-5 gap-px bg-white/10 border border-white/10 rounded mt-10 overflow-hidden">
-        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">개발 기여</dt><dd class="text-2xl text-white font-bold">100%</dd></div>
-        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">C# 코드</dt><dd class="text-2xl text-white font-bold">141,068<span class="text-sm font-normal text-neutral-400">줄</span></dd></div>
-        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">커밋</dt><dd class="text-2xl text-white font-bold">1,120<span class="text-sm font-normal text-neutral-400">회</span></dd></div>
-        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">자동 테스트</dt><dd class="text-2xl text-white font-bold">561<span class="text-sm font-normal text-neutral-400">건</span></dd></div>
-        <div class="bg-black px-4 py-4 col-span-2 sm:col-span-1"><dt class="text-xs text-neutral-500 mb-1">개발 기간</dt><dd class="text-2xl text-white font-bold">86<span class="text-sm font-normal text-neutral-400">일</span></dd></div>
+        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">구현</dt><dd class="text-2xl text-white font-bold">AI 위주</dd></div>
+        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">C# 코드</dt><dd class="text-2xl text-white font-bold">155,469<span class="text-sm font-normal text-neutral-400">줄</span></dd></div>
+        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">커밋</dt><dd class="text-2xl text-white font-bold">1,217<span class="text-sm font-normal text-neutral-400">회</span></dd></div>
+        <div class="bg-black px-4 py-4"><dt class="text-xs text-neutral-500 mb-1">자동 테스트</dt><dd class="text-2xl text-white font-bold">689<span class="text-sm font-normal text-neutral-400">건</span></dd></div>
+        <div class="bg-black px-4 py-4 col-span-2 sm:col-span-1"><dt class="text-xs text-neutral-500 mb-1">개발 기간</dt><dd class="text-2xl text-white font-bold">93<span class="text-sm font-normal text-neutral-400">일</span></dd></div>
       </dl>
-      <p class="text-xs text-neutral-500 mt-3">git 저장소 기준, 2026-10-08 집계. 개발 중(버전 0.4.16).</p>
+      <p class="text-xs text-neutral-500 mt-3">git 저장소 기준, 2026-10-15 집계. 개발 중(버전 0.4.63).</p>
     </section>
 
     <!-- ===== SCREENS ===== -->
@@ -182,7 +182,7 @@
       <!-- 코드 구성 -->
       <h3 class="text-lg text-white mb-2">코드 구성</h3>
       <p class="text-base leading-relaxed text-neutral-300 max-w-2xl mb-5">
-        런타임·에디터·테스트를 세 어셈블리(IntoStomach.Runtime / .Editor / .Tests)로 나눴습니다. 게임 코드 427개 파일, 테스트 59개 파일입니다.
+        런타임·에디터·테스트를 세 어셈블리(IntoStomach.Runtime / .Editor / .Tests)로 나눴습니다. 게임 코드 449개 파일, 테스트 76개 파일입니다.
         체력·타이머·도구 위력 같은 수치는 GameBalanceConfig 한 파일에서만 읽고, 코드에 수치를 직접 박으면 정합 검사에서 걸립니다.
       </p>
       <div class="max-w-xl">
@@ -193,7 +193,7 @@
 
     <!-- ===== DECISIONS ===== -->
     <section class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
-      <h2 class="text-2xl text-white mb-8">직접 내린 엔지니어링 판단 세 가지</h2>
+      <h2 class="text-2xl text-white mb-8">개발 중 내린 엔지니어링 판단 세 가지</h2>
 
       <article class="border-t border-white/10 py-8 max-w-2xl">
         <h3 class="text-lg text-white mb-4">01 &nbsp; 물리 콜백 0건 원칙에 예외를 하나만 둔 이유</h3>
@@ -218,7 +218,7 @@
         <div class="space-y-3 text-base leading-relaxed text-neutral-300">
           <p><span class="text-neutral-100 font-medium mr-1.5">문제</span>스케일 커브 규칙을 고친 뒤에도 임포터 버전이 그대로여서 며칠간 캐시된 옛 결과가 쓰였고, 캐릭터 애니메이션 클립 43개가 모두 낡은 상태였습니다.</p>
           <p><span class="text-neutral-100 font-medium mr-1.5">대안</span>필요할 때마다 강제 재임포트를 기억해서 실행할지, 임포터 코드가 바뀔 때 버전 번호도 함께 올려 캐시를 무효화할지를 비교했습니다.</p>
-          <p><span class="text-neutral-100 font-medium mr-1.5">선택</span>강제 재임포트를 걸었을 때 유니티가 낸 불일치 경고에서 원인을 찾았고, 같은 문제가 조용히 반복되지 않도록 임포터를 고치면 버전 번호를 반드시 올리는 규칙을 세웠습니다.</p>
+          <p><span class="text-neutral-100 font-medium mr-1.5">선택</span>AI 도구와 함께 강제 재임포트 때 유니티가 낸 불일치 경고를 따라가 원인을 찾았고, 같은 문제가 조용히 반복되지 않도록 임포터를 고치면 버전 번호를 반드시 올리는 규칙을 AI 도구가 매번 읽는 프로젝트 지침 문서에 적었습니다.</p>
         </div>
       </article>
     </section>
@@ -254,13 +254,13 @@
     <section id="timeline" class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
       <h2 class="text-2xl text-white mb-3">개발 기록</h2>
       <p class="text-base leading-relaxed text-neutral-300 max-w-2xl mb-10">
-        2026-07-15 첫 커밋부터 10-08까지 86일간 1,120커밋. 최다 커밋일은 09-21의 48건이고, 커밋이 없는 날은 13일이었습니다.
+        2026-07-15 첫 커밋부터 10-15까지 93일간 1,217커밋. 최다 커밋일은 09-21의 48건이고, 커밋이 없는 날은 13일이었습니다.
       </p>
 
       <!-- 주간 커밋 차트 -->
       <figure class="mb-14">
         <figcaption class="text-sm text-white mb-1">주별 커밋 수</figcaption>
-        <p class="text-xs text-neutral-500 mb-6">막대에 마우스를 올리면 주와 커밋 수가 보입니다. 마지막 주는 10-08까지.</p>
+        <p class="text-xs text-neutral-500 mb-6">막대에 마우스를 올리면 주와 커밋 수가 보입니다. 마지막 주는 10-15까지.</p>
         <div class="relative h-44 border-b border-white/20">
           <div class="absolute inset-x-0 top-0 border-t border-white/5"></div>
           <div class="absolute inset-x-0 top-1/2 border-t border-white/5"></div>
@@ -329,14 +329,20 @@
           <img src="assets/digestor/title.jpg" alt="Digestor 3D 타이틀" width="1600" height="1001" loading="lazy" class="shot max-w-sm">
         </li>
         <li class="pl-6 relative">
-          <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent"></span>
+          <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-neutral-600"></span>
           <p class="text-sm accent mb-1">10-06</p>
           <p class="text-neutral-100 mb-1">버전 0.4.0 — 허브 튜토리얼</p>
-          <p class="text-base leading-relaxed text-neutral-300 max-w-2xl mb-4">메인 메뉴 옆 훈련실에서 바로 조작을 배우는 튜토리얼. 이후 진입 끊김을 실측해 0으로 줄였습니다(현재 0.4.16).</p>
+          <p class="text-base leading-relaxed text-neutral-300 max-w-2xl mb-4">메인 메뉴 옆 훈련실에서 바로 조작을 배우는 튜토리얼. 이후 진입 끊김을 실측해 0으로 줄였습니다.</p>
           <div class="grid grid-cols-2 gap-3 max-w-xl">
             <img src="assets/digestor/tutorial.jpg" alt="튜토리얼 훈련실" width="1600" height="1000" loading="lazy" class="shot">
             <img src="assets/digestor/battery.jpg" alt="정전 튜토리얼" width="1600" height="1000" loading="lazy" class="shot">
           </div>
+        </li>
+        <li class="pl-6 relative">
+          <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent"></span>
+          <p class="text-sm accent mb-1">10-14</p>
+          <p class="text-neutral-100 mb-1">STOVE PC SDK 연동 (현재 0.4.63)</p>
+          <p class="text-base leading-relaxed text-neutral-300 max-w-2xl mb-4">STOVE 런처 연동과 도전과제 39개를 넣고, 클라우드 세이빙이 동기화할 수 있도록 진행 저장을 파일로 바꿨습니다.</p>
         </li>
       </ol>
     </section>
@@ -355,7 +361,7 @@
     <div class="text-xs text-neutral-400 border-t border-white/10 pt-6 flex flex-wrap gap-x-6 gap-y-1">
       <span>© 2026 장성웅</span>
       <span>Game Developer · Unity &amp; C#</span>
-      <span>마지막 업데이트: 2026-10-08</span>
+      <span>마지막 업데이트: 2026-10-15</span>
     </div>
   </footer>
 
@@ -370,7 +376,7 @@
   onScroll();
 
   // 주별 커밋 (git log, ISO 주 기준 · 주 시작 월요일)
-  var weeks = [["07-13",41],["07-20",92],["07-27",91],["08-03",116],["08-10",51],["08-17",34],["08-24",91],["08-31",111],["09-07",127],["09-14",90],["09-21",112],["09-28",89],["10-05",75]];
+  var weeks = [["07-13",41],["07-20",92],["07-27",91],["08-03",116],["08-10",51],["08-17",34],["08-24",91],["08-31",111],["09-07",127],["09-14",90],["09-21",112],["09-28",89],["10-05",133],["10-12",39]];
   var max = 130, bars = document.getElementById("bars"), labels = document.getElementById("barlabels"), table = document.getElementById("bartable");
   weeks.forEach(function (w, i) {
     var b = document.createElement("div");
