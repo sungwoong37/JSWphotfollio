@@ -49,7 +49,7 @@
         게임을 직접 만들고<br>끝까지 완성하는 개발자
       </h1>
       <p class="text-[17px] leading-relaxed text-neutral-300 max-w-xl">
-        Unity와 C#으로 게임 세 편을 만들었습니다. 막히면 증상에서 멈추지 않고
+        Unity와 C#으로 게임 세 편을 만들었고, 지금은 언리얼 엔진 5와 C++로 네 번째 게임을 만들고 있습니다. 막히면 증상에서 멈추지 않고
         원인을 찾을 때까지 파고드는 편입니다.
       </p>
 
@@ -57,18 +57,18 @@
       <dl class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 border border-white/10 rounded mt-10 overflow-hidden">
         <div class="bg-black px-4 py-4">
           <dt class="text-xs text-neutral-500 mb-1">개발한 게임</dt>
-          <dd class="text-2xl text-white font-bold">3편</dd>
-          <dd class="text-xs text-neutral-400 mt-1">출시 1편 · 1인 개발 1편 · 개발 중 1편</dd>
+          <dd class="text-2xl text-white font-bold">4편</dd>
+          <dd class="text-xs text-neutral-400 mt-1">출시 1편 · 1인 개발 1편 · 개발 중 2편</dd>
         </div>
         <div class="bg-black px-4 py-4">
-          <dt class="text-xs text-neutral-500 mb-1">C# 코드</dt>
-          <dd class="text-2xl text-white font-bold">187,024줄</dd>
-          <dd class="text-xs text-neutral-400 mt-1">세 게임 합계 · AI 도구 활용</dd>
+          <dt class="text-xs text-neutral-500 mb-1">코드</dt>
+          <dd class="text-2xl text-white font-bold">211,269줄</dd>
+          <dd class="text-xs text-neutral-400 mt-1">C# · C++ 합계 · AI 도구 활용</dd>
         </div>
         <div class="bg-black px-4 py-4">
           <dt class="text-xs text-neutral-500 mb-1">커밋</dt>
-          <dd class="text-2xl text-white font-bold">1,358회</dd>
-          <dd class="text-xs text-neutral-400 mt-1">세 저장소 합계</dd>
+          <dd class="text-2xl text-white font-bold">1,403회</dd>
+          <dd class="text-xs text-neutral-400 mt-1">네 저장소 합계</dd>
         </div>
         <div class="bg-black px-4 py-4">
           <dt class="text-xs text-neutral-500 mb-1">출시</dt>
@@ -89,26 +89,64 @@
       <p class="text-sm text-neutral-500 mb-6">최신순. 각 게임마다 직접 맡은 부분, git 기록으로 집계한 수치, AI 도구를 뺀 직접 작성 비율을 적었습니다.</p>
 
       <!-- 목차 -->
-      <ol class="grid sm:grid-cols-3 gap-3 mb-4 text-sm">
-        <li><a href="#p-digestor" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
+      <ol class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-sm">
+        <li><a href="#p-oml" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
           <span class="text-neutral-500 text-xs">01 · 개발 중</span>
+          <span class="block text-white font-medium mt-0.5">One More Log</span>
+          <span class="block text-neutral-400 text-xs mt-0.5">장작불 시뮬레이션</span>
+        </a></li>
+        <li><a href="#p-digestor" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
+          <span class="text-neutral-500 text-xs">02 · 개발 중</span>
           <span class="block text-white font-medium mt-0.5">Digestor</span>
           <span class="block text-neutral-400 text-xs mt-0.5">2~4인 협동 3D 액션</span>
         </a></li>
         <li><a href="#p-rat" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-xs accent">02 · Stove 출시</span>
+          <span class="text-xs accent">03 · Stove 출시</span>
           <span class="block text-white font-medium mt-0.5">Rat-errible Climb</span>
           <span class="block text-neutral-400 text-xs mt-0.5">2D 등반 플랫포머</span>
         </a></li>
         <li><a href="#p-soul" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-neutral-500 text-xs">03 · 1인 개발</span>
+          <span class="text-neutral-500 text-xs">04 · 1인 개발</span>
           <span class="block text-white font-medium mt-0.5">SoulSync</span>
           <span class="block text-neutral-400 text-xs mt-0.5">2인 협동 로그라이크</span>
         </a></li>
       </ol>
 
+      <!-- One More Log -->
+      <article id="p-oml" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10 mt-10">
+        <figure class="self-start">
+          <div class="w-full aspect-video rounded border border-white/10 flex items-center justify-center text-sm text-neutral-500">화면 정리 중</div>
+          <figcaption class="text-xs text-neutral-500 mt-2">프로토타입 · Unreal Engine 5.8</figcaption>
+        </figure>
+        <div>
+          <div class="flex flex-wrap gap-2 mb-3 text-xs">
+            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">개발 중</span>
+            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">1인 개발 · AI 구현</span>
+          </div>
+          <h3 class="text-2xl text-white">One More Log</h3>
+          <p class="text-sm text-neutral-400 mt-1 mb-4">실시간 장작불 시뮬레이션 · Unreal Engine 5.8 · C++17</p>
+          <p class="text-base leading-relaxed text-neutral-300 mb-6">
+            실제 시간으로 타들어 가는 장작불을 꺼지지 않게 돌보는 불멍 게임입니다.
+            자리를 비운 만큼 불이 정직하게 꺼지고, 장작을 어떻게 쌓느냐에 따라 화력과 타는 속도가 달라집니다.
+          </p>
+          <h4 class="text-sm font-semibold text-white mb-2">맡은 부분</h4>
+          <ul class="role text-[15px] leading-relaxed text-neutral-300 space-y-1 mb-6">
+            <li>게임의 핵심 방향 결정과 기획. 구현은 AI 도구 위주로 진행</li>
+            <li>엔진과 분리한 C++17 결정론 연소 시뮬레이션 코어, 헤드리스 테스트 89건, 100시간 분량 따라잡기 계산 182ms</li>
+            <li>Nanite · Lumen 숲 장면, 불 닿은 쪽부터 숯과 재로 변하는 장작 머티리얼, 불 크기에 비례하는 Niagara 불티</li>
+            <li>장작을 들고 회전해 떨어뜨리면 물리대로 굴러 자리 잡는 자유 배치</li>
+          </ul>
+          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
+            <div><dt class="text-xs text-neutral-500">구현</dt><dd class="text-lg text-white font-semibold">AI 도구 위주</dd></div>
+            <div><dt class="text-xs text-neutral-500">C++ 코드</dt><dd class="text-lg text-white font-semibold">24,245줄</dd></div>
+            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">120개 · 테스트 89건</dd></div>
+            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">45회</dd></div>
+          </dl>
+        </div>
+      </article>
+
       <!-- Digestor -->
-      <article id="p-digestor" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10 mt-10">
+      <article id="p-digestor" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10">
         <figure class="self-start">
           <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10">
           <figcaption class="text-xs text-neutral-500 mt-2">메인 메뉴 · 개발 중(버전 0.4)</figcaption>
@@ -224,7 +262,7 @@
       <dl class="grid sm:grid-cols-2 gap-x-10 gap-y-6 max-w-2xl text-base">
         <div>
           <dt class="text-xs text-neutral-500 mb-1">엔진 · 언어</dt>
-          <dd class="text-neutral-200">Unity 6, C#</dd>
+          <dd class="text-neutral-200">Unity 6, C# · Unreal Engine 5, C++(독학)</dd>
         </div>
         <div>
           <dt class="text-xs text-neutral-500 mb-1">멀티플레이</dt>
@@ -240,7 +278,7 @@
         </div>
         <div class="sm:col-span-2 border-t border-white/10 pt-5">
           <dt class="text-xs text-neutral-500 mb-1">다음에 배우려는 것</dt>
-          <dd class="text-neutral-300">Unreal Engine과 셰이더. 지금은 Unity에서 URP로 화면을 다루는 수준이고, 셰이더를 직접 써서 표현의 폭을 넓히려 합니다.</dd>
+          <dd class="text-neutral-300">셰이더. 지금은 URP와 언리얼 머티리얼로 화면을 다루는 수준이고, 셰이더를 직접 써서 표현의 폭을 넓히려 합니다.</dd>
         </div>
       </dl>
     </section>
