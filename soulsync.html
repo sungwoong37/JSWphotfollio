@@ -8,91 +8,182 @@
 <meta property="og:title" content="SoulSync 개발 과정 · 장성웅">
 <meta property="og:description" content="서버 권위 네트워킹과 파트너 거리 연동 밸런스, 속성 시너지 시스템.">
 <meta property="og:type" content="article">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  :root { --accent: #4a83c2; }
-  html { scroll-behavior: smooth; }
-  body { font-family: Pretendard, "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif; letter-spacing: -0.01em; font-size: 17px; }
-  h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
-  .accent { color: var(--accent); }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  :root {
+    --bg:#100f0e; --surface:#1d1b19; --surface-2:#2a2724;
+    --ink:#f5f2ec; --muted:#b5aea4; --accent:#ff6a1a; --accent-ink:#100f0e;
+    --step-small:clamp(.8125rem,.79rem + .1vw,.875rem);
+    --step-body:clamp(1.0625rem,1rem + .25vw,1.1875rem);
+    --step-lead:clamp(1.25rem,1.1rem + .7vw,1.625rem);
+    --step-head:clamp(2rem,1.3rem + 3.2vw,4rem);
+    --step-display:clamp(1.75rem,.9rem + 3.4vw,4rem);
+    --gutter:clamp(16px,2.4vw,32px);
+    --gap:clamp(120px,13vw,200px);
+    --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  html { scroll-behavior:smooth; }
+  html body {
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Schibsted Grotesk",Pretendard,"Apple SD Gothic Neo",system-ui,sans-serif;
+    font-size:var(--step-body); line-height:1.55; word-break:keep-all;
+  }
+  .display, .head { font-weight:800; letter-spacing:-.03em; line-height:1.02; text-wrap:balance; margin:0; }
+  .display { font-size:var(--step-display); }
+  .head { font-size:var(--step-head); }
+  .prose { max-width:62ch; margin:0; }
+  .note { font-size:var(--step-small); color:var(--muted); margin:0; }
+  .frame { padding-inline:var(--gutter); }
+  .section { margin-top:var(--gap); }
+
+  /* 입장 모션 */
+  .js .rise { opacity:0; transform:translateY(24px); }
+  .js .rise.in { opacity:1; transform:none; transition:opacity .7s var(--ease),transform .7s var(--ease); }
+  @media (prefers-reduced-motion:reduce) {
+    .js .rise { opacity:1; transform:none; }
+    html { scroll-behavior:auto; }
+  }
+
+  /* 내비: 그림 위에서도 글자가 --bg 판 위에 놓인다 */
+  .nav { position:fixed; inset:0 0 auto 0; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:16px; height:56px; padding-inline:var(--gutter); transition:background-color .2s var(--ease); }
+  .nav.solid { background:var(--bg); }
+  .nav-link { background:var(--bg); padding:6px 10px; font-size:var(--step-small); color:var(--ink); white-space:nowrap; transition:color .2s var(--ease),opacity .2s var(--ease); }
+  .nav-link.home { font-weight:800; font-size:var(--step-body); margin-left:-10px; }
+  .nav-link:last-child { margin-right:-10px; }
+  .nav-link:hover { color:var(--accent); }
+  .nav-link:active { opacity:.7; }
+
+  /* 링크·버튼 */
+  a:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .link { color:var(--accent); text-decoration:underline; text-underline-offset:4px; transition:opacity .2s var(--ease); }
+  .link:hover { opacity:.75; }
+  .link:active { opacity:.55; }
+  .btn { display:inline-block; background:var(--accent); color:var(--accent-ink); font-weight:600; padding:14px 22px; transition:transform .2s var(--ease),opacity .2s var(--ease); }
+  .btn:hover { transform:translateY(-2px); }
+  .btn:active { transform:translateY(1px); opacity:.85; }
+
+  /* 첫 화면: 폰은 그림 → 판 → 설명 순서 */
+  .hero { display:grid; grid-template-columns:minmax(0,1fr); }
+  .hero-fig { display:contents; }
+  .hero-img { grid-row:1; grid-column:1; display:block; width:100%; height:58svh; min-height:300px; object-fit:cover; object-position:64% 60%; }
+  .hero-cap { grid-row:1; grid-column:1; align-self:start; justify-self:end; margin-top:60px; background:var(--bg); padding:6px var(--gutter); font-size:var(--step-small); color:var(--muted); }
+  .plate { grid-row:2; grid-column:1; background:var(--bg); padding:24px var(--gutter) 16px; }
+  .plate-meta { display:flex; flex-wrap:wrap; gap:0 20px; margin-top:16px; }
+  @media (min-width:768px) {
+    .hero { grid-template-rows:minmax(0,1fr); }
+    .hero-img, .plate { grid-row:1; grid-column:1; }
+    .hero-img { height:100svh; min-height:680px; max-height:calc(56.25vw + 220px); }
+    .plate { align-self:end; justify-self:start; width:min(760px,78%); padding:40px var(--gutter) 32px; }
+  }
+
+  /* 수치 묶음 */
+  .stats { background:var(--surface); padding-block:clamp(40px,5vw,72px); margin:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:36px var(--gutter); }
+  .stats dd { margin:8px 0 0; font-size:var(--step-small); color:var(--muted); max-width:22ch; }
+  .stat-num { font-size:var(--step-display); font-weight:800; letter-spacing:-.03em; line-height:1.02; }
+  @media (min-width:768px) { .stats { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+
+  /* 큰 제목 + 본문 두 단 */
+  .two { display:grid; grid-template-columns:minmax(0,1fr); gap:32px var(--gutter); }
+  @media (min-width:768px) {
+    .two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .two.flip { grid-template-columns:minmax(0,7fr) minmax(0,5fr); }
+    .sticky-col { position:sticky; top:88px; align-self:start; }
+  }
+  .sticky-col .prose { margin-top:28px; }
+  .features { margin:0; display:grid; gap:44px; }
+  .features dt { font-size:var(--step-lead); font-weight:600; letter-spacing:-.02em; line-height:1.25; margin-bottom:10px; }
+  .features dd { margin:0; max-width:62ch; }
+
+  /* 맺음 */
+  .foot { background:var(--surface); margin-top:var(--gap); padding-block:clamp(56px,7vw,96px) 28px; }
+  .foot-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:32px var(--gutter); }
+  @media (min-width:768px) { .foot-grid { grid-template-columns:minmax(0,7fr) minmax(0,5fr); } }
+  .contacts { display:grid; gap:12px; justify-items:start; }
+  .contacts .btn { margin-top:16px; }
+  .colophon { display:flex; flex-wrap:wrap; gap:4px 24px; margin-top:clamp(48px,6vw,80px); font-size:var(--step-small); color:var(--muted); }
 </style>
 </head>
-<body class="bg-black text-neutral-200 antialiased">
+<body class="antialiased">
 
   <!-- ===== NAV ===== -->
-  <nav id="nav" class="fixed top-0 inset-x-0 z-50 border-b border-transparent transition-colors duration-200">
-    <div class="max-w-4xl mx-auto px-6 flex items-center justify-between h-14">
-      <a href="plety.html" class="text-sm font-bold tracking-wide text-white">장성웅</a>
-      <a href="plety.html" class="text-sm text-neutral-400 hover:text-white transition-colors">← 포트폴리오</a>
-    </div>
+  <nav id="nav" class="nav">
+    <a href="plety.html" class="nav-link home">장성웅</a>
+    <a href="plety.html" class="nav-link">← 포트폴리오</a>
   </nav>
 
   <main>
 
     <!-- ===== HERO ===== -->
-    <section class="max-w-4xl mx-auto px-6 pt-36 pb-16">
-      <p class="text-sm accent mb-6">SoulSync · 개발 과정</p>
-      <h1 class="text-3xl md:text-5xl leading-snug text-white mb-6 max-w-2xl">둘이 함께 몬스터 웨이브를 돌파하는 협동 로그라이크</h1>
-      <p class="text-base leading-relaxed text-neutral-300 max-w-xl mb-4">
-        두 플레이어가 Unity Relay로 연결해 속성(불꽃·얼음)과 무기(검·활)를 조합한 직업으로
-        몬스터 웨이브와 보스를 돌파하는 던전 크롤러입니다. 혼자서도 즐길 수 있는 솔로 모드가 따로 있습니다.
-      </p>
-      <p class="text-sm text-neutral-400 max-w-xl">1인 개발 · Unity 6</p>
-
-      <dl class="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-6 max-w-2xl mt-10 text-sm">
-        <div><dt class="text-2xl text-white font-bold">약 80%</dt><dd class="text-neutral-400 mt-1">직접 작성 (나머지 AI 보조)</dd></div>
-        <div><dt class="text-2xl text-white font-bold">23,150</dt><dd class="text-neutral-400 mt-1">C# 코드 줄 수</dd></div>
-        <div><dt class="text-2xl text-white font-bold">119</dt><dd class="text-neutral-400 mt-1">C# 파일</dd></div>
-        <div><dt class="text-2xl text-white font-bold">77</dt><dd class="text-neutral-400 mt-1">커밋</dd></div>
-      </dl>
-
-      <figure class="mt-12 border border-white/10 rounded overflow-hidden">
-        <img src="assets/soulsync.png" alt="SoulSync 컨셉아트" width="1600" height="900" loading="lazy" class="w-full h-auto block">
-        <figcaption class="text-xs text-neutral-400 px-4 py-3 border-t border-white/10">컨셉아트 · 실제 게임 화면은 정리해서 추가할 예정</figcaption>
+    <section class="hero">
+      <figure class="hero-fig">
+        <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" fetchpriority="high" class="hero-img">
+        <figcaption class="hero-cap">컨셉아트 · 실제 게임 화면은 정리해서 추가할 예정</figcaption>
       </figure>
+      <div class="plate">
+        <h1 class="display">둘이 함께 몬스터 웨이브를 돌파하는 협동 로그라이크</h1>
+        <div class="plate-meta">
+          <p class="note">SoulSync · 개발 과정</p>
+          <p class="note">1인 개발 · Unity 6</p>
+        </div>
+        <p class="prose" style="margin-top:16px">
+          두 플레이어가 Unity Relay로 연결해 속성(불꽃·얼음)과 무기(검·활)를 조합한 직업으로
+          몬스터 웨이브와 보스를 돌파하는 던전 크롤러입니다. 혼자서도 즐길 수 있는 솔로 모드가 따로 있습니다.
+        </p>
+      </div>
     </section>
 
-    <!-- ===== WHAT ===== -->
-    <section class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
-      <h2 class="text-2xl text-white mb-6">무엇을 만들었나</h2>
-      <p class="text-base leading-relaxed text-neutral-300 max-w-2xl mb-10">
-        속성 2종(불꽃·얼음)과 무기 2종(검·활)을 조합해 4가지 직업을 만들 수 있고,
-        몬스터를 처치해 얻은 경험치로 레벨업 시 스킬 카드를 선택하며 성장합니다.
-        일정 웨이브 이후 보스 3종(레이저·록·채찍) 중 하나가 원형 아레나에서 등장합니다.
-      </p>
+    <dl class="stats frame">
+      <div class="rise"><dt class="stat-num">약 80%</dt><dd>직접 작성 (나머지 AI 보조)</dd></div>
+      <div class="rise"><dt class="stat-num">23,150</dt><dd>C# 코드 줄 수</dd></div>
+      <div class="rise"><dt class="stat-num">119</dt><dd>C# 파일</dd></div>
+      <div class="rise"><dt class="stat-num">77</dt><dd>커밋</dd></div>
+    </dl>
 
-      <dl class="max-w-2xl space-y-6">
-        <div>
-          <dt class="text-neutral-100 mb-1">서버 권위 네트워킹</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">모든 게임플레이 클래스가 NetworkBehaviour를 상속합니다. 클라이언트가 쿨다운·소유권을 로컬 검증한 뒤 ServerRpc를 호출하면, 서버가 NetworkVariable에 결과를 기록하고 ClientRpc로 연출만 전파하는 구조로 통일했습니다.</dd>
+    <!-- ===== WHAT ===== -->
+    <section class="section frame two">
+      <div class="sticky-col">
+        <h2 class="head rise">무엇을 만들었나</h2>
+        <p class="prose rise">
+          속성 2종(불꽃·얼음)과 무기 2종(검·활)을 조합해 4가지 직업을 만들 수 있고,
+          몬스터를 처치해 얻은 경험치로 레벨업 시 스킬 카드를 선택하며 성장합니다.
+          일정 웨이브 이후 보스 3종(레이저·록·채찍) 중 하나가 원형 아레나에서 등장합니다.
+        </p>
+      </div>
+
+      <dl class="features">
+        <div class="rise">
+          <dt>서버 권위 네트워킹</dt>
+          <dd>모든 게임플레이 클래스가 NetworkBehaviour를 상속합니다. 클라이언트가 쿨다운·소유권을 로컬 검증한 뒤 ServerRpc를 호출하면, 서버가 NetworkVariable에 결과를 기록하고 ClientRpc로 연출만 전파하는 구조로 통일했습니다.</dd>
         </div>
-        <div>
-          <dt class="text-neutral-100 mb-1">파트너 거리 연동 밸런스</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">PlayerDistanceLink가 두 플레이어 사이 거리를 재서 받는 피해 배율을 조정합니다. 가까이 뭉치면 0.9배로 피해를 줄여주고, 너무 떨어지면 최대 1.5배까지 늘려 협동 플레이를 유도합니다.</dd>
+        <div class="rise">
+          <dt>파트너 거리 연동 밸런스</dt>
+          <dd>PlayerDistanceLink가 두 플레이어 사이 거리를 재서 받는 피해 배율을 조정합니다. 가까이 뭉치면 0.9배로 피해를 줄여주고, 너무 떨어지면 최대 1.5배까지 늘려 협동 플레이를 유도합니다.</dd>
         </div>
-        <div>
-          <dt class="text-neutral-100 mb-1">속성 시너지</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">얼음 공격이 화상(Burn) 상태인 몬스터에 맞으면 두 상태이상을 모두 지우고 추가 피해를 줍니다. 속성을 번갈아 쓰는 협동 플레이에 보상을 주는 설계입니다.</dd>
+        <div class="rise">
+          <dt>속성 시너지</dt>
+          <dd>얼음 공격이 화상(Burn) 상태인 몬스터에 맞으면 두 상태이상을 모두 지우고 추가 피해를 줍니다. 속성을 번갈아 쓰는 협동 플레이에 보상을 주는 설계입니다.</dd>
         </div>
-        <div>
-          <dt class="text-neutral-100 mb-1">부활 시스템</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">사망하면 묘비 상태가 되고, 다른 플레이어가 5초간 근처에 머물면 HP 70%로 부활합니다. 부활할수록 소요 시간이 20%씩 늘어나 무한 부활을 막습니다.</dd>
+        <div class="rise">
+          <dt>부활 시스템</dt>
+          <dd>사망하면 묘비 상태가 되고, 다른 플레이어가 5초간 근처에 머물면 HP 70%로 부활합니다. 부활할수록 소요 시간이 20%씩 늘어나 무한 부활을 막습니다.</dd>
         </div>
-        <div>
-          <dt class="text-neutral-100 mb-1">솔로 모드 분기</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">혼자 플레이할 때는 몬스터 체력·공격력·속도를 각각 0.65배·0.7배·0.85배로 낮추고, 파트너 거리 페널티는 완전히 끕니다. 영구 재화로 성장하는 별도 업그레이드 상점도 있습니다.</dd>
+        <div class="rise">
+          <dt>솔로 모드 분기</dt>
+          <dd>혼자 플레이할 때는 몬스터 체력·공격력·속도를 각각 0.65배·0.7배·0.85배로 낮추고, 파트너 거리 페널티는 완전히 끕니다. 영구 재화로 성장하는 별도 업그레이드 상점도 있습니다.</dd>
         </div>
       </dl>
     </section>
 
     <!-- ===== ROLE ===== -->
-    <section class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
-      <h2 class="text-2xl text-white mb-6">맡은 부분</h2>
-      <p class="text-base leading-relaxed text-neutral-300 max-w-2xl">
+    <section class="section frame two flip">
+      <h2 class="head rise">맡은 부분</h2>
+      <p class="prose rise">
         기획부터 개발까지 혼자 진행한 1인 프로젝트입니다(git 기준 C# 23,150줄, 이 중 약 80% 직접 작성하고 나머지는 AI 도구로 보조). Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이를 구현했습니다.
         보스 패턴 3종, 스킬 시스템(검·활 계열), 몬스터 계층 구조, 솔로 모드 분기를 포함한 게임플레이 루프를 만들었습니다.
       </p>
@@ -101,15 +192,19 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-  <footer id="contact" class="max-w-4xl mx-auto px-6 py-16 border-t border-white/10">
-    <h2 class="text-2xl text-white mb-3">연락처</h2>
-    <p class="text-base text-neutral-300 mb-6 max-w-xl">SoulSync이나 게임 개발 작업에 관해 연락 주세요.</p>
-    <div class="flex flex-wrap gap-x-8 gap-y-2 text-sm mb-10">
-      <span><span class="text-neutral-400">이메일</span> <a href="mailto:j03j03j03@naver.com" class="text-neutral-200 hover:text-white underline underline-offset-4">j03j03j03@naver.com</a></span>
-      <span><span class="text-neutral-400">전화</span> <a href="tel:01086163731" class="text-neutral-200 hover:text-white underline underline-offset-4">010-8616-3731</a></span>
-      <a href="plety.html" class="text-neutral-200 hover:text-white underline underline-offset-4">← 포트폴리오로 돌아가기</a>
+  <footer id="contact" class="foot frame">
+    <div class="foot-grid">
+      <div>
+        <h2 class="head rise">연락처</h2>
+        <p class="prose rise" style="margin-top:20px">SoulSync이나 게임 개발 작업에 관해 연락 주세요.</p>
+      </div>
+      <div class="contacts rise">
+        <span><span class="note">이메일</span> <a href="mailto:j03j03j03@naver.com" class="link">j03j03j03@naver.com</a></span>
+        <span><span class="note">전화</span> <a href="tel:01086163731" class="link">010-8616-3731</a></span>
+        <a href="plety.html" class="btn">← 포트폴리오로 돌아가기</a>
+      </div>
     </div>
-    <div class="text-xs text-neutral-400 border-t border-white/10 pt-6 flex flex-wrap gap-x-6 gap-y-1">
+    <div class="colophon">
       <span>© 2026 장성웅</span>
       <span>Game Developer · Unity &amp; C#</span>
       <span>마지막 업데이트: 2026-09-17</span>
@@ -119,12 +214,28 @@
 <script>
   var nav = document.getElementById("nav");
   function onScroll() {
-    var s = window.scrollY > 20;
-    nav.classList.toggle("bg-black", s);
-    nav.classList.toggle("border-white/10", s);
+    nav.classList.toggle("solid", window.scrollY > 20);
   }
   addEventListener("scroll", onScroll, { passive: true });
   onScroll();
+
+  (function () {
+    var items = [].slice.call(document.querySelectorAll(".rise"));
+    items.forEach(function (el) {
+      var kin = [].filter.call(el.parentNode.children, function (c) { return c.classList.contains("rise"); });
+      el.style.transitionDelay = Math.min(kin.indexOf(el), 4) * 70 + "ms";
+    });
+    if (!("IntersectionObserver" in window)) {
+      items.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    });
+    items.forEach(function (el) { io.observe(el); });
+  })();
 </script>
 </body>
 </html>

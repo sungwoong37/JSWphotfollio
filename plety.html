@@ -8,362 +8,572 @@
 <meta property="og:title" content="장성웅 · 게임 개발자 포트폴리오">
 <meta property="og:description" content="Unity와 C#으로 만든 게임 세 편. Rat-errible Climb은 Stove 출시, 온라인 협동 게임 두 편.">
 <meta property="og:type" content="website">
+<script>document.documentElement.classList.add('js')</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
-<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-  :root { --accent: #4a83c2; }
-  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
-  body { font-family: Pretendard, "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif; letter-spacing: -0.01em; font-size: 17px; word-break: keep-all; }
-  h1, h2, h3 { font-weight: 700; letter-spacing: -0.02em; }
-  .accent { color: var(--accent); }
-  .tag-accent { color: var(--accent); border-color: var(--accent); }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-  .nav-link[aria-current="true"] { color: #fff; }
-  .role li { position: relative; padding-left: 1rem; }
-  .role li::before { content: ""; position: absolute; left: 0; top: 0.72em; width: 0.35rem; height: 1px; background: #737373; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  :root {
+    --bg: #100f0e; --surface: #1d1b19; --surface-2: #2a2724;
+    --ink: #f5f2ec; --muted: #b5aea4; --accent: #ff6a1a; --accent-ink: #100f0e;
+    --step-small: clamp(.8125rem, .79rem + .1vw, .875rem);
+    --step-body: clamp(1.0625rem, 1rem + .25vw, 1.1875rem);
+    --step-lead: clamp(1.25rem, 1.1rem + .7vw, 1.625rem);
+    --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+    --step-display: clamp(2.75rem, 7vw, 7rem);
+    --gutter: clamp(16px, 2.4vw, 32px);
+    --gap: clamp(96px, 13vw, 200px);
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Schibsted Grotesk", Pretendard, "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif; font-size: var(--step-body); line-height: 1.55; letter-spacing: -.01em; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
+  ul, ol { list-style: none; }
+  img, canvas { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-weight: 800; letter-spacing: -.03em; line-height: 1.04; }
+  h2 { font-size: var(--step-display); }
+  h3 { font-size: var(--step-head); }
+  h3 small { display: block; font-size: var(--step-small); font-weight: 400; letter-spacing: -.01em; line-height: 1.5; color: var(--muted); margin-top: .75rem; }
+  h4 { font-size: var(--step-body); font-weight: 800; margin: 0 0 .5rem; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .muted { color: var(--muted); }
+  .small { font-size: var(--step-small); }
+  .pad { padding-inline: var(--gutter); }
+  .link { text-underline-offset: .25em; text-decoration-thickness: 1px; transition: color .2s, opacity .2s; }
+  .link:hover { color: var(--accent); }
+  .link:active { opacity: .7; }
+  .go { display: inline-block; color: var(--accent); font-weight: 600; text-decoration: none; transition: transform .25s var(--ease); }
+  .go:hover { transform: translateX(6px); }
+  .go:active { transform: translateX(2px); }
+  .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 600; font-size: var(--step-small); padding: .7rem 1.2rem; border: 0; cursor: pointer; text-decoration: none; transition: transform .2s var(--ease), background .2s; }
+  .btn:hover { background: var(--ink); }
+  .btn:active { transform: scale(.97); }
+
+  /* 내비게이션 */
+  .nav { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; align-items: center; justify-content: space-between; height: 3.5rem; padding-inline: var(--gutter); transition: background .2s; }
+  .nav.solid { background: var(--bg); }
+  .nav a { text-decoration: none; }
+  .brand { font-weight: 800; }
+  .nav-links { display: flex; align-items: center; gap: clamp(.9rem, 2vw, 1.75rem); font-size: var(--step-small); font-weight: 600; }
+  .nav-link { color: var(--muted); transition: color .2s; }
+  .nav-link:hover, .nav-link[aria-current="true"] { color: var(--ink); }
+
+  /* 첫 화면: 문장 사이로 네 게임이 지나간다 */
+  .hero { position: relative; height: 240svh; }
+  .hero-stage { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; display: grid; grid-template-rows: 3.5rem 1fr; padding: 0 var(--gutter) var(--gutter); --title: clamp(2.5rem, min(6.4vw, 11svh), 6.75rem); }
+  .hero h1 { grid-row: 2; grid-column: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
+  .hero-a, .hero-b { font-size: var(--title); line-height: 1.06; white-space: nowrap; }
+  .hero-a { padding-top: .35rem; }
+  .hero-b { align-self: flex-end; }
+  .hero-foot { grid-row: 2; grid-column: 1; align-self: end; position: relative; z-index: 3; max-width: 34vw; }
+  .hero-foot p { font-size: 1rem; line-height: 1.5; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.1rem; margin-top: 1rem; font-size: var(--step-small); }
+  .reel-window { grid-row: 2; grid-column: 1; position: relative; z-index: 3; overflow: hidden; margin: calc(var(--title) * 1.3) calc(var(--gutter) * -1) 11.5rem; }
+  .reel { position: absolute; left: 50%; top: 50%; width: min(58vw, calc((100svh - 24rem) * 1.78)); margin-left: calc(min(58vw, calc((100svh - 24rem) * 1.78)) / -2); display: grid; gap: 24px; will-change: transform; }
+  .reel img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--surface); }
+
+  /* 한눈에 보기 */
+  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); background: var(--surface); padding: clamp(40px, 5vw, 72px) var(--gutter); }
+  .glance > div { display: flex; flex-direction: column; }
+  .glance dd.big { order: -1; }
+  .glance dt { font-size: var(--step-small); color: var(--muted); }
+  .glance dd.big { font-size: var(--step-head); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; margin: .25rem 0 .4rem; }
+  .glance dd.note { font-size: var(--step-small); color: var(--muted); }
+
+  /* 프로젝트 */
+  .work-head { padding: var(--gap) var(--gutter) clamp(48px, 6vw, 88px); display: grid; grid-template-columns: 42fr 58fr; gap: var(--gutter); align-items: end; }
+  .index a { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 1rem; padding: .55rem 0; text-decoration: none; transition: transform .25s var(--ease); }
+  .index a:hover { transform: translateX(8px); }
+  .index b { font-size: var(--step-lead); font-weight: 800; letter-spacing: -.02em; }
+  .index span { font-size: var(--step-small); color: var(--muted); text-align: right; }
+  .index .out { color: var(--accent); }
+
+  .game { display: grid; grid-template-columns: 42fr 58fr; background: var(--field); }
+  .game-text { padding: clamp(72px, 9vw, 128px) var(--gutter); display: flex; flex-direction: column; gap: 2rem; }
+  .game-pic { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--surface); display: grid; }
+  .game-pic img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
+  .game-pic.pair { grid-template-rows: 62fr 38fr; gap: 8px; background: var(--field); }
+  .game-pic figcaption { position: absolute; left: 0; bottom: 0; background: var(--field); padding: .5rem .9rem .5rem var(--gutter); font-size: var(--step-small); color: var(--ink); }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; font-size: var(--step-small); }
+  .tags span { background: rgba(245, 242, 236, .1); padding: .15rem .6rem; }
+  .tags .out { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .sub { color: var(--muted); font-size: var(--step-small); margin-top: .75rem; }
+  .lead { max-width: 58ch; }
+  .role { display: grid; gap: .5rem; max-width: 58ch; }
+  .role li { position: relative; padding-left: 1.1rem; }
+  .role li::before { content: ""; position: absolute; left: 0; top: .62em; width: .42rem; height: .42rem; background: var(--accent); }
+  .facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 1rem 1.5rem; background: rgba(245, 242, 236, .07); padding: 1.1rem 1.25rem; }
+  .facts dt { font-size: var(--step-small); color: var(--muted); }
+  .facts dd { font-size: var(--step-lead); font-weight: 800; letter-spacing: -.02em; line-height: 1.25; }
+  .facts dd.plain { font-size: var(--step-small); font-weight: 400; letter-spacing: -.01em; padding-top: .3rem; }
+
+  /* 장작불 */
+  .fire { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #0a0705; display: grid; grid-template-rows: 1fr auto; }
+  .fire canvas { width: 100%; height: 100%; min-height: 0; image-rendering: pixelated; }
+  .fire-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; background: var(--field); padding: 1rem var(--gutter); }
+  .fire-state { font-weight: 600; font-size: var(--step-small); }
+  .fire-note { width: 100%; font-size: var(--step-small); color: var(--muted); }
+  .fire-fallback { align-self: center; padding: var(--gutter); color: var(--muted); }
+  .js .fire-fallback { display: none; }
+  html:not(.js) .fire canvas, html:not(.js) #log { display: none; }
+
+  .work-foot { padding: clamp(48px, 6vw, 88px) var(--gutter) 0; max-width: 60ch; font-size: var(--step-small); color: var(--muted); }
+
+  /* 기술 */
+  .skills { padding-top: var(--gap); }
+  .band { background: var(--accent); color: var(--accent-ink); overflow: hidden; padding: clamp(28px, 4vw, 56px) 0; margin-top: clamp(32px, 4vw, 56px); }
+  .track { display: flex; width: max-content; font-size: clamp(3.25rem, 8vw, 7.5rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; white-space: nowrap; animation: slide 48s linear infinite; }
+  .track span { display: flex; align-items: center; }
+  .track span::after { content: ""; width: .28em; height: .28em; border-radius: 50%; background: currentColor; margin: 0 .42em; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+  .skill-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem var(--gutter); padding: clamp(40px, 5vw, 72px) var(--gutter) 0; }
+  .skill-list dt { color: var(--muted); font-size: var(--step-small); margin-bottom: .25rem; }
+  .skill-list .next { grid-column: 1 / -1; max-width: 62ch; }
+
+  /* 소개 */
+  .about { padding: var(--gap) var(--gutter) 0; display: grid; grid-template-columns: 42fr 58fr; gap: clamp(48px, 6vw, 88px) var(--gutter); }
+  .about-side { position: sticky; top: 5rem; align-self: start; }
+  .about-body { display: grid; gap: clamp(56px, 7vw, 96px); }
+  .about-body h3 { font-size: var(--step-lead); letter-spacing: -.02em; margin-bottom: 1rem; }
+  .about-body p { max-width: 58ch; }
+  .steps { list-style: decimal; display: grid; gap: .75rem; margin: 1.25rem 0; padding: 1.5rem 1.5rem 1.5rem 3rem; background: var(--surface); max-width: 62ch; }
+  .steps li::marker { color: var(--accent); font-weight: 800; }
+  .about-two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); }
+
+  /* 연락처 + 마무리 */
+  .close { margin-top: var(--gap); background: var(--accent); color: var(--accent-ink); overflow: hidden; padding: clamp(64px, 8vw, 112px) var(--gutter) 0; }
+  .close-top { display: grid; grid-template-columns: 7fr 5fr; gap: var(--gutter); }
+  .close h2 { margin-bottom: 1.25rem; }
+  .close p { max-width: 44ch; }
+  .close .btn { background: var(--bg); color: var(--ink); margin-top: 1.5rem; }
+  .close .btn:hover { background: var(--ink); color: var(--bg); }
+  .close-links { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem var(--gutter); align-content: start; font-size: var(--step-small); }
+  .close-links h3 { font-size: var(--step-small); font-weight: 600; letter-spacing: -.01em; line-height: 1.5; margin-bottom: .5rem; color: #3b1c08; }
+  .close-links ul { display: grid; gap: .45rem; }
+  .close .link:hover { color: var(--ink); }
+  .legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; font-size: var(--step-small); margin-top: clamp(56px, 8vw, 112px); color: #3b1c08; }
+  .wordmark { font-size: clamp(9rem, 31vw, 34rem); font-weight: 900; line-height: .9; letter-spacing: -.04em; white-space: nowrap; margin: .1em 0 -.2em; font-family: Pretendard, "Apple SD Gothic Neo", sans-serif; }
+
+  /* 입장 모션 */
+  .js .rise { opacity: 0; transform: translateY(24px); }
+  .js .rise.in { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .7s var(--ease); }
+
+  @media (max-width: 899px) {
+    .hero { height: auto; }
+    .hero-stage { position: relative; height: auto; min-height: 0; display: block; padding-top: 4.5rem; overflow: visible; }
+    .hero-a, .hero-b { display: block; font-size: 9.6vw; white-space: normal; }
+    .hero-b { text-align: right; }
+    .reel-window { height: auto; margin: 1rem 0; overflow: hidden; }
+    .hero-stage { --title: 9.6vw; }
+    .hero h1 { display: block; }
+    .reel { position: static; width: 100%; margin: 0; grid-auto-flow: column; grid-auto-columns: 100%; gap: 0; transform: none !important; }
+    .reel img:not(:first-child) { display: none; }
+    .reel img { aspect-ratio: 4 / 3; }
+    .hero-foot { max-width: none; margin-top: 1.25rem; }
+    .hero-foot p { font-size: var(--step-body); }
+    .glance { grid-template-columns: 1fr; gap: 1.5rem; padding-top: 88px; }
+    .glance > div { display: grid; grid-template-columns: minmax(0, 46%) 1fr; column-gap: 1rem; }
+    .glance dd.big { grid-row: 1 / 3; margin: 0; }
+    .work-head, .game, .about, .close-top, .about-two { grid-template-columns: 1fr; }
+    .game-pic, .fire, .about-side { position: relative; top: 0; }
+    .game-pic { order: -1; height: auto; aspect-ratio: 4 / 3; }
+    .game-pic.pair { aspect-ratio: auto; grid-template-rows: auto auto; }
+    .game-pic.pair img { aspect-ratio: 16 / 10; height: auto; }
+    .game-pic.pair { gap: 4px; }
+    .fire { order: -1; height: 86svh; }
+    .game-text { padding-block: 92px 72px; }
+    .facts { grid-template-columns: 1fr 1fr; }
+    .skill-list { grid-template-columns: 1fr 1fr; }
+    .wordmark { font-size: 36vw; }
+  }
+  @media (max-width: 480px) { .nav-links { gap: .8rem; } .nav-links .btn { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .rise { opacity: 1; transform: none; }
+    .track { animation: none; }
+    .hero { height: auto; }
+    .hero-stage { position: relative; }
+  }
 </style>
 </head>
-<body class="bg-black text-neutral-200 antialiased">
+<body>
 
   <!-- ===== NAV ===== -->
-  <nav id="nav" class="fixed top-0 inset-x-0 z-50 border-b border-transparent transition-colors duration-200">
-    <div class="max-w-4xl mx-auto px-6 flex items-center justify-between h-14">
-      <a href="#top" class="text-sm font-bold tracking-wide text-white">장성웅</a>
-      <div class="flex items-center gap-5 sm:gap-6 text-sm">
-        <a href="#work" class="nav-link text-neutral-400 hover:text-white transition-colors">프로젝트</a>
-        <a href="#skills" class="nav-link text-neutral-400 hover:text-white transition-colors">기술</a>
-        <a href="#about" class="nav-link text-neutral-400 hover:text-white transition-colors">소개</a>
-        <a href="#contact" class="nav-link text-neutral-400 hover:text-white transition-colors">연락처</a>
-      </div>
+  <nav id="nav" class="nav">
+    <a href="#top" class="brand">장성웅</a>
+    <div class="nav-links">
+      <a href="#work" class="nav-link">프로젝트</a>
+      <a href="#skills" class="nav-link">기술</a>
+      <a href="#about" class="nav-link">소개</a>
+      <a href="#contact" class="nav-link">연락처</a>
+      <a href="resume.pdf" target="_blank" rel="noopener" class="btn">이력서 PDF</a>
     </div>
   </nav>
 
   <main id="top">
 
     <!-- ===== HERO ===== -->
-    <section class="max-w-4xl mx-auto px-6 pt-36 pb-16">
-      <p class="text-sm accent mb-6">게임 개발자 · 유한대학교 컴퓨터공학과 게임콘텐츠전공</p>
-      <h1 class="text-4xl md:text-5xl leading-snug text-white mb-8 max-w-2xl">
-        게임을 직접 만들고<br>끝까지 완성하는 개발자
-      </h1>
-      <p class="text-[17px] leading-relaxed text-neutral-300 max-w-xl">
-        Unity와 C#으로 게임 세 편을 만들었고, 지금은 언리얼 엔진 5와 C++로 네 번째 게임을 만들고 있습니다. 막히면 증상에서 멈추지 않고
-        원인을 찾을 때까지 파고드는 편입니다.
-      </p>
-
-      <!-- 한눈에 보기 -->
-      <dl class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 border border-white/10 rounded mt-10 overflow-hidden">
-        <div class="bg-black px-4 py-4">
-          <dt class="text-xs text-neutral-500 mb-1">개발한 게임</dt>
-          <dd class="text-2xl text-white font-bold">4편</dd>
-          <dd class="text-xs text-neutral-400 mt-1">출시 1편 · 1인 개발 1편 · 개발 중 2편</dd>
+    <section class="hero" id="hero">
+      <div class="hero-stage">
+        <h1>
+          <span class="hero-a">게임을 직접 만들고</span>
+          <span class="hero-b">끝까지 완성하는 개발자</span>
+        </h1>
+        <div class="reel-window">
+          <div class="reel" id="reel">
+            <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116">
+            <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001">
+            <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931">
+            <img src="assets/digestor/tutorial.jpg" alt="Digestor 튜토리얼 훈련실" width="1600" height="1000">
+          </div>
         </div>
-        <div class="bg-black px-4 py-4">
-          <dt class="text-xs text-neutral-500 mb-1">코드</dt>
-          <dd class="text-2xl text-white font-bold">211,269줄</dd>
-          <dd class="text-xs text-neutral-400 mt-1">C# · C++ 합계 · AI 도구 활용</dd>
+        <div class="hero-foot">
+          <p><b>게임 개발자 · 유한대학교 컴퓨터공학과 게임콘텐츠전공.</b> Unity와 C#으로 게임 세 편을 만들었고, 지금은 언리얼 엔진 5와 C++로 네 번째 게임을 만들고 있습니다. 막히면 증상에서 멈추지 않고 원인을 찾을 때까지 파고드는 편입니다.</p>
+          <div class="hero-actions">
+            <a href="#work" class="btn">프로젝트 보기</a>
+            <a href="#contact" class="link">이력 · 연락처</a>
+          </div>
         </div>
-        <div class="bg-black px-4 py-4">
-          <dt class="text-xs text-neutral-500 mb-1">커밋</dt>
-          <dd class="text-2xl text-white font-bold">1,403회</dd>
-          <dd class="text-xs text-neutral-400 mt-1">네 저장소 합계</dd>
-        </div>
-        <div class="bg-black px-4 py-4">
-          <dt class="text-xs text-neutral-500 mb-1">출시</dt>
-          <dd class="text-2xl text-white font-bold">Stove</dd>
-          <dd class="text-xs text-neutral-400 mt-1">Rat-errible Climb · 스토브 인디</dd>
-        </div>
-      </dl>
-
-      <div class="flex flex-wrap items-center gap-5 mt-10">
-        <a href="#work" class="bg-white text-black text-sm font-medium px-5 py-2.5 rounded hover:bg-neutral-200 transition-colors">프로젝트 보기</a>
-        <a href="resume.pdf" target="_blank" rel="noopener" class="text-sm text-neutral-400 hover:text-white underline underline-offset-4 transition-colors">이력서 PDF</a>
-        <a href="#contact" class="text-sm text-neutral-400 hover:text-white underline underline-offset-4 transition-colors">이력 · 연락처</a>
       </div>
     </section>
 
-    <!-- ===== WORK ===== -->
-    <section id="work" class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
-      <h2 class="text-2xl text-white mb-2">프로젝트</h2>
-      <p class="text-sm text-neutral-500 mb-6">최신순. 각 게임마다 직접 맡은 부분, git 기록으로 집계한 수치, AI 도구를 뺀 직접 작성 비율을 적었습니다.</p>
+    <!-- 한눈에 보기 -->
+    <dl class="glance">
+      <div class="rise">
+        <dt>개발한 게임</dt>
+        <dd class="big">4편</dd>
+        <dd class="note">출시 1편 · 1인 개발 1편 · 개발 중 2편</dd>
+      </div>
+      <div class="rise">
+        <dt>코드</dt>
+        <dd class="big">211,269줄</dd>
+        <dd class="note">C# · C++ 합계 · AI 도구 활용</dd>
+      </div>
+      <div class="rise">
+        <dt>커밋</dt>
+        <dd class="big">1,403회</dd>
+        <dd class="note">네 저장소 합계</dd>
+      </div>
+      <div class="rise">
+        <dt>출시</dt>
+        <dd class="big">Stove</dd>
+        <dd class="note">Rat-errible Climb · 스토브 인디</dd>
+      </div>
+    </dl>
 
-      <!-- 목차 -->
-      <ol class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-sm">
-        <li><a href="#p-oml" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-neutral-500 text-xs">01 · 개발 중</span>
-          <span class="block text-white font-medium mt-0.5">One More Log</span>
-          <span class="block text-neutral-400 text-xs mt-0.5">장작불 시뮬레이션</span>
-        </a></li>
-        <li><a href="#p-digestor" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-neutral-500 text-xs">02 · 개발 중</span>
-          <span class="block text-white font-medium mt-0.5">Digestor</span>
-          <span class="block text-neutral-400 text-xs mt-0.5">2~4인 협동 3D 액션</span>
-        </a></li>
-        <li><a href="#p-rat" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-xs accent">03 · Stove 출시</span>
-          <span class="block text-white font-medium mt-0.5">Rat-errible Climb</span>
-          <span class="block text-neutral-400 text-xs mt-0.5">2D 등반 플랫포머</span>
-        </a></li>
-        <li><a href="#p-soul" class="block border border-white/10 rounded px-4 py-3 hover:border-white/30 transition-colors">
-          <span class="text-neutral-500 text-xs">04 · 1인 개발</span>
-          <span class="block text-white font-medium mt-0.5">SoulSync</span>
-          <span class="block text-neutral-400 text-xs mt-0.5">2인 협동 로그라이크</span>
-        </a></li>
-      </ol>
+    <!-- ===== WORK ===== -->
+    <section id="work">
+      <div class="work-head">
+        <div>
+          <h2 class="rise">프로젝트</h2>
+          <p class="rise lead" style="margin-top:1.25rem">최신순. 각 게임마다 직접 맡은 부분, git 기록으로 집계한 수치, AI 도구를 뺀 직접 작성 비율을 적었습니다.</p>
+        </div>
+        <ol class="index rise">
+          <li><a href="#p-oml"><b>One More Log</b><span>개발 중 · 장작불 시뮬레이션</span></a></li>
+          <li><a href="#p-digestor"><b>Digestor</b><span>개발 중 · 2~4인 협동 3D 액션</span></a></li>
+          <li><a href="#p-rat"><b>Rat-errible Climb</b><span class="out">Stove 출시 · 2D 등반 플랫포머</span></a></li>
+          <li><a href="#p-soul"><b>SoulSync</b><span>1인 개발 · 2인 협동 로그라이크</span></a></li>
+        </ol>
+      </div>
 
       <!-- One More Log -->
-      <article id="p-oml" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10 mt-10">
-        <figure class="self-start">
-          <div class="w-full aspect-video rounded border border-white/10 flex items-center justify-center text-sm text-neutral-500">화면 정리 중</div>
-          <figcaption class="text-xs text-neutral-500 mt-2">프로토타입 · Unreal Engine 5.8</figcaption>
-        </figure>
-        <div>
-          <div class="flex flex-wrap gap-2 mb-3 text-xs">
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">개발 중</span>
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">1인 개발 · AI 구현</span>
+      <article id="p-oml" class="game" style="--field:#1a120c">
+        <div class="game-text">
+          <div class="rise">
+            <h3>One More Log</h3>
+            <p class="sub">실시간 장작불 시뮬레이션 · Unreal Engine 5.8 · C++17</p>
           </div>
-          <h3 class="text-2xl text-white">One More Log</h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">실시간 장작불 시뮬레이션 · Unreal Engine 5.8 · C++17</p>
-          <p class="text-base leading-relaxed text-neutral-300 mb-6">
+          <div class="tags rise">
+            <span>개발 중</span>
+            <span>1인 개발 · AI 구현</span>
+          </div>
+          <p class="lead rise">
             실제 시간으로 타들어 가는 장작불을 꺼지지 않게 돌보는 불멍 게임입니다.
             자리를 비운 만큼 불이 정직하게 꺼지고, 장작을 어떻게 쌓느냐에 따라 화력과 타는 속도가 달라집니다.
           </p>
-          <h4 class="text-sm font-semibold text-white mb-2">맡은 부분</h4>
-          <ul class="role text-[15px] leading-relaxed text-neutral-300 space-y-1 mb-6">
-            <li>게임의 핵심 방향 결정과 기획. 구현은 AI 도구 위주로 진행</li>
-            <li>엔진과 분리한 C++17 결정론 연소 시뮬레이션 코어, 헤드리스 테스트 89건, 100시간 분량 따라잡기 계산 182ms</li>
-            <li>Nanite · Lumen 숲 장면, 불 닿은 쪽부터 숯과 재로 변하는 장작 머티리얼, 불 크기에 비례하는 Niagara 불티</li>
-            <li>장작을 들고 회전해 떨어뜨리면 물리대로 굴러 자리 잡는 자유 배치</li>
-          </ul>
-          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">구현</dt><dd class="text-lg text-white font-semibold">AI 도구 위주</dd></div>
-            <div><dt class="text-xs text-neutral-500">C++ 코드</dt><dd class="text-lg text-white font-semibold">24,245줄</dd></div>
-            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">120개 · 테스트 89건</dd></div>
-            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">45회</dd></div>
+          <div class="rise">
+            <h4>맡은 부분</h4>
+            <ul class="role">
+              <li>게임의 핵심 방향 결정과 기획. 구현은 AI 도구 위주로 진행</li>
+              <li>엔진과 분리한 C++17 결정론 연소 시뮬레이션 코어, 헤드리스 테스트 89건, 100시간 분량 따라잡기 계산 182ms</li>
+              <li>Nanite · Lumen 숲 장면, 불 닿은 쪽부터 숯과 재로 변하는 장작 머티리얼, 불 크기에 비례하는 Niagara 불티</li>
+              <li>장작을 들고 회전해 떨어뜨리면 물리대로 굴러 자리 잡는 자유 배치</li>
+            </ul>
+          </div>
+          <dl class="facts rise">
+            <div><dt>구현</dt><dd>AI 도구 위주</dd></div>
+            <div><dt>C++ 코드</dt><dd>24,245줄</dd></div>
+            <div><dt>파일</dt><dd class="plain">120개 · 테스트 89건</dd></div>
+            <div><dt>커밋</dt><dd>45회</dd></div>
           </dl>
         </div>
+        <figure class="fire">
+          <canvas id="fire" width="96" height="108" role="img" aria-label="장작불 모형. 시간이 지나면 줄어들고 장작을 넣으면 커집니다."></canvas>
+          <p class="fire-fallback">프로토타입 화면은 정리 중입니다.</p>
+          <figcaption class="fire-bar">
+            <span class="fire-state" id="fire-state" aria-live="polite">불을 지피는 중</span>
+            <button type="button" class="btn" id="log">장작 하나 더</button>
+            <span class="fire-note">게임의 규칙을 웹으로 옮긴 작은 모형입니다. 이 페이지를 나가도 불은 계속 줄어듭니다. 프로토타입 · Unreal Engine 5.8</span>
+          </figcaption>
+        </figure>
       </article>
 
       <!-- Digestor -->
-      <article id="p-digestor" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10">
-        <figure class="self-start">
-          <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10">
-          <figcaption class="text-xs text-neutral-500 mt-2">메인 메뉴 · 개발 중(버전 0.4)</figcaption>
-        </figure>
-        <div>
-          <div class="flex flex-wrap gap-2 mb-3 text-xs">
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">개발 중</span>
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">기획·개발 1인 · 모델링 협업 · AI 구현</span>
+      <article id="p-digestor" class="game" style="--field:#23282e">
+        <div class="game-text">
+          <div class="rise">
+            <h3>Digestor <small>(이전 이름 Pill Agents)</small></h3>
+            <p class="sub">2~4인 온라인 협동 3D 액션 · Unity 6 · URP · Netcode + Relay</p>
           </div>
-          <h3 class="text-2xl text-white">Digestor <span class="text-neutral-400 text-base font-normal">(이전 이름 Pill Agents)</span></h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">2~4인 온라인 협동 3D 액션 · Unity 6 · URP · Netcode + Relay</p>
-          <p class="text-base leading-relaxed text-neutral-300 mb-6">
+          <div class="tags rise">
+            <span>개발 중</span>
+            <span>기획·개발 1인 · 모델링 협업 · AI 구현</span>
+          </div>
+          <p class="lead rise">
             위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 탈출구까지 살아남는 게임입니다.
             보스에 붙은 구슬을 때려 그로기 게이지를 채우면 딜 구간이 열리는, 팀이 직접 공격 타이밍을 만드는 구조를 설계했습니다.
           </p>
-          <h4 class="text-sm font-semibold text-white mb-2">맡은 부분</h4>
-          <ul class="role text-[15px] leading-relaxed text-neutral-300 space-y-1 mb-6">
-            <li>기획과 설계를 직접 하고, 구현은 AI 도구 위주로 진행 (Claude Code 설계 검토 · Codex 구현 · 별도 검증)</li>
-            <li>서버 권위 네트워킹 (Netcode for GameObjects + Relay)</li>
-            <li>기생충 보스 3페이즈 상태머신</li>
-            <li>밸런스 수치를 한 파일에서만 관리하는 <span class="text-neutral-100">GameBalanceConfig</span> 구조</li>
-            <li>물리 콜백 대신 SphereCast·OverlapSphere로 매 프레임 검사하는 판정 구조</li>
-          </ul>
-          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">구현</dt><dd class="text-lg text-white font-semibold">AI 도구 위주</dd></div>
-            <div><dt class="text-xs text-neutral-500">C# 코드</dt><dd class="text-lg text-white font-semibold">155,469줄</dd></div>
-            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">525개 · 테스트 689건</dd></div>
-            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">1,217회</dd></div>
+          <div class="rise">
+            <h4>맡은 부분</h4>
+            <ul class="role">
+              <li>기획과 설계를 직접 하고, 구현은 AI 도구 위주로 진행 (Claude Code 설계 검토 · Codex 구현 · 별도 검증)</li>
+              <li>서버 권위 네트워킹 (Netcode for GameObjects + Relay)</li>
+              <li>기생충 보스 3페이즈 상태머신</li>
+              <li>밸런스 수치를 한 파일에서만 관리하는 GameBalanceConfig 구조</li>
+              <li>물리 콜백 대신 SphereCast·OverlapSphere로 매 프레임 검사하는 판정 구조</li>
+            </ul>
+          </div>
+          <dl class="facts rise">
+            <div><dt>구현</dt><dd>AI 도구 위주</dd></div>
+            <div><dt>C# 코드</dt><dd>155,469줄</dd></div>
+            <div><dt>파일</dt><dd class="plain">525개 · 테스트 689건</dd></div>
+            <div><dt>커밋</dt><dd>1,217회</dd></div>
           </dl>
-          <p class="text-sm text-neutral-400 mb-5">
-            <span class="text-neutral-500">개발 방식</span> Claude Code로 설계, Codex로 구현.
-          </p>
-          <a href="digestor.html" class="inline-block text-sm accent hover:underline underline-offset-4">개발 과정 자세히 보기 →</a>
+          <p class="rise small muted">개발 방식: Claude Code로 설계, Codex로 구현.</p>
+          <a href="digestor.html" class="go rise">개발 과정 자세히 보기 →</a>
         </div>
+        <figure class="game-pic pair">
+          <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" loading="lazy">
+          <img src="assets/digestor/tutorial.jpg" alt="Digestor 튜토리얼 훈련실 화면" width="1600" height="1000" loading="lazy" style="object-position:50% 72%">
+          <figcaption>메인 메뉴와 튜토리얼 · 개발 중(버전 0.4)</figcaption>
+        </figure>
       </article>
 
       <!-- Rat-errible Climb -->
-      <article id="p-rat" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10">
-        <figure class="self-start">
-          <img src="assets/onlyuprat.png" alt="Rat-errible Climb 컨셉아트" width="2752" height="1536" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10">
-          <figcaption class="text-xs text-neutral-500 mt-2">컨셉아트</figcaption>
-        </figure>
-        <div>
-          <div class="flex flex-wrap gap-2 mb-3 text-xs">
-            <span class="border tag-accent rounded px-2 py-0.5">Stove Indie 출시</span>
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">3인 팀 · 팀장 · 프로그래밍</span>
+      <article id="p-rat" class="game" style="--field:#10201f">
+        <div class="game-text">
+          <div class="rise">
+            <h3>Rat-errible Climb <small>(쥐독한 등반)</small></h3>
+            <p class="sub">2D 등반 플랫포머 · Unity 6 · URP</p>
           </div>
-          <h3 class="text-2xl text-white">Rat-errible Climb <span class="text-neutral-400 text-base font-normal">(쥐독한 등반)</span></h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">2D 등반 플랫포머 · Unity 6 · URP</p>
-          <p class="text-base leading-relaxed text-neutral-300 mb-6">
+          <div class="tags rise">
+            <span class="out">Stove Indie 출시</span>
+            <span>3인 팀 · 팀장 · 프로그래밍</span>
+          </div>
+          <p class="lead rise">
             하수구 속 쥐가 프로펠러·가시·고양이 발 같은 함정을 피해 꼭대기까지 오르는 게임입니다.
           </p>
-          <h4 class="text-sm font-semibold text-white mb-2">맡은 부분</h4>
-          <ul class="role text-[15px] leading-relaxed text-neutral-300 space-y-1 mb-6">
-            <li>함정 시스템 설계 — <span class="text-neutral-100">TrapBase</span>를 상속해 Warning → Active → Cooldown 상태를 도는 구조</li>
-            <li>Cinemachine 카메라 전환</li>
-            <li>사다리·수중·끈적한 벽 같은 상호작용 구현</li>
-            <li>함정·장애물 스크립트 30개 구현</li>
-            <li>팀장으로서 팀원 결과물을 검토하고 수정 방향을 구체적으로 피드백</li>
-          </ul>
-          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">직접 작성</dt><dd class="text-lg text-white font-semibold">약 60%</dd></div>
-            <div><dt class="text-xs text-neutral-500">C# 코드</dt><dd class="text-lg text-white font-semibold">8,405줄</dd></div>
-            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">66개</dd></div>
-            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">64회 / 팀 89회</dd></div>
+          <div class="rise">
+            <h4>맡은 부분</h4>
+            <ul class="role">
+              <li>함정 시스템 설계 — TrapBase를 상속해 Warning → Active → Cooldown 상태를 도는 구조</li>
+              <li>Cinemachine 카메라 전환</li>
+              <li>사다리·수중·끈적한 벽 같은 상호작용 구현</li>
+              <li>함정·장애물 스크립트 30개 구현</li>
+              <li>팀장으로서 팀원 결과물을 검토하고 수정 방향을 구체적으로 피드백</li>
+            </ul>
+          </div>
+          <dl class="facts rise">
+            <div><dt>직접 작성</dt><dd>약 60%</dd></div>
+            <div><dt>C# 코드</dt><dd>8,405줄</dd></div>
+            <div><dt>파일</dt><dd class="plain">66개</dd></div>
+            <div><dt>커밋</dt><dd>64회 / 팀 89회</dd></div>
           </dl>
-          <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="inline-block text-sm accent hover:underline underline-offset-4">Stove 스토어 페이지 →</a>
+          <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="go rise">Stove 스토어 페이지 →</a>
         </div>
+        <figure class="game-pic">
+          <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" loading="lazy" style="object-position:64% 50%">
+          <figcaption>컨셉아트</figcaption>
+        </figure>
       </article>
 
       <!-- SoulSync -->
-      <article id="p-soul" class="grid md:grid-cols-[17rem_1fr] gap-x-10 gap-y-6 py-12 border-t border-white/10">
-        <figure class="self-start">
-          <img src="assets/soulsync.png" alt="SoulSync 컨셉아트" width="1690" height="931" loading="lazy" class="w-full aspect-video object-cover rounded border border-white/10">
-          <figcaption class="text-xs text-neutral-500 mt-2">컨셉아트</figcaption>
-        </figure>
-        <div>
-          <div class="flex flex-wrap gap-2 mb-3 text-xs">
-            <span class="border border-white/20 text-neutral-300 rounded px-2 py-0.5">1인 개발</span>
+      <article id="p-soul" class="game" style="--field:#17141c">
+        <div class="game-text">
+          <div class="rise">
+            <h3>SoulSync</h3>
+            <p class="sub">2인 온라인 협동 로그라이크 · Unity 6 · Netcode + Relay</p>
           </div>
-          <h3 class="text-2xl text-white">SoulSync</h3>
-          <p class="text-sm text-neutral-400 mt-1 mb-4">2인 온라인 협동 로그라이크 · Unity 6 · Netcode + Relay</p>
-          <p class="text-base leading-relaxed text-neutral-300 mb-6">
+          <div class="tags rise">
+            <span>1인 개발</span>
+          </div>
+          <p class="lead rise">
             두 사람이 Unity Relay로 연결해 몬스터 웨이브를 돌파하는 던전 크롤러입니다.
             속성(불꽃·얼음)과 무기(검·활)를 조합해 직업을 만들고, 레벨업 스킬·상점·가챠로 성장합니다.
           </p>
-          <h4 class="text-sm font-semibold text-white mb-2">맡은 부분</h4>
-          <ul class="role text-[15px] leading-relaxed text-neutral-300 space-y-1 mb-6">
-            <li>Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이 구현</li>
-            <li>보스 3종 패턴, 검·활 계열 스킬 시스템</li>
-            <li>솔로 모드 분기를 포함한 게임플레이 루프</li>
-            <li>기획부터 개발까지 혼자 진행한 1인 프로젝트</li>
-          </ul>
-          <dl class="grid grid-cols-2 sm:grid-cols-4 gap-y-3 gap-x-4 text-sm border-t border-white/10 pt-4 mb-5">
-            <div><dt class="text-xs text-neutral-500">직접 작성</dt><dd class="text-lg text-white font-semibold">약 80%</dd></div>
-            <div><dt class="text-xs text-neutral-500">C# 코드</dt><dd class="text-lg text-white font-semibold">23,150줄</dd></div>
-            <div><dt class="text-xs text-neutral-500">파일</dt><dd class="text-neutral-300 pt-1">119개</dd></div>
-            <div><dt class="text-xs text-neutral-500">커밋</dt><dd class="text-lg text-white font-semibold">77회</dd></div>
+          <div class="rise">
+            <h4>맡은 부분</h4>
+            <ul class="role">
+              <li>Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이 구현</li>
+              <li>보스 3종 패턴, 검·활 계열 스킬 시스템</li>
+              <li>솔로 모드 분기를 포함한 게임플레이 루프</li>
+              <li>기획부터 개발까지 혼자 진행한 1인 프로젝트</li>
+            </ul>
+          </div>
+          <dl class="facts rise">
+            <div><dt>직접 작성</dt><dd>약 80%</dd></div>
+            <div><dt>C# 코드</dt><dd>23,150줄</dd></div>
+            <div><dt>파일</dt><dd class="plain">119개</dd></div>
+            <div><dt>커밋</dt><dd>77회</dd></div>
           </dl>
-          <a href="soulsync.html" class="inline-block text-sm accent hover:underline underline-offset-4">개발 과정 자세히 보기 →</a>
+          <a href="soulsync.html" class="go rise">개발 과정 자세히 보기 →</a>
         </div>
+        <figure class="game-pic">
+          <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" loading="lazy" style="object-position:62% 50%">
+          <figcaption>컨셉아트</figcaption>
+        </figure>
       </article>
 
-      <p class="text-sm text-neutral-500 pt-8 border-t border-white/10">
+      <p class="work-foot">
         코드·커밋 수치는 각 게임의 git 저장소 기준입니다(2026-10-15 집계). 외부 에셋 코드는 뺐습니다. 직접 작성 비율은 AI 도구로 보조한 부분을 뺀 본인 추정치입니다.<br>
         실제 플레이 화면은 정리해서 추가할 예정이고, 컨셉아트로 표시된 이미지는 실제 게임 화면이 아닙니다.
       </p>
     </section>
 
     <!-- ===== SKILLS ===== -->
-    <section id="skills" class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
-      <h2 class="text-2xl text-white mb-8">기술</h2>
-      <dl class="grid sm:grid-cols-2 gap-x-10 gap-y-6 max-w-2xl text-base">
-        <div>
-          <dt class="text-xs text-neutral-500 mb-1">엔진 · 언어</dt>
-          <dd class="text-neutral-200">Unity 6, C# · Unreal Engine 5, C++(독학)</dd>
+    <section id="skills" class="skills">
+      <h2 class="pad rise">기술</h2>
+      <div class="band" aria-hidden="true">
+        <div class="track">
+          <span>Unity 6</span><span>C#</span><span>Unreal Engine 5</span><span>C++</span><span>Netcode for GameObjects</span><span>Unity Relay</span><span>URP</span><span>Cinemachine</span><span>Claude Code</span><span>Codex</span>
+          <span>Unity 6</span><span>C#</span><span>Unreal Engine 5</span><span>C++</span><span>Netcode for GameObjects</span><span>Unity Relay</span><span>URP</span><span>Cinemachine</span><span>Claude Code</span><span>Codex</span>
         </div>
-        <div>
-          <dt class="text-xs text-neutral-500 mb-1">멀티플레이</dt>
-          <dd class="text-neutral-200">Netcode for GameObjects, Unity Relay <span class="text-neutral-500 text-sm">· 서버 권위 구조</span></dd>
+      </div>
+      <dl class="skill-list">
+        <div class="rise">
+          <dt>엔진 · 언어</dt>
+          <dd>Unity 6, C# · Unreal Engine 5, C++(독학)</dd>
         </div>
-        <div>
-          <dt class="text-xs text-neutral-500 mb-1">렌더링 · 카메라</dt>
-          <dd class="text-neutral-200">URP, Cinemachine</dd>
+        <div class="rise">
+          <dt>멀티플레이</dt>
+          <dd>Netcode for GameObjects, Unity Relay · 서버 권위 구조</dd>
         </div>
-        <div>
-          <dt class="text-xs text-neutral-500 mb-1">AI 협업 도구</dt>
-          <dd class="text-neutral-200">Claude Code, Codex</dd>
+        <div class="rise">
+          <dt>렌더링 · 카메라</dt>
+          <dd>URP, Cinemachine</dd>
         </div>
-        <div class="sm:col-span-2 border-t border-white/10 pt-5">
-          <dt class="text-xs text-neutral-500 mb-1">다음에 배우려는 것</dt>
-          <dd class="text-neutral-300">셰이더. 지금은 URP와 언리얼 머티리얼로 화면을 다루는 수준이고, 셰이더를 직접 써서 표현의 폭을 넓히려 합니다.</dd>
+        <div class="rise">
+          <dt>AI 협업 도구</dt>
+          <dd>Claude Code, Codex</dd>
+        </div>
+        <div class="next rise">
+          <dt>다음에 배우려는 것</dt>
+          <dd>셰이더. 지금은 URP와 언리얼 머티리얼로 화면을 다루는 수준이고, 셰이더를 직접 써서 표현의 폭을 넓히려 합니다.</dd>
         </div>
       </dl>
     </section>
 
     <!-- ===== ABOUT ===== -->
-    <section id="about" class="max-w-4xl mx-auto px-6 py-14 border-t border-white/10">
-      <h2 class="text-2xl text-white mb-8">소개</h2>
-      <dl class="max-w-2xl space-y-10">
+    <section id="about" class="about">
+      <div class="about-side">
+        <h2 class="rise">소개</h2>
+      </div>
+      <div class="about-body">
         <div>
-          <dt class="text-white font-semibold mb-2">가장 오래 붙잡았던 문제</dt>
-          <dd class="text-base leading-relaxed text-neutral-300 space-y-3">
-            <p>적 AI가 의도대로 움직이지 않던 문제를 로그와 공식 문서를 오가며 원인을 찾을 때까지 파고들어 고친 적이 있습니다.</p>
-            <ol class="text-[15px] text-neutral-300 border-l border-white/15 pl-4 space-y-2">
-              <li><span class="text-neutral-500 mr-2">1</span>상태머신의 전이 조건을 하나씩 로그로 찍어 실제로 어느 상태에서 멈추는지부터 확인</li>
-              <li><span class="text-neutral-500 mr-2">2</span>조건을 바로 고치지 않고, Unity 공식 문서에서 해당 컴포넌트의 이벤트 호출 시점을 다시 확인</li>
-              <li><span class="text-neutral-500 mr-2">3</span>제가 가정한 호출 순서가 실제와 다르다는 걸 확인한 뒤에 조건문 수정</li>
-            </ol>
-            <p>증상만 보고 코드를 바꿨다면 같은 문제가 다른 상태에서 다시 나왔을 것입니다.</p>
-          </dd>
+          <h3 class="rise">가장 오래 붙잡았던 문제</h3>
+          <p class="rise">적 AI가 의도대로 움직이지 않던 문제를 로그와 공식 문서를 오가며 원인을 찾을 때까지 파고들어 고친 적이 있습니다.</p>
+          <ol class="steps rise">
+            <li>상태머신의 전이 조건을 하나씩 로그로 찍어 실제로 어느 상태에서 멈추는지부터 확인</li>
+            <li>조건을 바로 고치지 않고, Unity 공식 문서에서 해당 컴포넌트의 이벤트 호출 시점을 다시 확인</li>
+            <li>제가 가정한 호출 순서가 실제와 다르다는 걸 확인한 뒤에 조건문 수정</li>
+          </ol>
+          <p class="rise">증상만 보고 코드를 바꿨다면 같은 문제가 다른 상태에서 다시 나왔을 것입니다.</p>
         </div>
-        <div>
-          <dt class="text-white font-semibold mb-2">팀에서의 역할</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">
-            주로 개발을 맡습니다. 말수는 적은 편이지만 맡은 부분은 끝까지 책임지고,
-            팀원과 일정·구조를 맞추는 데 문제는 없었습니다.
-          </dd>
+        <div class="about-two">
+          <div class="rise">
+            <h3>팀에서의 역할</h3>
+            <p>주로 개발을 맡습니다. 말수는 적은 편이지만 맡은 부분은 끝까지 책임지고, 팀원과 일정·구조를 맞추는 데 문제는 없었습니다.</p>
+          </div>
+          <div class="rise">
+            <h3>플레이해 본 게임</h3>
+            <p>Xbox·Steam 통합 351개 게임, 7,792.9시간입니다.</p>
+            <a href="game-history.html" class="go" style="margin-top:.75rem">플레이 이력 자세히 보기 →</a>
+          </div>
         </div>
-        <div>
-          <dt class="text-white font-semibold mb-2">플레이해 본 게임</dt>
-          <dd class="text-base leading-relaxed text-neutral-300">
-            Xbox·Steam 통합 351개 게임, 7,792.9시간입니다.
-            <a href="game-history.html" class="accent hover:underline underline-offset-4 whitespace-nowrap">플레이 이력 자세히 보기 →</a>
-          </dd>
-        </div>
-      </dl>
+      </div>
     </section>
 
   </main>
 
   <!-- ===== FOOTER / CONTACT ===== -->
-  <footer id="contact" class="max-w-4xl mx-auto px-6 py-16 border-t border-white/10">
-    <h2 class="text-2xl text-white mb-3">연락처</h2>
-    <p class="text-base text-neutral-400 mb-8 max-w-xl">
-      이력서와 자기소개서는 PDF로 받을 수 있습니다. 프로젝트 자료가 더 필요하면 연락 주세요.
-    </p>
-    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-6 max-w-2xl mb-12">
+  <footer id="contact" class="close">
+    <div class="close-top">
       <div>
-        <h3 class="text-xs text-neutral-500 mb-2 font-normal">연락</h3>
-        <ul class="text-sm space-y-2">
-          <li><span class="text-neutral-500 mr-2">이메일</span><a href="mailto:j03j03j03@naver.com" class="text-neutral-200 hover:text-white underline underline-offset-4">j03j03j03@naver.com</a></li>
-          <li><span class="text-neutral-500 mr-2">전화</span><a href="tel:01086163731" class="text-neutral-200 hover:text-white underline underline-offset-4">010-8616-3731</a></li>
-        </ul>
+        <h2 class="rise">연락처</h2>
+        <p class="rise">이력서와 자기소개서는 PDF로 받을 수 있습니다. 프로젝트 자료가 더 필요하면 연락 주세요.</p>
+        <a href="mailto:j03j03j03@naver.com" class="btn rise">메일 보내기</a>
       </div>
-      <div>
-        <h3 class="text-xs text-neutral-500 mb-2 font-normal">더 보기</h3>
-        <ul class="text-sm space-y-2">
-          <li><a href="resume.pdf" target="_blank" rel="noopener" class="text-neutral-200 hover:text-white underline underline-offset-4">이력서 · 자기소개서 (PDF)</a></li>
-          <li><a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="text-neutral-200 hover:text-white underline underline-offset-4">Rat-errible Climb · Stove Indie</a></li>
-          <li><a href="digestor.html" class="text-neutral-200 hover:text-white underline underline-offset-4">Digestor 개발 과정</a></li>
-          <li><a href="soulsync.html" class="text-neutral-200 hover:text-white underline underline-offset-4">SoulSync 개발 과정</a></li>
-          <li><a href="game-history.html" class="text-neutral-200 hover:text-white underline underline-offset-4">게임 플레이 이력</a></li>
-        </ul>
+      <div class="close-links">
+        <div>
+          <h3>연락</h3>
+          <ul>
+            <li>이메일 <a href="mailto:j03j03j03@naver.com" class="link">j03j03j03@naver.com</a></li>
+            <li>전화 <a href="tel:01086163731" class="link">010-8616-3731</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>더 보기</h3>
+          <ul>
+            <li><a href="resume.pdf" target="_blank" rel="noopener" class="link">이력서 · 자기소개서 (PDF)</a></li>
+            <li><a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="link">Rat-errible Climb · Stove Indie</a></li>
+            <li><a href="digestor.html" class="link">Digestor 개발 과정</a></li>
+            <li><a href="soulsync.html" class="link">SoulSync 개발 과정</a></li>
+            <li><a href="game-history.html" class="link">게임 플레이 이력</a></li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="text-xs text-neutral-500 border-t border-white/10 pt-6 flex flex-wrap gap-x-6 gap-y-1">
+    <div class="legal">
       <span>© 2026 장성웅</span>
       <span>Game Developer · Unity &amp; C#</span>
-      <span>마지막 업데이트: 2026-10-15</span>
+      <span>마지막 업데이트: 2026-10-31</span>
     </div>
+    <div class="wordmark" aria-hidden="true">장성웅</div>
   </footer>
 
 <script>
   // 스크롤 시 상단 내비게이션 배경
   var nav = document.getElementById("nav");
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var hero = document.getElementById("hero");
+  var reel = document.getElementById("reel");
+  var ticking = false;
   function onScroll() {
-    var s = window.scrollY > 20;
-    nav.classList.toggle("bg-black", s);
-    nav.classList.toggle("border-white/10", s);
+    nav.classList.toggle("solid", window.scrollY > 20);
+    // 첫 화면 필름을 스크롤에 맞춰 한 칸씩 올림
+    if (reduced || innerWidth < 900) { reel.style.transform = ""; return; }
+    var run = hero.offsetHeight - innerHeight;
+    var p = Math.min(1, Math.max(0, window.scrollY / run));
+    var frame = reel.firstElementChild.offsetHeight + 24;
+    reel.style.transform = "translateY(" + (-frame / 2 + 12 - p * frame * 3) + "px)";
   }
-  addEventListener("scroll", onScroll, { passive: true });
+  function queue() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; onScroll(); });
+  }
+  addEventListener("scroll", queue, { passive: true });
+  addEventListener("resize", queue);
+  addEventListener("load", onScroll);
   onScroll();
 
   // 현재 보고 있는 섹션을 내비게이션에 표시
   var links = document.querySelectorAll(".nav-link");
+  var rises = document.querySelectorAll(".rise");
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -376,7 +586,136 @@
     ["work", "skills", "about", "contact"].forEach(function (id) {
       io.observe(document.getElementById(id));
     });
+
+    // 섹션 요소가 차례로 올라오는 입장 모션
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var sibs = Array.prototype.filter.call(e.target.parentNode.children, function (c) { return c.classList.contains("rise"); });
+        e.target.style.transitionDelay = Math.min(sibs.indexOf(e.target), 4) * 70 + "ms";
+        e.target.classList.add("in");
+        rio.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    rises.forEach(function (el) { rio.observe(el); });
+  } else {
+    rises.forEach(function (el) { el.classList.add("in"); });
   }
+
+  // One More Log: 실제 시간으로 타는 장작불. 자리를 비운 시간만큼 정직하게 줄어든다.
+  (function () {
+    var canvas = document.getElementById("fire");
+    var ctx = canvas.getContext("2d");
+    var state = document.getElementById("fire-state");
+    var W = canvas.width, H = canvas.height;
+    var heat = new Uint8Array(W * H);
+    var img = ctx.createImageData(W, H);
+    var LOG_MS = 12 * 60 * 1000;   // 장작 한 개가 타는 시간
+    var MAX_LOGS = 5;
+    var KEY = "onemorelog-fire";
+    var logs = 3, last = Date.now(), away = 0;
+
+    try {
+      var saved = JSON.parse(localStorage.getItem(KEY));
+      if (saved && saved.t) {
+        away = last - saved.t;
+        logs = Math.max(0, saved.logs - away / LOG_MS);
+      }
+    } catch (e) {}
+    function save() {
+      try { localStorage.setItem(KEY, JSON.stringify({ logs: logs, t: Date.now() })); } catch (e) {}
+    }
+
+    function palette(v) {
+      // 재 → 숯불 → 주황 → 노랑 → 흰빛, 단계가 보이도록 끊어서
+      if (v < 32) return [10, 7, 5];
+      if (v < 72) return [58, 16, 8];
+      if (v < 112) return [128, 34, 8];
+      if (v < 152) return [214, 72, 12];
+      if (v < 196) return [255, 124, 26];
+      if (v < 232) return [255, 188, 56];
+      return [255, 236, 170];
+    }
+    function minutes(ms) {
+      var m = Math.round(ms / 60000);
+      if (m < 60) return m + "분";
+      return Math.floor(m / 60) + "시간 " + (m % 60) + "분";
+    }
+    function label() {
+      if (logs <= 0) return "불이 꺼졌습니다. 숯만 남았습니다.";
+      var left = "남은 시간 " + (minutes(logs * LOG_MS) === "0분" ? "1분 미만" : minutes(logs * LOG_MS));
+      if (away > 60000) return "자리를 비운 " + minutes(away) + " 동안 불이 줄었습니다. " + left;
+      return left;
+    }
+    function step() {
+      var source = Math.min(1, logs / 3);
+      for (var x = 0; x < W; x++) {
+        var edge = Math.min(x, W - 1 - x) / (W * .22);
+        var v = source * Math.min(1, edge) * (200 + Math.random() * 55);
+        heat[(H - 1) * W + x] = logs > 0 ? v : (Math.random() < .06 ? 90 : 20);
+      }
+      var cool = 3 + (1 - source) * 5;
+      for (var y = 1; y < H; y++) {
+        for (var i = 0; i < W; i++) {
+          var from = y * W + i;
+          var drift = (Math.random() * 3 | 0) - 1;
+          var to = (y - 1) * W + Math.min(W - 1, Math.max(0, i + drift));
+          heat[to] = Math.max(0, heat[from] - Math.random() * cool);
+        }
+      }
+    }
+    function draw() {
+      for (var i = 0; i < heat.length; i++) {
+        var c = palette(heat[i]);
+        img.data[i * 4] = c[0]; img.data[i * 4 + 1] = c[1]; img.data[i * 4 + 2] = c[2]; img.data[i * 4 + 3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+      // 쌓인 장작
+      var n = Math.ceil(logs);
+      for (var l = 0; l < n; l++) {
+        var row = l % 2, y = H - 5 - (Math.floor(l / 2) + 1) * 5;
+        ctx.fillStyle = logs > 0 ? "#2b1a10" : "#17110d";
+        ctx.fillRect(16 + row * 32 + (l > 3 ? 8 : 0), y, 32, 4);
+        ctx.fillStyle = "#d6480c";
+        ctx.fillRect(16 + row * 32 + (l > 3 ? 8 : 0), y + 3, 32, 1);
+      }
+    }
+    function tick(now) {
+      var t = Date.now();
+      logs = Math.max(0, logs - (t - last) / LOG_MS);
+      last = t;
+      step(); draw();
+      if (visible && !reduced) requestAnimationFrame(tick);
+    }
+
+    var seconds = 0;
+    setInterval(function () {
+      if (reduced) { logs = Math.max(0, logs - (Date.now() - last) / LOG_MS); last = Date.now(); }
+      state.textContent = label();
+      if (++seconds % 15 === 0) save();
+    }, 1000);
+
+    document.getElementById("log").addEventListener("click", function () {
+      logs = Math.min(MAX_LOGS, logs + 1);
+      away = 0;
+      state.textContent = label();
+      save();
+      if (reduced) { for (var i = 0; i < H * 2; i++) step(); draw(); }
+    });
+    addEventListener("pagehide", save);
+
+    var visible = false;
+    for (var i = 0; i < H * 2; i++) step();
+    draw();
+    state.textContent = label();
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        var was = visible;
+        visible = es[0].isIntersecting;
+        if (visible && !was && !reduced) requestAnimationFrame(tick);
+      }).observe(canvas);
+    } else if (!reduced) { visible = true; requestAnimationFrame(tick); }
+  })();
 </script>
 </body>
 </html>
