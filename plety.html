@@ -169,6 +169,15 @@ a:active { color: var(--color-ink-2); }
 .plate-grid { --plate-ratio: 16 / 10; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rule-box); padding: var(--rule-box); background: var(--color-rule); }
 .plate-grid > .plate { border: 0; }
 
+/* 모션: html.js 일 때만 숨겼다가 화면에 들어오면 드러낸다. 스크립트가 없거나 움직임 줄이기면 처음부터 보인다. transform·opacity 만 쓴다 */
+h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule-box); margin-top: var(--space-sm); background: currentColor; transform-origin: left center; }
+.js h2.rule-in::after { transform: scaleX(0); transition: transform 0.9s var(--ease-out) 0.15s; }
+.js h2.rule-in.is-in::after { transform: scaleX(1); }
+.js .rise { opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); transition-delay: var(--rise-delay, 0ms); }
+.js .rise.is-in { opacity: 1; transform: none; }
+.plate { transition: transform 0.35s var(--ease-out); }
+@media (hover: hover) { .plate:hover { transform: translateY(-4px); } }
+
 @media (max-width: 60rem) {
   :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
   .g12 > * { grid-column: 1 / -1; }
@@ -193,6 +202,7 @@ a:active { color: var(--color-ink-2); }
 @media (prefers-reduced-motion: reduce) {
   *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   .btn:active, .nav__menu > summary:active { transform: none; }
+  .js .rise, .js h2.rule-in::after, .plate:hover { opacity: 1; transform: none; }
 }
 /* == /SHARED == */
 /* 메인 페이지 전용 규칙 (plety). 토큰은 SHARED 의 :root 만 쓴다. */
@@ -262,6 +272,11 @@ html:not(.js) .home-fire > canvas, html:not(.js) .home-fire__controls { display:
 .home-states li + li::after { content: ""; position: absolute; right: 100%; top: 50%; width: 10px; height: 12px; background: var(--color-rule); clip-path: polygon(0 0, 100% 50%, 0 100%); transform: translate(0, -50%); }
 .home-states ol::after { content: ""; position: absolute; left: 16.66%; right: 16.66%; bottom: var(--space-sm); height: var(--space-lg); border: var(--rule-bar) solid var(--color-rule); border-top: 0; }
 .home-states ol::before { content: ""; position: absolute; left: calc(16.66% - 6px); bottom: calc(var(--space-sm) + var(--space-lg) - 2px); width: 12px; height: 10px; background: var(--color-rule); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.home-states li { transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out); }
+.home-states li.is-on { background: var(--color-ink); color: var(--color-paper); }
+.home-states__ctl { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-sm); }
+.home-states__ctl .btn { min-height: var(--control-min); padding-top: var(--space-2xs); padding-bottom: var(--space-2xs); font-size: var(--text-sm); }
+html:not(.js) .home-states__ctl .btn { display: none; }
 .home-states figcaption { padding-top: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
 
 .home-work__foot { margin-top: var(--space-xl); font-size: var(--text-sm); color: var(--color-muted); max-width: 72ch; }
@@ -549,7 +564,7 @@ html:not(.js) .home-fire > canvas, html:not(.js) .home-fire__controls { display:
                 <li lang="en">Active</li>
                 <li lang="en">Cooldown</li>
               </ol>
-              <figcaption><code>TrapBase</code></figcaption>
+              <figcaption class="home-states__ctl"><code>TrapBase</code><button type="button" class="btn" id="states-toggle" aria-pressed="false">순환 멈추기</button></figcaption>
             </figure>
             <figure class="plate">
               <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" loading="lazy" style="object-position:64% 50%">
@@ -872,6 +887,59 @@ html:not(.js) .home-fire > canvas, html:not(.js) .home-fire__controls { display:
         if (visible) kick();
       }).observe(canvas);
     } else { visible = true; kick(); }
+  })();
+</script>
+<script>
+  // TrapBase 전이도: 화면에 보이는 동안 Warning → Active → Cooldown 을 차례로 밝힌다
+  (function () {
+    var fig = document.querySelector(".home-states");
+    var btn = document.getElementById("states-toggle");
+    if (!fig || !btn) return;
+    var cells = fig.querySelectorAll("li");
+    var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var i = 0, timer = null, seen = false, stopped = reduced, held = false;
+    function show() { cells.forEach(function (c, k) { c.classList.toggle("is-on", k === i); }); }
+    function run() {
+      var go = seen && !stopped && !held && !document.hidden;
+      if (go && !timer) timer = setInterval(function () { i = (i + 1) % cells.length; show(); }, 1400);
+      if (!go && timer) { clearInterval(timer); timer = null; }
+    }
+    show();
+    if (reduced) { btn.hidden = true; return; }
+    btn.addEventListener("click", function () {
+      stopped = !stopped;
+      btn.setAttribute("aria-pressed", stopped ? "true" : "false");
+      btn.textContent = stopped ? "순환 다시 보기" : "순환 멈추기";
+      run();
+    });
+    fig.addEventListener("mouseenter", function () { held = true; run(); });
+    fig.addEventListener("mouseleave", function () { held = false; run(); });
+    document.addEventListener("visibilitychange", run);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { seen = es[0].isIntersecting; run(); }).observe(fig);
+    } else { seen = true; run(); }
+  })();
+</script>
+<script>
+  // 등장 모션: 섹션 제목 아래 괘선이 그어지고, 그림·표가 차례로 올라온다
+  (function () {
+    var root = document.documentElement;
+    if (!root.classList.contains("js") || !("IntersectionObserver" in window)) return;
+    document.querySelectorAll("main h2, footer h2").forEach(function (h) { h.classList.add("rule-in"); });
+    var items = document.querySelectorAll("main .plate, main .table, main .diagram, main .lead");
+    items.forEach(function (el) {
+      el.classList.add("rise");
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains("rise"); });
+      el.style.setProperty("--rise-delay", Math.min(sibs.indexOf(el), 4) * 60 + "ms");
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("is-in");
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".rise, h2.rule-in").forEach(function (el) { io.observe(el); });
   })();
 </script>
 <script>

@@ -167,6 +167,15 @@ a:active { color: var(--color-ink-2); }
 .plate-grid { --plate-ratio: 16 / 10; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rule-box); padding: var(--rule-box); background: var(--color-rule); }
 .plate-grid > .plate { border: 0; }
 
+/* 모션: html.js 일 때만 숨겼다가 화면에 들어오면 드러낸다. 스크립트가 없거나 움직임 줄이기면 처음부터 보인다. transform·opacity 만 쓴다 */
+h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule-box); margin-top: var(--space-sm); background: currentColor; transform-origin: left center; }
+.js h2.rule-in::after { transform: scaleX(0); transition: transform 0.9s var(--ease-out) 0.15s; }
+.js h2.rule-in.is-in::after { transform: scaleX(1); }
+.js .rise { opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out); transition-delay: var(--rise-delay, 0ms); }
+.js .rise.is-in { opacity: 1; transform: none; }
+.plate { transition: transform 0.35s var(--ease-out); }
+@media (hover: hover) { .plate:hover { transform: translateY(-4px); } }
+
 @media (max-width: 60rem) {
   :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
   .g12 > * { grid-column: 1 / -1; }
@@ -191,6 +200,7 @@ a:active { color: var(--color-ink-2); }
 @media (prefers-reduced-motion: reduce) {
   *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   .btn:active, .nav__menu > summary:active { transform: none; }
+  .js .rise, .js h2.rule-in::after, .plate:hover { opacity: 1; transform: none; }
 }
 /* == /SHARED == */
 /* soulsync 전용 규칙 */
@@ -236,6 +246,7 @@ a:active { color: var(--color-ink-2); }
 }
 /* 첫 화면 한 장 안에: 데스크톱에서 히어로 그림을 2:1로 */
 @media (min-width: 60rem) { .ss-hero__plate { --plate-ratio: 2 / 1; } }
+@media (max-width: 40rem) { .ss-hero__h { font-size: 1.75rem; } .ss-hero__h span { display: block; } }
 </style>
 </head>
 <body>
@@ -397,6 +408,28 @@ a:active { color: var(--color-ink-2); }
     </p>
   </div>
 </footer>
+<script>
+  // 등장 모션: 섹션 제목 아래 괘선이 그어지고, 그림·표가 차례로 올라온다
+  (function () {
+    var root = document.documentElement;
+    if (!root.classList.contains("js") || !("IntersectionObserver" in window)) return;
+    document.querySelectorAll("main h2, footer h2").forEach(function (h) { h.classList.add("rule-in"); });
+    var items = document.querySelectorAll("main .plate, main .table, main .diagram, main .lead");
+    items.forEach(function (el) {
+      el.classList.add("rise");
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains("rise"); });
+      el.style.setProperty("--rise-delay", Math.min(sibs.indexOf(el), 4) * 60 + "ms");
+    });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("is-in");
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    document.querySelectorAll(".rise, h2.rule-in").forEach(function (el) { io.observe(el); });
+  })();
+</script>
 <script>
   // 모바일 메뉴: 링크를 누르면 닫는다
   document.querySelectorAll(".nav__menu a").forEach(function (a) {
