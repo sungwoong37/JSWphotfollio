@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>장성웅 · 게임 개발자 포트폴리오</title>
+<title>장성웅, 게임 개발자 포트폴리오</title>
 <meta name="description" content="Unity와 C#으로 게임 세 편을 만든 게임 개발자 장성웅. 2D 등반 플랫포머 Rat-errible Climb은 Stove에 출시했고, 온라인 협동 게임 두 편을 개발했습니다.">
-<meta property="og:title" content="장성웅 · 게임 개발자 포트폴리오">
+<meta property="og:title" content="장성웅, 게임 개발자 포트폴리오">
 <meta property="og:description" content="Unity와 C#으로 만든 게임 세 편. Rat-errible Climb은 Stove 출시, 온라인 협동 게임 두 편.">
 <meta property="og:type" content="website">
 <script>document.documentElement.classList.add('js')</script>
@@ -13,593 +13,713 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #100f0e; --surface: #1d1b19; --surface-2: #2a2724;
-    --ink: #f5f2ec; --muted: #b5aea4; --accent: #ff6a1a; --accent-ink: #100f0e;
-    --step-small: clamp(.8125rem, .79rem + .1vw, .875rem);
-    --step-body: clamp(1.0625rem, 1rem + .25vw, 1.1875rem);
-    --step-lead: clamp(1.25rem, 1.1rem + .7vw, 1.625rem);
-    --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
-    --step-display: clamp(2.75rem, 7vw, 7rem);
-    --gutter: clamp(16px, 2.4vw, 32px);
-    --gap: clamp(96px, 13vw, 200px);
-    --ease: cubic-bezier(.2, .7, .2, 1);
-  }
-  *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Schibsted Grotesk", Pretendard, "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, sans-serif; font-size: var(--step-body); line-height: 1.55; letter-spacing: -.01em; word-break: keep-all; -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; padding: 0; }
-  ul, ol { list-style: none; }
-  img, canvas { display: block; max-width: 100%; }
-  a { color: inherit; }
-  h1, h2, h3 { font-weight: 800; letter-spacing: -.03em; line-height: 1.04; }
-  h2 { font-size: var(--step-display); }
-  h3 { font-size: var(--step-head); }
-  h3 small { display: block; font-size: var(--step-small); font-weight: 400; letter-spacing: -.01em; line-height: 1.5; color: var(--muted); margin-top: .75rem; }
-  h4 { font-size: var(--step-body); font-weight: 800; margin: 0 0 .5rem; }
-  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  .muted { color: var(--muted); }
-  .small { font-size: var(--step-small); }
-  .pad { padding-inline: var(--gutter); }
-  .link { text-underline-offset: .25em; text-decoration-thickness: 1px; transition: color .2s, opacity .2s; }
-  .link:hover { color: var(--accent); }
-  .link:active { opacity: .7; }
-  .go { display: inline-block; color: var(--accent); font-weight: 600; text-decoration: none; transition: transform .25s var(--ease); }
-  .go:hover { transform: translateX(6px); }
-  .go:active { transform: translateX(2px); }
-  .btn { display: inline-block; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 600; font-size: var(--step-small); padding: .7rem 1.2rem; border: 0; cursor: pointer; text-decoration: none; transition: transform .2s var(--ease), background .2s; }
-  .btn:hover { background: var(--ink); }
-  .btn:active { transform: scale(.97); }
+/* Hallmark · shape: Map/Diagram (draw fc0aea) · genre: playful · theme: Werkstatt (deal 3/3, seed 7a25·a181b94c·2026-11-02·r0) · redesign: full
+ * hero: Stage · nav: edge-aligned, name left, links and the resume button right, details menu under 60rem · footer: ink contact band and colophon · imagery: the product (colour game art) · signature: a ruled 2x2 plate of the four games with the live One More Log fire · werkstatt: putty
+ * axes: mid/geometric-sans/cool · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: E, the four game sheets share one skeleton; each sheet carries a different proof (the fire note, two real Digestor screens, the TrapBase state diagram, SoulSync concept art) */
+/* Hallmark · answered F4 · the ink contact band inverts the one primary to putty, Werkstatt's own control rule for an ink band */
+/* Hallmark · waive 44c · a 2x2 plate grid of the four games stands beside the hero text and centres on it · the render tier measures only its first cell, the Digestor title screen, not the whole plate with the One More Log fire */
+/* Hallmark · dropped reel · the scroll-driven film strip of game art is gone; FINAL-PLAN decision 1 puts the four games in the ruled hero plate instead */
+/* Hallmark · dropped 연락, 더 보기 · the shared ink contact band now labels the lines 이메일 and 전화 under its one 연락처 heading, and the five more links sit in that band */
+/* Theme notes (not hallmark gates, 기록용): game art stays in colour, Werkstatt mono photo rule set aside because the screenshots are the work itself; the hero fire canvas is the one moving thing, a One More Log rule demo with a pause toggle and a reduced-motion still frame */
+/* == SHARED v1 == */
+/* 공통 블록: 4페이지가 바이트 그대로 붙인다. 근거 theme.mjs scaffold werkstatt (putty). 수정은 코디네이터 ask 후 시스템 워커만. */
+:root {
+  color-scheme: light;
+  --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-md: 1.0625rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 3vw + 1rem, 3.5rem); --text-display: clamp(2.5rem, 4vw + 1rem, 4.5rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --text-contact: clamp(1.25rem, 2.5vw + 0.5rem, 2.441rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --nav-h: 64px; --control-h: 48px; --control-min: 44px; --measure: 65ch;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300;
+  --color-paper: oklch(84% 0.024 82); --color-paper-2: oklch(79.5% 0.028 80); --color-paper-3: oklch(89.5% 0.018 84);
+  --color-ink: oklch(18% 0.008 60); --color-ink-2: oklch(27% 0.01 60); --color-muted: oklch(39% 0.014 62);
+  --color-rule: oklch(18% 0.008 60); --color-rule-soft: oklch(79.5% 0.028 80);
+  --color-accent: oklch(46% 0.2 264); --color-accent-2-deep: oklch(50% 0.19 31); --color-accent-3: oklch(85% 0.165 92);
+  --color-accent-ink: oklch(96% 0.012 82); --color-focus: oklch(46% 0.2 264);
+  --color-band-ink: oklch(18% 0.008 60); --color-band-text: oklch(84% 0.024 82); --color-band-muted: oklch(79.5% 0.028 80); --color-band-focus: oklch(84% 0.024 82);
+  --color-status-released: oklch(50% 0.19 31); --color-status-released-ink: oklch(96% 0.012 82);
+  --color-status-dev: oklch(85% 0.165 92); --color-status-dev-ink: oklch(18% 0.008 60);
+  --font-display: "Jost", "Pretendard", "Apple SD Gothic Neo", sans-serif; --font-body: "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-code: ui-monospace, "SF Mono", Menlo, monospace; /* taste-skill-ignore: <code> 안의 실제 클래스명 전용 토큰 */
+  --weight-body: 400; --weight-strong: 700; --display-weight: 700; --tracking-display: -0.005em;
+  --radius-card: 0; --radius-pill: 0; --rule-bar: 2px; --rule-box: 3px;
+  --shadow-card: none;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); scroll-padding-top: calc(var(--nav-h) + var(--space-lg)); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-weight: var(--weight-body); font-size: var(--text-md); line-height: 1.6; word-break: keep-all; -webkit-font-smoothing: antialiased; caret-color: var(--color-accent); }
+::selection { background: var(--color-accent-3); color: var(--color-ink); }
+:focus-visible { outline: var(--rule-bar) solid var(--color-focus); outline-offset: var(--rule-bar); }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); font-synthesis: none; letter-spacing: var(--tracking-display); line-height: 1.1; text-transform: uppercase; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+h1 { max-width: 20ch; font-size: var(--text-display); }
+h2 { max-width: 30ch; font-size: var(--text-section); }
+h3 { max-width: 40ch; font-size: var(--text-title); line-height: 1.2; }
+h4, h5, h6 { margin: 0; font-size: var(--text-md); font-weight: var(--weight-strong); }
+p { margin: 0; text-wrap: pretty; }
+p:not([class]) { max-width: var(--measure); }
+.lead { font-size: var(--text-lead); line-height: 1.5; max-width: 52ch; }
+.muted { color: var(--color-muted); }
+strong, b { font-weight: var(--weight-strong); }
+ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; }
+img, video, canvas { max-width: 100%; height: auto; display: block; }
+svg { display: block; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; color: inherit; }
+code { font-family: var(--font-code); font-size: 0.9em; overflow-wrap: break-word; }
+.num { font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: var(--space-md); top: var(--space-xs); z-index: var(--z-sticky-nav); padding: var(--space-sm) var(--space-md); background: var(--color-ink); color: var(--color-paper); transform: translateY(-200%); }
+.skip:focus-visible { transform: none; }
 
-  /* 내비게이션 */
-  .nav { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; align-items: center; justify-content: space-between; height: 3.5rem; padding-inline: var(--gutter); transition: background .2s; }
-  .nav.solid { background: var(--bg); }
-  .nav a { text-decoration: none; }
-  .brand { font-weight: 800; }
-  .nav-links { display: flex; align-items: center; gap: clamp(.9rem, 2vw, 1.75rem); font-size: var(--step-small); font-weight: 600; }
-  .nav-link { color: var(--muted); transition: color .2s; }
-  .nav-link:hover, .nav-link[aria-current="true"] { color: var(--ink); }
+/* 칸: 컨테이너, 12열, 구역 */
+.container { width: 100%; max-width: var(--container); margin-left: auto; margin-right: auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+.g12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap-columns); }
+.c-4 { grid-column: span 4; } .c-5 { grid-column: span 5; } .c-6 { grid-column: span 6; } .c-7 { grid-column: span 7; } .c-8 { grid-column: span 8; } .c-12 { grid-column: 1 / -1; }
+.section { padding-top: var(--section-gap-s); padding-bottom: var(--section-gap-s); }
+.ruled { border-block: var(--rule-box) solid var(--color-rule); }
 
-  /* 첫 화면: 문장 사이로 네 게임이 지나간다 */
-  .hero { position: relative; height: 240svh; }
-  .hero-stage { position: sticky; top: 0; height: 100svh; min-height: 560px; overflow: hidden; display: grid; grid-template-rows: 3.5rem 1fr; padding: 0 var(--gutter) var(--gutter); --title: clamp(2.5rem, min(6.4vw, 11svh), 6.75rem); }
-  .hero h1 { grid-row: 2; grid-column: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; position: relative; z-index: 2; }
-  .hero-a, .hero-b { font-size: var(--title); line-height: 1.06; white-space: nowrap; }
-  .hero-a { padding-top: .35rem; }
-  .hero-b { align-self: flex-end; }
-  .hero-foot { grid-row: 2; grid-column: 1; align-self: end; position: relative; z-index: 3; max-width: 34vw; }
-  .hero-foot p { font-size: 1rem; line-height: 1.5; }
-  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.1rem; margin-top: 1rem; font-size: var(--step-small); }
-  .reel-window { grid-row: 2; grid-column: 1; position: relative; z-index: 3; overflow: hidden; margin: calc(var(--title) * 1.3) calc(var(--gutter) * -1) 11.5rem; }
-  .reel { position: absolute; left: 50%; top: 50%; width: min(58vw, calc((100svh - 24rem) * 1.78)); margin-left: calc(min(58vw, calc((100svh - 24rem) * 1.78)) / -2); display: grid; gap: 24px; will-change: transform; }
-  .reel img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--surface); }
+/* 링크 */
+a { color: inherit; text-decoration-line: underline; text-decoration-thickness: var(--rule-bar); text-decoration-color: var(--color-accent); text-underline-offset: 0.22em; }
+a:hover { text-decoration-thickness: var(--rule-box); }
+a:active { color: var(--color-ink-2); }
 
-  /* 한눈에 보기 */
-  .glance { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gutter); background: var(--surface); padding: clamp(40px, 5vw, 72px) var(--gutter); }
-  .glance > div { display: flex; flex-direction: column; }
-  .glance dd.big { order: -1; }
-  .glance dt { font-size: var(--step-small); color: var(--muted); }
-  .glance dd.big { font-size: var(--step-head); font-weight: 800; letter-spacing: -.03em; line-height: 1.1; margin: .25rem 0 .4rem; }
-  .glance dd.note { font-size: var(--step-small); color: var(--muted); }
+/* 버튼: 사각, 48px */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); min-height: var(--control-h); padding: var(--space-sm) var(--space-lg); border: var(--rule-bar) solid var(--color-ink); border-radius: 0; background: transparent; color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-strong); line-height: 1.2; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.btn:hover { background: var(--color-paper-3); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn--primary { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-paper); }
+.btn--primary:hover { background: var(--color-ink-2); border-color: var(--color-ink-2); }
+.actions { display: flex; flex-wrap: wrap; align-items: flex-start; align-content: flex-start; gap: var(--space-sm); }
 
-  /* 프로젝트 */
-  .work-head { padding: var(--gap) var(--gutter) clamp(48px, 6vw, 88px); display: grid; grid-template-columns: 42fr 58fr; gap: var(--gutter); align-items: end; }
-  .index a { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 1rem; padding: .55rem 0; text-decoration: none; transition: transform .25s var(--ease); }
-  .index a:hover { transform: translateX(8px); }
-  .index b { font-size: var(--step-lead); font-weight: 800; letter-spacing: -.02em; }
-  .index span { font-size: var(--step-small); color: var(--muted); text-align: right; }
-  .index .out { color: var(--accent); }
+/* 내비: 유일한 sticky. 60rem 미만은 <details> 메뉴 (JS 없이 동작) */
+.nav { position: sticky; top: 0; z-index: var(--z-sticky-nav); background: var(--color-paper); border-bottom: var(--rule-bar) solid var(--color-rule); }
+.nav__in { display: flex; align-items: center; gap: var(--space-lg); min-height: var(--nav-h); }
+.nav__brand { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--display-weight); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; min-height: var(--control-min); }
+.nav__links { display: flex; align-items: center; gap: var(--space-lg); margin: 0 0 0 auto; list-style: none; }
+.nav__links a, .nav__menu a { display: inline-flex; align-items: center; min-height: var(--control-min); font-size: var(--text-sm); font-weight: var(--weight-strong); text-decoration-color: transparent; white-space: nowrap; }
+.nav__links a:hover, .nav__menu a:hover, .nav a[aria-current="page"] { text-decoration-color: var(--color-accent); }
+.nav__cta { flex-shrink: 0; }
+.nav__menu { display: none; }
+.nav__menu > summary { display: inline-flex; align-items: center; min-height: var(--control-min); padding: 0 var(--space-md); border: var(--rule-bar) solid var(--color-ink); font-size: var(--text-sm); font-weight: var(--weight-strong); list-style: none; cursor: pointer; white-space: nowrap; }
+.nav__menu > summary::-webkit-details-marker { display: none; }
+.nav__menu > summary:hover { background: var(--color-paper-3); }
+.nav__menu > summary:active { transform: translateY(1px); }
+.nav__menu[open] > summary { background: var(--color-ink); color: var(--color-paper); }
+.nav__menu ul { position: absolute; left: 0; right: 0; top: 100%; display: grid; gap: var(--space-2xs); padding: var(--space-sm) var(--gutter) var(--space-lg); list-style: none; background: var(--color-paper); border-bottom: var(--rule-box) solid var(--color-rule); }
+.nav__menu a { min-height: var(--control-h); font-size: var(--text-md); }
+.nav__menu:not([open]) > ul { display: none; }
 
-  .game { display: grid; grid-template-columns: 42fr 58fr; background: var(--field); }
-  .game-text { padding: clamp(72px, 9vw, 128px) var(--gutter); display: flex; flex-direction: column; gap: 2rem; }
-  .game-pic { position: sticky; top: 0; height: 100svh; overflow: hidden; background: var(--surface); display: grid; }
-  .game-pic img { width: 100%; height: 100%; object-fit: cover; min-height: 0; }
-  .game-pic.pair { grid-template-rows: 62fr 38fr; gap: 8px; background: var(--field); }
-  .game-pic figcaption { position: absolute; left: 0; bottom: 0; background: var(--field); padding: .5rem .9rem .5rem var(--gutter); font-size: var(--step-small); color: var(--ink); }
-  .tags { display: flex; flex-wrap: wrap; gap: .4rem; font-size: var(--step-small); }
-  .tags span { background: rgba(245, 242, 236, .1); padding: .15rem .6rem; }
-  .tags .out { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
-  .sub { color: var(--muted); font-size: var(--step-small); margin-top: .75rem; }
-  .lead { max-width: 58ch; }
-  .role { display: grid; gap: .5rem; max-width: 58ch; }
-  .role li { position: relative; padding-left: 1.1rem; }
-  .role li::before { content: ""; position: absolute; left: 0; top: .62em; width: .42rem; height: .42rem; background: var(--accent); }
-  .facts { display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; gap: 1rem 1.5rem; background: rgba(245, 242, 236, .07); padding: 1.1rem 1.25rem; }
-  .facts dt { font-size: var(--step-small); color: var(--muted); }
-  .facts dd { font-size: var(--step-lead); font-weight: 800; letter-spacing: -.02em; line-height: 1.25; }
-  .facts dd.plain { font-size: var(--step-small); font-weight: 400; letter-spacing: -.01em; padding-top: .3rem; }
+/* 데이터 표: 진짜 <table>. 60rem 미만은 .table--stack 이 칸을 쌓고 data-label 을 보인다 */
+.table-scroll { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; border-block: var(--rule-box) solid var(--color-rule); font-variant-numeric: tabular-nums; }
+.table caption { caption-side: bottom; padding: var(--space-sm) 0 0; text-align: left; font-size: var(--text-sm); color: var(--color-muted); }
+.table th, .table td { padding: var(--space-sm) var(--space-md); text-align: left; vertical-align: top; }
+.table thead th { border-bottom: var(--rule-bar) solid var(--color-rule); font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.table tbody th { font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.table tbody tr + tr > * { border-top: var(--rule-bar) solid var(--color-rule-soft); }
+.table tfoot > tr > * { border-top: var(--rule-bar) solid var(--color-rule); font-weight: var(--weight-strong); }
+.table .num, .table td.num { text-align: right; }
 
-  /* 장작불 */
-  .fire { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #0a0705; display: grid; grid-template-rows: 1fr auto; }
-  .fire canvas { width: 100%; height: 100%; min-height: 0; image-rendering: pixelated; }
-  .fire-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; background: var(--field); padding: 1rem var(--gutter); }
-  .fire-state { font-weight: 600; font-size: var(--step-small); }
-  .fire-note { width: 100%; font-size: var(--step-small); color: var(--muted); }
-  .fire-fallback { align-self: center; padding: var(--gutter); color: var(--muted); }
-  .js .fire-fallback { display: none; }
-  html:not(.js) .fire canvas, html:not(.js) #log { display: none; }
+/* 상태 칩: 원색은 출시 상태 축 하나. 글자 병기 필수 */
+.chip { display: inline-flex; align-items: center; padding: var(--space-xs) var(--space-sm); border: var(--rule-bar) solid var(--color-ink); background: transparent; color: var(--color-ink); font-size: var(--text-sm); font-weight: var(--weight-strong); line-height: 1.2; white-space: nowrap; }
+.chip--released { background: var(--color-status-released); color: var(--color-status-released-ink); }
+.chip--dev { background: var(--color-status-dev); color: var(--color-status-dev-ink); }
 
-  .work-foot { padding: clamp(48px, 6vw, 88px) var(--gutter) 0; max-width: 60ch; font-size: var(--step-small); color: var(--muted); }
+/* 띠: 페이지당 2개까지 */
+.band { padding-top: var(--section-gap-s); padding-bottom: var(--section-gap-s); }
+.band--paper { background: var(--color-paper-2); }
+.band--ink { background: var(--color-band-ink); color: var(--color-band-text); }
+.band--ink .muted, .band--ink .table caption { color: var(--color-band-muted); }
+.band--ink a { text-decoration-color: var(--color-band-text); }
+.band--ink a:active { color: var(--color-band-muted); }
+.band--ink :focus-visible { outline-color: var(--color-band-focus); }
+.band--ink ::selection { background: var(--color-accent-3); color: var(--color-ink); }
+.band--ink .btn { border-color: var(--color-band-text); color: var(--color-band-text); }
+.band--ink .btn:hover { background: var(--color-ink-2); }
+.band--ink .btn--primary { background: var(--color-band-text); border-color: var(--color-band-text); color: var(--color-band-ink); }
+.band--ink .btn--primary:hover { background: var(--color-paper-3); border-color: var(--color-paper-3); }
+.band--ink .table, .band--ink .table thead th, .band--ink .table tfoot > tr > * { border-color: var(--color-band-text); }
 
-  /* 기술 */
-  .skills { padding-top: var(--gap); }
-  .band { background: var(--accent); color: var(--accent-ink); overflow: hidden; padding: clamp(28px, 4vw, 56px) 0; margin-top: clamp(32px, 4vw, 56px); }
-  .track { display: flex; width: max-content; font-size: clamp(3.25rem, 8vw, 7.5rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; white-space: nowrap; animation: slide 48s linear infinite; }
-  .track span { display: flex; align-items: center; }
-  .track span::after { content: ""; width: .28em; height: .28em; border-radius: 50%; background: currentColor; margin: 0 .42em; }
-  @keyframes slide { to { transform: translateX(-50%); } }
-  .skill-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem var(--gutter); padding: clamp(40px, 5vw, 72px) var(--gutter) 0; }
-  .skill-list dt { color: var(--muted); font-size: var(--step-small); margin-bottom: .25rem; }
-  .skill-list .next { grid-column: 1 / -1; max-width: 62ch; }
+/* 연락처 띠 */
+.contact__grid { row-gap: var(--space-xl); }
+.contact__grid h2 { margin-bottom: var(--space-md); }
+.contact__lines { display: grid; gap: var(--space-md); }
+.contact__lines dt { font-size: var(--text-sm); color: var(--color-band-muted); }
+.contact__big { font-family: var(--font-display); font-size: var(--text-contact); font-weight: var(--display-weight); line-height: 1.15; overflow-wrap: break-word; min-width: 0; }
+.contact__more { display: grid; gap: var(--space-2xs); list-style: none; }
+.contact__more a { display: inline-flex; align-items: center; min-height: var(--control-min); }
 
-  /* 소개 */
-  .about { padding: var(--gap) var(--gutter) 0; display: grid; grid-template-columns: 42fr 58fr; gap: clamp(48px, 6vw, 88px) var(--gutter); }
-  .about-side { position: sticky; top: 5rem; align-self: start; }
-  .about-body { display: grid; gap: clamp(56px, 7vw, 96px); }
-  .about-body h3 { font-size: var(--step-lead); letter-spacing: -.02em; margin-bottom: 1rem; }
-  .about-body p { max-width: 58ch; }
-  .steps { list-style: decimal; display: grid; gap: .75rem; margin: 1.25rem 0; padding: 1.5rem 1.5rem 1.5rem 3rem; background: var(--surface); max-width: 62ch; }
-  .steps li::marker { color: var(--accent); font-weight: 800; }
-  .about-two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gutter); }
+/* 판권 */
+.colophon { padding-top: var(--space-lg); padding-bottom: var(--space-xl); }
+.colophon__line { display: flex; flex-wrap: wrap; column-gap: var(--space-lg); row-gap: var(--space-2xs); max-width: none; font-size: var(--text-sm); color: var(--color-muted); }
 
-  /* 연락처 + 마무리 */
-  .close { margin-top: var(--gap); background: var(--accent); color: var(--accent-ink); overflow: hidden; padding: clamp(64px, 8vw, 112px) var(--gutter) 0; }
-  .close-top { display: grid; grid-template-columns: 7fr 5fr; gap: var(--gutter); }
-  .close h2 { margin-bottom: 1.25rem; }
-  .close p { max-width: 44ch; }
-  .close .btn { background: var(--bg); color: var(--ink); margin-top: 1.5rem; }
-  .close .btn:hover { background: var(--ink); color: var(--bg); }
-  .close-links { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem var(--gutter); align-content: start; font-size: var(--step-small); }
-  .close-links h3 { font-size: var(--step-small); font-weight: 600; letter-spacing: -.01em; line-height: 1.5; margin-bottom: .5rem; color: #3b1c08; }
-  .close-links ul { display: grid; gap: .45rem; }
-  .close .link:hover { color: var(--ink); }
-  .legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1.5rem; font-size: var(--step-small); margin-top: clamp(56px, 8vw, 112px); color: #3b1c08; }
-  .wordmark { font-size: clamp(9rem, 31vw, 34rem); font-weight: 900; line-height: .9; letter-spacing: -.04em; white-space: nowrap; margin: .1em 0 -.2em; font-family: Pretendard, "Apple SD Gothic Neo", sans-serif; }
+/* 그림 칸 */
+.plate { min-width: 0; border: var(--rule-bar) solid var(--color-rule); background: var(--color-paper-3); }
+.plate > img, .plate > canvas { width: 100%; height: auto; aspect-ratio: var(--plate-ratio, auto); object-fit: cover; }
+.plate > figcaption { padding: var(--space-sm) var(--space-md); border-top: var(--rule-bar) solid var(--color-rule); font-size: var(--text-sm); color: var(--color-muted); }
+.plate-grid { --plate-ratio: 16 / 10; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rule-box); padding: var(--rule-box); background: var(--color-rule); }
+.plate-grid > .plate { border: 0; }
 
-  /* 입장 모션 */
-  .js .rise { opacity: 0; transform: translateY(24px); }
-  .js .rise.in { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .7s var(--ease); }
+@media (max-width: 60rem) {
+  :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
+  .g12 > * { grid-column: 1 / -1; }
+  .nav__links { display: none; }
+  .nav__menu { display: block; }
+  .nav__cta { margin-left: auto; padding-left: var(--space-md); padding-right: var(--space-md); }
+  .table--stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .table--stack, .table--stack tbody, .table--stack tfoot, .table--stack tr, .table--stack th, .table--stack td { display: block; width: 100%; }
+  .table--stack tbody tr + tr > * { border-top: 0; }
+  .table--stack tr + tr { border-top: var(--rule-bar) solid var(--color-rule); }
+  .table--stack tbody th { padding-top: var(--space-md); font-size: var(--text-md); }
+  .table--stack caption { display: block; }
+  .table--stack td { display: grid; grid-template-columns: minmax(0, 8rem) minmax(0, 1fr); justify-items: start; align-items: start; gap: var(--space-md); padding-top: var(--space-xs); padding-bottom: var(--space-xs); }
+  .table--stack td::before { content: attr(data-label); font-size: var(--text-sm); font-weight: var(--weight-strong); color: var(--color-muted); }
+  .band--ink .table--stack td::before { color: var(--color-band-muted); }
+  .table--stack .num, .table--stack td.num { text-align: left; }
+}
+@media (max-width: 40rem) {
+  :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; }
+  .plate-grid--fold { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .btn:active, .nav__menu > summary:active { transform: none; }
+}
+/* == /SHARED == */
+/* 메인 페이지 전용 규칙 (plety). 토큰은 SHARED 의 :root 만 쓴다. */
 
-  @media (max-width: 899px) {
-    .hero { height: auto; }
-    .hero-stage { position: relative; height: auto; min-height: 0; display: block; padding-top: 4.5rem; overflow: visible; }
-    .hero-a, .hero-b { display: block; font-size: 9.6vw; white-space: normal; }
-    .hero-b { text-align: right; }
-    .reel-window { height: auto; margin: 1rem 0; overflow: hidden; }
-    .hero-stage { --title: 9.6vw; }
-    .hero h1 { display: block; }
-    .reel { position: static; width: 100%; margin: 0; grid-auto-flow: column; grid-auto-columns: 100%; gap: 0; transform: none !important; }
-    .reel img:not(:first-child) { display: none; }
-    .reel img { aspect-ratio: 4 / 3; }
-    .hero-foot { max-width: none; margin-top: 1.25rem; }
-    .hero-foot p { font-size: var(--step-body); }
-    .glance { grid-template-columns: 1fr; gap: 1.5rem; padding-top: 88px; }
-    .glance > div { display: grid; grid-template-columns: minmax(0, 46%) 1fr; column-gap: 1rem; }
-    .glance dd.big { grid-row: 1 / 3; margin: 0; }
-    .work-head, .game, .about, .close-top, .about-two { grid-template-columns: 1fr; }
-    .game-pic, .fire, .about-side { position: relative; top: 0; }
-    .game-pic { order: -1; height: auto; aspect-ratio: 4 / 3; }
-    .game-pic.pair { aspect-ratio: auto; grid-template-rows: auto auto; }
-    .game-pic.pair img { aspect-ratio: 16 / 10; height: auto; }
-    .game-pic.pair { gap: 4px; }
-    .fire { order: -1; height: 86svh; }
-    .game-text { padding-block: 92px 72px; }
-    .facts { grid-template-columns: 1fr 1fr; }
-    .skill-list { grid-template-columns: 1fr 1fr; }
-    .wordmark { font-size: 36vw; }
-  }
-  @media (max-width: 480px) { .nav-links { gap: .8rem; } .nav-links .btn { display: none; } }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .js .rise { opacity: 1; transform: none; }
-    .track { animation: none; }
-    .hero { height: auto; }
-    .hero-stage { position: relative; }
-  }
+/* 히어로: Stage, 왼쪽 글 / 오른쪽 네 칸 판 */
+.home-hero { display: grid; align-items: center; min-height: calc(100svh - var(--nav-h)); padding-top: var(--space-xl); padding-bottom: var(--space-xl); }
+.home-hero__grid { align-items: center; }
+.home-hero__text { display: grid; gap: var(--space-lg); align-content: center; }
+.home-hero__text h1 { max-width: none; font-size: var(--text-display-s); }
+.home-hero__text h1 > span { display: block; }
+
+/* 판: 칸마다 그림 행과 캡션 행을 subgrid 로 맞춰 같은 줄의 그림 높이·캡션 띠가 같다 (검증 수정) */
+.home-plate { grid-template-rows: repeat(4, auto); }
+.home-plate > .plate { display: grid; grid-row: span 2; grid-template-rows: subgrid; grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+.home-plate > .plate > img, .home-plate > .plate > canvas { aspect-ratio: 16 / 10; width: 100%; height: 100%; }
+.home-plate > .plate > .home-fire__fallback { min-height: 0; }
+.home-plate figcaption b { color: var(--color-ink); }
+
+/* One More Log 칸: 살아 있는 장작불 */
+.home-fire { background: var(--color-ink); }
+.home-fire > canvas { image-rendering: pixelated; background: var(--color-ink); }
+.home-fire__fallback { flex: 1 1 auto; display: grid; place-items: center; min-height: 8rem; padding: var(--space-lg); color: var(--color-band-text); text-align: center; }
+.js .home-fire__fallback { display: none; }
+html:not(.js) .home-fire > canvas, html:not(.js) .home-fire__controls { display: none; }
+.home-fire figcaption { display: grid; gap: var(--space-xs); background: var(--color-paper-3); }
+.home-fire__state { min-height: 1.6em; color: var(--color-ink); }
+.home-fire__controls { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+
+/* 프로젝트: 사양 지도 + 합계 + 사양서 네 장 */
+.home-work__head { row-gap: var(--space-lg); padding-bottom: var(--space-xl); }
+.home-map th[scope="col"] { font-family: var(--font-display); font-size: var(--text-md); }
+.home-map td .chip { margin-bottom: var(--space-xs); }
+.home-map td > a { display: inline-flex; align-items: center; min-height: var(--control-min); } /* 터치 대상 44px (검증 수정) */
+.home-map td span:not(.chip) { display: block; }
+.home-map { table-layout: fixed; }
+.home-map th[scope="row"], .home-map thead th:first-child { width: 8rem; }
+.home-total { margin-top: var(--space-2xl); }
+.home-total th[scope="row"] { width: 14rem; }
+.home-total td.num { width: 14rem; }
+.home-total h3 { margin-bottom: var(--space-md); }
+.home-total .table td.num { font-family: var(--font-display); font-size: var(--text-xl); line-height: 1.2; font-variant-numeric: tabular-nums; }
+
+.home-sheets { margin-top: var(--space-3xl); }
+.home-sheet { padding-top: var(--space-2xl); padding-bottom: var(--space-3xl); border-top: var(--rule-box) solid var(--color-rule); row-gap: var(--space-xl); }
+.home-sheet__text { display: grid; gap: var(--space-lg); align-content: start; }
+.home-sheet__head { display: grid; gap: var(--space-sm); }
+.home-sheet__head h3 { font-size: var(--text-2xl); }
+.home-sheet__head small { font-family: var(--font-body); font-size: var(--text-md); font-weight: var(--weight-body); text-transform: none; }
+.home-sheet__tags { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); }
+.home-sheet__role h4 { margin-bottom: var(--space-sm); }
+.home-sheet__role ul { display: grid; gap: var(--space-xs); padding-left: var(--space-lg); max-width: var(--measure); }
+.home-sheet__spec { width: 100%; }
+.home-sheet__spec td { font-weight: var(--weight-strong); }
+.home-sheet__more { display: inline-flex; align-items: center; min-height: var(--control-min); font-weight: var(--weight-strong); }
+.home-sheet__proof { display: grid; gap: var(--space-lg); align-content: start; }
+.home-pair { --plate-ratio: 16 / 10; }
+.home-pair > figcaption { grid-column: 1 / -1; padding: var(--space-sm) var(--space-md); background: var(--color-paper-3); font-size: var(--text-sm); color: var(--color-muted); }
+
+.home-note { padding: var(--space-xl) var(--space-lg); border: var(--rule-box) solid var(--color-rule); background: var(--color-paper-3); display: grid; gap: var(--space-sm); }
+.home-note p { max-width: 40ch; }
+
+/* Rat-errible Climb: TrapBase 상태 전이도 */
+.home-states { padding: var(--space-lg); border: var(--rule-box) solid var(--color-rule); background: var(--color-paper-3); }
+.home-states ol { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); padding-bottom: var(--space-xl); list-style: none; }
+.home-states li { position: relative; display: grid; place-items: center; min-height: var(--control-h); padding: var(--space-sm) var(--space-xs); border: var(--rule-bar) solid var(--color-rule); background: var(--color-paper); font-weight: var(--weight-strong); text-align: center; }
+.home-states li + li::before { content: ""; position: absolute; right: 100%; top: 50%; width: var(--space-xl); border-top: var(--rule-bar) solid var(--color-rule); }
+.home-states li + li::after { content: ""; position: absolute; right: 100%; top: 50%; width: 10px; height: 12px; background: var(--color-rule); clip-path: polygon(0 0, 100% 50%, 0 100%); transform: translate(0, -50%); }
+.home-states ol::after { content: ""; position: absolute; left: 16.66%; right: 16.66%; bottom: var(--space-sm); height: var(--space-lg); border: var(--rule-bar) solid var(--color-rule); border-top: 0; }
+.home-states ol::before { content: ""; position: absolute; left: calc(16.66% - 6px); bottom: calc(var(--space-sm) + var(--space-lg) - 2px); width: 12px; height: 10px; background: var(--color-rule); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.home-states figcaption { padding-top: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
+
+.home-work__foot { margin-top: var(--space-xl); font-size: var(--text-sm); color: var(--color-muted); max-width: 72ch; }
+
+/* 기술 */
+.home-skills h2 { margin-bottom: var(--space-xl); }
+.home-skills .table th[scope="row"] { width: 14rem; }
+
+/* 소개 */
+.home-about { row-gap: var(--space-xl); }
+.home-about__body { display: grid; gap: var(--space-lg); }
+.home-about__body h3, .home-about__two h3 { margin-bottom: var(--space-2xs); }
+.home-steps { display: grid; gap: var(--space-sm); padding-left: var(--space-lg); max-width: var(--measure); }
+.home-steps li::marker { font-weight: var(--weight-strong); }
+.home-about__two { row-gap: var(--space-xl); padding-top: var(--space-xl); border-top: var(--rule-bar) solid var(--color-rule); }
+.home-about__two > div { display: grid; gap: var(--space-sm); align-content: start; }
+
+@media (max-width: 60rem) {
+  .home-hero { min-height: 0; padding-top: var(--space-xl); padding-bottom: var(--space-2xl); }
+  .home-skills .table th[scope="row"], .home-map th[scope="row"], .home-total th[scope="row"], .home-total td.num { width: auto; }
+  .home-map { table-layout: auto; }
+}
+@media (max-width: 40rem) {
+  .home-hero__text h1 { font-size: var(--text-2xl); }
+  .home-fire figcaption { padding-left: var(--space-sm); padding-right: var(--space-sm); } /* 320px 에서 장작 버튼이 칸 안에 들도록 (검증 수정) */
+  .home-fire__controls .btn { padding-left: var(--space-md); padding-right: var(--space-md); }
+  .home-states ol { gap: var(--space-md); }
+  .home-states li + li::before { width: var(--space-md); }
+  .home-states li { font-size: var(--text-sm); }
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#top">본문으로 건너뛰기</a>
+<nav id="nav" class="nav" aria-label="주 메뉴">
+  <div class="nav__in container">
+    <a class="nav__brand" href="#top">장성웅</a>
+    <ul class="nav__links">
+      <li><a href="#work">프로젝트</a></li>
+      <li><a href="#skills">기술</a></li>
+      <li><a href="#about">소개</a></li>
+      <li><a href="#contact">연락처</a></li>
+    </ul>
+    <a class="btn btn--primary nav__cta" href="resume.pdf" target="_blank" rel="noopener">이력서 PDF</a>
+    <details class="nav__menu">
+      <summary>메뉴</summary>
+      <ul>
+        <li><a href="#work">프로젝트</a></li>
+        <li><a href="#skills">기술</a></li>
+        <li><a href="#about">소개</a></li>
+        <li><a href="#contact">연락처</a></li>
+      </ul>
+    </details>
+  </div>
+</nav>
 
-  <!-- ===== NAV ===== -->
-  <nav id="nav" class="nav">
-    <a href="#top" class="brand">장성웅</a>
-    <div class="nav-links">
-      <a href="#work" class="nav-link">프로젝트</a>
-      <a href="#skills" class="nav-link">기술</a>
-      <a href="#about" class="nav-link">소개</a>
-      <a href="#contact" class="nav-link">연락처</a>
-      <a href="resume.pdf" target="_blank" rel="noopener" class="btn">이력서 PDF</a>
-    </div>
-  </nav>
+<main id="top">
 
-  <main id="top">
-
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="hero">
-      <div class="hero-stage">
-        <h1>
-          <span class="hero-a">게임을 직접 만들고</span>
-          <span class="hero-b">끝까지 완성하는 개발자</span>
-        </h1>
-        <div class="reel-window">
-          <div class="reel" id="reel">
-            <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116">
-            <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001">
-            <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931">
-            <img src="assets/digestor/tutorial.jpg" alt="Digestor 튜토리얼 훈련실" width="1600" height="1000">
-          </div>
-        </div>
-        <div class="hero-foot">
-          <p><b>게임 개발자 · 유한대학교 컴퓨터공학과 게임콘텐츠전공.</b> Unity와 C#으로 게임 세 편을 만들었고, 지금은 언리얼 엔진 5와 C++로 네 번째 게임을 만들고 있습니다. 막히면 증상에서 멈추지 않고 원인을 찾을 때까지 파고드는 편입니다.</p>
-          <div class="hero-actions">
-            <a href="#work" class="btn">프로젝트 보기</a>
-            <a href="#contact" class="link">이력 · 연락처</a>
-          </div>
+  <!-- 히어로: Stage. 왼쪽 글, 오른쪽 게임 네 칸 판 -->
+  <section id="hero" class="home-hero" aria-labelledby="hero-h">
+    <div class="container g12 home-hero__grid">
+      <div class="c-6 home-hero__text">
+        <h1 id="hero-h"><span>게임을 직접 만들고</span> <span>끝까지 완성하는 개발자</span></h1>
+        <p class="lead"><b>게임 개발자, 유한대학교 컴퓨터공학과 게임콘텐츠전공.</b> Unity와 C#으로 게임 세 편을 만들었고, 지금은 언리얼 엔진 5와 C++로 네 번째 게임을 만들고 있습니다.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#work">프로젝트 보기</a>
+          <a class="btn" href="#contact">이력과 연락처</a>
         </div>
       </div>
-    </section>
-
-    <!-- 한눈에 보기 -->
-    <dl class="glance">
-      <div class="rise">
-        <dt>개발한 게임</dt>
-        <dd class="big">4편</dd>
-        <dd class="note">출시 1편 · 1인 개발 1편 · 개발 중 2편</dd>
-      </div>
-      <div class="rise">
-        <dt>코드</dt>
-        <dd class="big">211,269줄</dd>
-        <dd class="note">C# · C++ 합계 · AI 도구 활용</dd>
-      </div>
-      <div class="rise">
-        <dt>커밋</dt>
-        <dd class="big">1,403회</dd>
-        <dd class="note">네 저장소 합계</dd>
-      </div>
-      <div class="rise">
-        <dt>출시</dt>
-        <dd class="big">Stove</dd>
-        <dd class="note">Rat-errible Climb · 스토브 인디</dd>
-      </div>
-    </dl>
-
-    <!-- ===== WORK ===== -->
-    <section id="work">
-      <div class="work-head">
-        <div>
-          <h2 class="rise">프로젝트</h2>
-          <p class="rise lead" style="margin-top:1.25rem">최신순. 각 게임마다 직접 맡은 부분, git 기록으로 집계한 수치, AI 도구를 뺀 직접 작성 비율을 적었습니다.</p>
-        </div>
-        <ol class="index rise">
-          <li><a href="#p-oml"><b>One More Log</b><span>개발 중 · 장작불 시뮬레이션</span></a></li>
-          <li><a href="#p-digestor"><b>Digestor</b><span>개발 중 · 2~4인 협동 3D 액션</span></a></li>
-          <li><a href="#p-rat"><b>Rat-errible Climb</b><span class="out">Stove 출시 · 2D 등반 플랫포머</span></a></li>
-          <li><a href="#p-soul"><b>SoulSync</b><span>1인 개발 · 2인 협동 로그라이크</span></a></li>
-        </ol>
-      </div>
-
-      <!-- One More Log -->
-      <article id="p-oml" class="game" style="--field:#1a120c">
-        <div class="game-text">
-          <div class="rise">
-            <h3>One More Log</h3>
-            <p class="sub">실시간 장작불 시뮬레이션 · Unreal Engine 5.8 · C++17</p>
-          </div>
-          <div class="tags rise">
-            <span>개발 중</span>
-            <span>1인 개발 · AI 구현</span>
-          </div>
-          <p class="lead rise">
-            실제 시간으로 타들어 가는 장작불을 꺼지지 않게 돌보는 불멍 게임입니다.
-            자리를 비운 만큼 불이 정직하게 꺼지고, 장작을 어떻게 쌓느냐에 따라 화력과 타는 속도가 달라집니다.
-          </p>
-          <div class="rise">
-            <h4>맡은 부분</h4>
-            <ul class="role">
-              <li>게임의 핵심 방향 결정과 기획. 구현은 AI 도구 위주로 진행</li>
-              <li>엔진과 분리한 C++17 결정론 연소 시뮬레이션 코어, 헤드리스 테스트 89건, 100시간 분량 따라잡기 계산 182ms</li>
-              <li>Nanite · Lumen 숲 장면, 불 닿은 쪽부터 숯과 재로 변하는 장작 머티리얼, 불 크기에 비례하는 Niagara 불티</li>
-              <li>장작을 들고 회전해 떨어뜨리면 물리대로 굴러 자리 잡는 자유 배치</li>
-            </ul>
-          </div>
-          <dl class="facts rise">
-            <div><dt>구현</dt><dd>AI 도구 위주</dd></div>
-            <div><dt>C++ 코드</dt><dd>24,245줄</dd></div>
-            <div><dt>파일</dt><dd class="plain">120개 · 테스트 89건</dd></div>
-            <div><dt>커밋</dt><dd>45회</dd></div>
-          </dl>
-        </div>
-        <figure class="fire">
-          <canvas id="fire" width="96" height="108" role="img" aria-label="장작불 모형. 시간이 지나면 줄어들고 장작을 넣으면 커집니다."></canvas>
-          <p class="fire-fallback">프로토타입 화면은 정리 중입니다.</p>
-          <figcaption class="fire-bar">
-            <span class="fire-state" id="fire-state" aria-live="polite">불을 지피는 중</span>
-            <button type="button" class="btn" id="log">장작 하나 더</button>
-            <span class="fire-note">게임의 규칙을 웹으로 옮긴 작은 모형입니다. 이 페이지를 나가도 불은 계속 줄어듭니다. 프로토타입 · Unreal Engine 5.8</span>
+      <div class="c-6 plate-grid home-plate">
+        <figure class="plate">
+          <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" fetchpriority="high">
+          <figcaption><b>Digestor</b>, 개발 중(버전 0.4)</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" style="object-position:64% 50%">
+          <figcaption><b>Rat-errible Climb</b>, 컨셉아트</figcaption>
+        </figure>
+        <figure class="plate">
+          <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" style="object-position:62% 50%">
+          <figcaption><b>SoulSync</b>, 컨셉아트</figcaption>
+        </figure>
+        <figure class="plate home-fire keep-motion">
+          <canvas id="fire" width="172" height="108" role="img" aria-label="장작불 모형. 시간이 지나면 줄어들고 장작을 넣으면 커집니다."></canvas>
+          <p class="home-fire__fallback">프로토타입 화면은 정리 중입니다.</p>
+          <figcaption>
+            <span><b>One More Log</b></span>
+            <span class="home-fire__state" id="fire-state" aria-live="polite">불을 지피는 중</span>
+            <span class="home-fire__controls">
+              <button type="button" class="btn" id="log">장작 하나 더</button>
+              <button type="button" class="btn" id="fire-pause" aria-pressed="false">불 멈추기</button>
+            </span>
           </figcaption>
         </figure>
-      </article>
+      </div>
+    </div>
+  </section>
 
-      <!-- Digestor -->
-      <article id="p-digestor" class="game" style="--field:#23282e">
-        <div class="game-text">
-          <div class="rise">
-            <h3>Digestor <small>(이전 이름 Pill Agents)</small></h3>
-            <p class="sub">2~4인 온라인 협동 3D 액션 · Unity 6 · URP · Netcode + Relay</p>
-          </div>
-          <div class="tags rise">
-            <span>개발 중</span>
-            <span>기획·개발 1인 · 모델링 협업 · AI 구현</span>
-          </div>
-          <p class="lead rise">
-            위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 탈출구까지 살아남는 게임입니다.
-            보스에 붙은 구슬을 때려 그로기 게이지를 채우면 딜 구간이 열리는, 팀이 직접 공격 타이밍을 만드는 구조를 설계했습니다.
-          </p>
-          <div class="rise">
-            <h4>맡은 부분</h4>
-            <ul class="role">
-              <li>기획과 설계를 직접 하고, 구현은 AI 도구 위주로 진행 (Claude Code 설계 검토 · Codex 구현 · 별도 검증)</li>
-              <li>서버 권위 네트워킹 (Netcode for GameObjects + Relay)</li>
-              <li>기생충 보스 3페이즈 상태머신</li>
-              <li>밸런스 수치를 한 파일에서만 관리하는 GameBalanceConfig 구조</li>
-              <li>물리 콜백 대신 SphereCast·OverlapSphere로 매 프레임 검사하는 판정 구조</li>
-            </ul>
-          </div>
-          <dl class="facts rise">
-            <div><dt>구현</dt><dd>AI 도구 위주</dd></div>
-            <div><dt>C# 코드</dt><dd>155,469줄</dd></div>
-            <div><dt>파일</dt><dd class="plain">525개 · 테스트 689건</dd></div>
-            <div><dt>커밋</dt><dd>1,217회</dd></div>
-          </dl>
-          <p class="rise small muted">개발 방식: Claude Code로 설계, Codex로 구현.</p>
-          <a href="digestor.html" class="go rise">개발 과정 자세히 보기 →</a>
-        </div>
-        <figure class="game-pic pair">
-          <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" loading="lazy">
-          <img src="assets/digestor/tutorial.jpg" alt="Digestor 튜토리얼 훈련실 화면" width="1600" height="1000" loading="lazy" style="object-position:50% 72%">
-          <figcaption>메인 메뉴와 튜토리얼 · 개발 중(버전 0.4)</figcaption>
-        </figure>
-      </article>
+  <!-- 프로젝트 -->
+  <section id="work" class="section" aria-labelledby="work-h">
+    <div class="container">
+      <div class="g12 home-work__head">
+        <h2 id="work-h" class="c-12">프로젝트</h2>
+        <p class="lead c-8">최신순. 각 게임마다 직접 맡은 부분, git 기록으로 집계한 수치, AI 도구를 뺀 직접 작성 비율을 적었습니다.</p>
+      </div>
 
-      <!-- Rat-errible Climb -->
-      <article id="p-rat" class="game" style="--field:#10201f">
-        <div class="game-text">
-          <div class="rise">
-            <h3>Rat-errible Climb <small>(쥐독한 등반)</small></h3>
-            <p class="sub">2D 등반 플랫포머 · Unity 6 · URP</p>
-          </div>
-          <div class="tags rise">
-            <span class="out">Stove Indie 출시</span>
-            <span>3인 팀 · 팀장 · 프로그래밍</span>
-          </div>
-          <p class="lead rise">
-            하수구 속 쥐가 프로펠러·가시·고양이 발 같은 함정을 피해 꼭대기까지 오르는 게임입니다.
-          </p>
-          <div class="rise">
-            <h4>맡은 부분</h4>
-            <ul class="role">
-              <li>함정 시스템 설계 — TrapBase를 상속해 Warning → Active → Cooldown 상태를 도는 구조</li>
-              <li>Cinemachine 카메라 전환</li>
-              <li>사다리·수중·끈적한 벽 같은 상호작용 구현</li>
-              <li>함정·장애물 스크립트 30개 구현</li>
-              <li>팀장으로서 팀원 결과물을 검토하고 수정 방향을 구체적으로 피드백</li>
-            </ul>
-          </div>
-          <dl class="facts rise">
-            <div><dt>직접 작성</dt><dd>약 60%</dd></div>
-            <div><dt>C# 코드</dt><dd>8,405줄</dd></div>
-            <div><dt>파일</dt><dd class="plain">66개</dd></div>
-            <div><dt>커밋</dt><dd>64회 / 팀 89회</dd></div>
-          </dl>
-          <a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="go rise">Stove 스토어 페이지 →</a>
-        </div>
-        <figure class="game-pic">
-          <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" loading="lazy" style="object-position:64% 50%">
-          <figcaption>컨셉아트</figcaption>
-        </figure>
-      </article>
+      <!-- 사양 지도: 열 = 게임(최신순), 행 = 항목 -->
+      <div class="table-scroll">
+        <table class="table table--stack home-map">
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">항목</span></th>
+              <th scope="col">One More Log</th>
+              <th scope="col">Digestor</th>
+              <th scope="col">Rat-errible Climb</th>
+              <th scope="col">SoulSync</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">상태</th>
+              <td data-label="One More Log"><div><span class="chip chip--dev">개발 중</span><span>장작불 시뮬레이션</span></div></td>
+              <td data-label="Digestor"><div><span class="chip chip--dev">개발 중</span><span>2~4인 협동 3D 액션</span></div></td>
+              <td data-label="Rat-errible Climb"><div><span class="chip chip--released">Stove 출시</span><span>2D 등반 플랫포머</span></div></td>
+              <td data-label="SoulSync"><div><span class="chip">1인 개발</span><span>2인 협동 로그라이크</span></div></td>
+            </tr>
+            <tr>
+              <th scope="row">맡은 역할</th>
+              <td data-label="One More Log">1인 개발, AI 구현</td>
+              <td data-label="Digestor">기획·개발 1인, 모델링 협업, AI 구현</td>
+              <td data-label="Rat-errible Climb">3인 팀, 팀장, 프로그래밍</td>
+              <td data-label="SoulSync">기획부터 개발까지 혼자 진행한 1인 프로젝트</td>
+            </tr>
+            <tr>
+              <th scope="row">구현 방식</th>
+              <td data-label="One More Log">AI 도구 위주</td>
+              <td data-label="Digestor">AI 도구 위주</td>
+              <td data-label="Rat-errible Climb">직접 작성 약 60%</td>
+              <td data-label="SoulSync">직접 작성 약 80%</td>
+            </tr>
+            <tr>
+              <th scope="row">핵심 기술</th>
+              <td data-label="One More Log">엔진과 분리한 C++17 결정론 연소 시뮬레이션 코어</td>
+              <td data-label="Digestor">서버 권위 네트워킹 (Netcode for GameObjects + Relay)</td>
+              <td data-label="Rat-errible Climb">함정 시스템 설계</td>
+              <td data-label="SoulSync">Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이 구현</td>
+            </tr>
+            <tr>
+              <th scope="row">자세히</th>
+              <td data-label="One More Log"><a href="#p-oml" aria-label="One More Log 자세히 보기">자세히 보기</a></td>
+              <td data-label="Digestor"><a href="#p-digestor" aria-label="Digestor 자세히 보기">자세히 보기</a></td>
+              <td data-label="Rat-errible Climb"><a href="#p-rat" aria-label="Rat-errible Climb 자세히 보기">자세히 보기</a></td>
+              <td data-label="SoulSync"><a href="#p-soul" aria-label="SoulSync 자세히 보기">자세히 보기</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <!-- SoulSync -->
-      <article id="p-soul" class="game" style="--field:#17141c">
-        <div class="game-text">
-          <div class="rise">
-            <h3>SoulSync</h3>
-            <p class="sub">2인 온라인 협동 로그라이크 · Unity 6 · Netcode + Relay</p>
-          </div>
-          <div class="tags rise">
-            <span>1인 개발</span>
-          </div>
-          <p class="lead rise">
-            두 사람이 Unity Relay로 연결해 몬스터 웨이브를 돌파하는 던전 크롤러입니다.
-            속성(불꽃·얼음)과 무기(검·활)를 조합해 직업을 만들고, 레벨업 스킬·상점·가챠로 성장합니다.
-          </p>
-          <div class="rise">
-            <h4>맡은 부분</h4>
-            <ul class="role">
-              <li>Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이 구현</li>
-              <li>보스 3종 패턴, 검·활 계열 스킬 시스템</li>
-              <li>솔로 모드 분기를 포함한 게임플레이 루프</li>
-              <li>기획부터 개발까지 혼자 진행한 1인 프로젝트</li>
-            </ul>
-          </div>
-          <dl class="facts rise">
-            <div><dt>직접 작성</dt><dd>약 80%</dd></div>
-            <div><dt>C# 코드</dt><dd>23,150줄</dd></div>
-            <div><dt>파일</dt><dd class="plain">119개</dd></div>
-            <div><dt>커밋</dt><dd>77회</dd></div>
-          </dl>
-          <a href="soulsync.html" class="go rise">개발 과정 자세히 보기 →</a>
-        </div>
-        <figure class="game-pic">
-          <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" loading="lazy" style="object-position:62% 50%">
-          <figcaption>컨셉아트</figcaption>
-        </figure>
-      </article>
+      <!-- 합계 -->
+      <div class="home-total">
+        <h3 id="total-h">합계</h3>
+        <table class="table table--stack" aria-labelledby="total-h">
+          <thead>
+            <tr><th scope="col">항목</th><th scope="col" class="num">값</th><th scope="col">설명</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">개발한 게임</th><td class="num" data-label="값">4편</td><td data-label="설명">출시 1편, 1인 개발 1편, 개발 중 2편</td></tr>
+            <tr><th scope="row">코드</th><td class="num" data-label="값">211,269줄</td><td data-label="설명">C#, C++ 합계<br>AI 도구 활용</td></tr>
+            <tr><th scope="row">커밋</th><td class="num" data-label="값">1,403회</td><td data-label="설명">네 저장소 합계</td></tr>
+            <tr><th scope="row">출시</th><td class="num" data-label="값">Stove</td><td data-label="설명">Rat-errible Climb, 스토브 인디</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-      <p class="work-foot">
+      <div class="home-sheets">
+
+        <!-- One More Log -->
+        <article id="p-oml" class="g12 home-sheet" aria-labelledby="oml-h">
+          <div class="c-7 home-sheet__text">
+            <div class="home-sheet__head">
+              <h3 id="oml-h">One More Log</h3>
+              <p class="muted">실시간 장작불 시뮬레이션, Unreal Engine 5.8, C++17</p>
+            </div>
+            <div class="home-sheet__tags">
+              <span class="chip chip--dev">개발 중</span>
+              <span>1인 개발, AI 구현</span>
+            </div>
+            <p class="lead">실제 시간으로 타들어 가는 장작불을 꺼지지 않게 돌보는 불멍 게임입니다. 자리를 비운 만큼 불이 정직하게 꺼지고, 장작을 어떻게 쌓느냐에 따라 화력과 타는 속도가 달라집니다.</p>
+            <div class="home-sheet__role">
+              <h4>맡은 부분</h4>
+              <ul>
+                <li>게임의 핵심 방향 결정과 기획. 구현은 AI 도구 위주로 진행</li>
+                <li>엔진과 분리한 C++17 결정론 연소 시뮬레이션 코어, 헤드리스 테스트 89건, 100시간 분량 따라잡기 계산 182ms</li>
+                <li>Nanite, Lumen 숲 장면, 불 닿은 쪽부터 숯과 재로 변하는 장작 머티리얼, 불 크기에 비례하는 Niagara 불티</li>
+                <li>장작을 들고 회전해 떨어뜨리면 물리대로 굴러 자리 잡는 자유 배치</li>
+              </ul>
+            </div>
+          </div>
+          <div class="c-5 home-sheet__proof">
+            <div class="home-note">
+              <p>게임의 규칙을 웹으로 옮긴 작은 모형입니다. 이 페이지를 나가도 불은 계속 줄어듭니다.</p>
+              <p class="muted">프로토타입, Unreal Engine 5.8</p>
+            </div>
+            <table class="table home-sheet__spec">
+              <tbody>
+                <tr><th scope="row">구현</th><td data-label="구현">AI 도구 위주</td></tr>
+                <tr><th scope="row">C++ 코드</th><td data-label="C++ 코드">24,245줄</td></tr>
+                <tr><th scope="row">파일</th><td data-label="파일">120개, 테스트 89건</td></tr>
+                <tr><th scope="row">커밋</th><td data-label="커밋">45회</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- Digestor -->
+        <article id="p-digestor" class="g12 home-sheet" aria-labelledby="digestor-h">
+          <div class="c-7 home-sheet__text">
+            <div class="home-sheet__head">
+              <h3 id="digestor-h">Digestor <small>(이전 이름 Pill Agents)</small></h3>
+              <p class="muted">2~4인 온라인 협동 3D 액션, Unity 6, URP, Netcode + Relay</p>
+            </div>
+            <div class="home-sheet__tags">
+              <span class="chip chip--dev">개발 중</span>
+              <span>기획·개발 1인, 모델링 협업, AI 구현</span>
+            </div>
+            <p class="lead">위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 탈출구까지 살아남는 게임입니다. 보스에 붙은 구슬을 때려 그로기 게이지를 채우면 딜 구간이 열리는, 팀이 직접 공격 타이밍을 만드는 구조를 설계했습니다.</p>
+            <div class="home-sheet__role">
+              <h4>맡은 부분</h4>
+              <ul>
+                <li>기획과 설계를 직접 하고, 구현은 AI 도구 위주로 진행 (Claude Code 설계 검토, Codex 구현, 별도 검증)</li>
+                <li>서버 권위 네트워킹 (Netcode for GameObjects + Relay)</li>
+                <li>기생충 보스 3페이즈 상태머신</li>
+                <li>밸런스 수치를 한 파일에서만 관리하는 <code>GameBalanceConfig</code> 구조</li>
+                <li>물리 콜백 대신 <code>SphereCast</code>·<code>OverlapSphere</code>로 매 프레임 검사하는 판정 구조</li>
+              </ul>
+            </div>
+            <p class="muted">개발 방식: Claude Code로 설계, Codex로 구현.</p>
+            <a class="home-sheet__more" href="digestor.html">개발 과정 자세히 보기</a>
+          </div>
+          <div class="c-5 home-sheet__proof">
+            <figure class="plate-grid home-pair">
+              <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" loading="lazy">
+              <img src="assets/digestor/tutorial.jpg" alt="Digestor 튜토리얼 훈련실 화면" width="1600" height="1000" loading="lazy" style="object-position:50% 72%">
+              <figcaption>메인 메뉴와 튜토리얼, 개발 중(버전 0.4)</figcaption>
+            </figure>
+            <table class="table home-sheet__spec">
+              <tbody>
+                <tr><th scope="row">구현</th><td data-label="구현">AI 도구 위주</td></tr>
+                <tr><th scope="row">C# 코드</th><td data-label="C# 코드">155,469줄</td></tr>
+                <tr><th scope="row">파일</th><td data-label="파일">525개, 테스트 689건</td></tr>
+                <tr><th scope="row">커밋</th><td data-label="커밋">1,217회</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- Rat-errible Climb -->
+        <article id="p-rat" class="g12 home-sheet" aria-labelledby="rat-h">
+          <div class="c-7 home-sheet__text">
+            <div class="home-sheet__head">
+              <h3 id="rat-h">Rat-errible Climb <small>(쥐독한 등반)</small></h3>
+              <p class="muted">2D 등반 플랫포머, Unity 6, URP</p>
+            </div>
+            <div class="home-sheet__tags">
+              <span class="chip chip--released">Stove Indie 출시</span>
+              <span>3인 팀, 팀장, 프로그래밍</span>
+            </div>
+            <p class="lead">하수구 속 쥐가 프로펠러·가시·고양이 발 같은 함정을 피해 꼭대기까지 오르는 게임입니다.</p>
+            <div class="home-sheet__role">
+              <h4>맡은 부분</h4>
+              <ul>
+                <li>함정 시스템 설계: <code>TrapBase</code>를 상속해 Warning → Active → Cooldown 상태를 도는 구조</li>
+                <li>Cinemachine 카메라 전환</li>
+                <li>사다리·수중·끈적한 벽 같은 상호작용 구현</li>
+                <li>함정·장애물 스크립트 30개 구현</li>
+                <li>팀장으로서 팀원 결과물을 검토하고 수정 방향을 구체적으로 피드백</li>
+              </ul>
+            </div>
+            <a class="home-sheet__more" href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener">Stove 스토어 페이지 보기</a>
+          </div>
+          <div class="c-5 home-sheet__proof">
+            <figure class="home-states diagram" aria-label="TrapBase 상태 전이도: Warning, Active, Cooldown 을 차례로 돌고 다시 Warning 으로">
+              <ol>
+                <li lang="en">Warning</li>
+                <li lang="en">Active</li>
+                <li lang="en">Cooldown</li>
+              </ol>
+              <figcaption><code>TrapBase</code></figcaption>
+            </figure>
+            <figure class="plate">
+              <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" loading="lazy" style="object-position:64% 50%">
+              <figcaption>컨셉아트</figcaption>
+            </figure>
+            <table class="table home-sheet__spec">
+              <tbody>
+                <tr><th scope="row">직접 작성</th><td data-label="직접 작성">약 60%</td></tr>
+                <tr><th scope="row">C# 코드</th><td data-label="C# 코드">8,405줄</td></tr>
+                <tr><th scope="row">파일</th><td data-label="파일">66개</td></tr>
+                <tr><th scope="row">커밋</th><td data-label="커밋">64회 / 팀 89회</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- SoulSync -->
+        <article id="p-soul" class="g12 home-sheet" aria-labelledby="soul-h">
+          <div class="c-7 home-sheet__text">
+            <div class="home-sheet__head">
+              <h3 id="soul-h">SoulSync</h3>
+              <p class="muted">2인 온라인 협동 로그라이크, Unity 6, Netcode + Relay</p>
+            </div>
+            <div class="home-sheet__tags">
+              <span class="chip">1인 개발</span>
+            </div>
+            <p class="lead">두 사람이 Unity Relay로 연결해 몬스터 웨이브를 돌파하는 던전 크롤러입니다. 속성(불꽃·얼음)과 무기(검·활)를 조합해 직업을 만들고, 레벨업 스킬·상점·가챠로 성장합니다.</p>
+            <div class="home-sheet__role">
+              <h4>맡은 부분</h4>
+              <ul>
+                <li>Netcode for GameObjects 기반 서버 권위 패턴으로 실시간 멀티플레이 구현</li>
+                <li>보스 3종 패턴, 검·활 계열 스킬 시스템</li>
+                <li>솔로 모드 분기를 포함한 게임플레이 루프</li>
+                <li>기획부터 개발까지 혼자 진행한 1인 프로젝트</li>
+              </ul>
+            </div>
+            <a class="home-sheet__more" href="soulsync.html">개발 과정 자세히 보기</a>
+          </div>
+          <div class="c-5 home-sheet__proof">
+            <figure class="plate">
+              <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" loading="lazy" style="object-position:62% 50%">
+              <figcaption>컨셉아트</figcaption>
+            </figure>
+            <table class="table home-sheet__spec">
+              <tbody>
+                <tr><th scope="row">직접 작성</th><td data-label="직접 작성">약 80%</td></tr>
+                <tr><th scope="row">C# 코드</th><td data-label="C# 코드">23,150줄</td></tr>
+                <tr><th scope="row">파일</th><td data-label="파일">119개</td></tr>
+                <tr><th scope="row">커밋</th><td data-label="커밋">77회</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="home-work__foot">
         코드·커밋 수치는 각 게임의 git 저장소 기준입니다(2026-10-15 집계). 외부 에셋 코드는 뺐습니다. 직접 작성 비율은 AI 도구로 보조한 부분을 뺀 본인 추정치입니다.<br>
         실제 플레이 화면은 정리해서 추가할 예정이고, 컨셉아트로 표시된 이미지는 실제 게임 화면이 아닙니다.
       </p>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== SKILLS ===== -->
-    <section id="skills" class="skills">
-      <h2 class="pad rise">기술</h2>
-      <div class="band" aria-hidden="true">
-        <div class="track">
-          <span>Unity 6</span><span>C#</span><span>Unreal Engine 5</span><span>C++</span><span>Netcode for GameObjects</span><span>Unity Relay</span><span>URP</span><span>Cinemachine</span><span>Claude Code</span><span>Codex</span>
-          <span>Unity 6</span><span>C#</span><span>Unreal Engine 5</span><span>C++</span><span>Netcode for GameObjects</span><span>Unity Relay</span><span>URP</span><span>Cinemachine</span><span>Claude Code</span><span>Codex</span>
+  <!-- 기술 -->
+  <section id="skills" class="band band--paper home-skills" aria-labelledby="skills-h">
+    <div class="container">
+      <h2 id="skills-h">기술</h2>
+      <table class="table table--stack">
+        <thead>
+          <tr><th scope="col">분야</th><th scope="col">내용</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">엔진과 언어</th><td data-label="내용">Unity 6, C#<br>Unreal Engine 5, C++(독학)</td></tr>
+          <tr><th scope="row">멀티플레이</th><td data-label="내용">Netcode for GameObjects, Unity Relay<br>서버 권위 구조</td></tr>
+          <tr><th scope="row">렌더링과 카메라</th><td data-label="내용">URP, Cinemachine</td></tr>
+          <tr><th scope="row">AI 협업 도구</th><td data-label="내용">Claude Code, Codex</td></tr>
+          <tr><th scope="row">다음에 배우려는 것</th><td data-label="내용">셰이더. 지금은 URP와 언리얼 머티리얼로 화면을 다루는 수준이고, 셰이더를 직접 써서 표현의 폭을 넓히려 합니다.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 소개 -->
+  <section id="about" class="section" aria-labelledby="about-h">
+    <div class="container g12 home-about">
+      <div class="c-5">
+        <h2 id="about-h">소개</h2>
+      </div>
+      <div class="c-7 home-about__body">
+        <p class="lead">막히면 증상에서 멈추지 않고 원인을 찾을 때까지 파고드는 편입니다.</p>
+        <h3>가장 오래 붙잡았던 문제</h3>
+        <p>적 AI가 의도대로 움직이지 않던 문제를 로그와 공식 문서를 오가며 원인을 찾을 때까지 파고들어 고친 적이 있습니다.</p>
+        <ol class="home-steps">
+          <li>상태머신의 전이 조건을 하나씩 로그로 찍어 실제로 어느 상태에서 멈추는지부터 확인</li>
+          <li>조건을 바로 고치지 않고, Unity 공식 문서에서 해당 컴포넌트의 이벤트 호출 시점을 다시 확인</li>
+          <li>제가 가정한 호출 순서가 실제와 다르다는 걸 확인한 뒤에 조건문 수정</li>
+        </ol>
+        <p>증상만 보고 코드를 바꿨다면 같은 문제가 다른 상태에서 다시 나왔을 것입니다.</p>
+      </div>
+      <div class="c-12 g12 home-about__two">
+        <div class="c-6">
+          <h3>팀에서의 역할</h3>
+          <p>주로 개발을 맡습니다. 말수는 적은 편이지만 맡은 부분은 끝까지 책임지고, 팀원과 일정·구조를 맞추는 데 문제는 없었습니다.</p>
+        </div>
+        <div class="c-6">
+          <h3>플레이해 본 게임</h3>
+          <p>Xbox·Steam 통합 351개 게임, 7,792.9시간입니다.</p>
+          <a class="home-sheet__more" href="game-history.html">플레이 이력 자세히 보기</a>
         </div>
       </div>
-      <dl class="skill-list">
-        <div class="rise">
-          <dt>엔진 · 언어</dt>
-          <dd>Unity 6, C# · Unreal Engine 5, C++(독학)</dd>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <section class="band band--ink" aria-labelledby="contact-h">
+    <div class="container g12 contact__grid">
+      <div class="c-6">
+        <h2 id="contact-h">연락처</h2>
+        <p class="lead">이력서와 자기소개서는 PDF로 받을 수 있습니다. 프로젝트 자료가 더 필요하면 연락 주세요.</p>
+      </div>
+      <dl class="contact__lines c-6">
+        <div>
+          <dt>이메일</dt>
+          <dd><a class="contact__big" href="mailto:j03j03j03@naver.com">j03j03j03@naver.com</a></dd>
         </div>
-        <div class="rise">
-          <dt>멀티플레이</dt>
-          <dd>Netcode for GameObjects, Unity Relay · 서버 권위 구조</dd>
-        </div>
-        <div class="rise">
-          <dt>렌더링 · 카메라</dt>
-          <dd>URP, Cinemachine</dd>
-        </div>
-        <div class="rise">
-          <dt>AI 협업 도구</dt>
-          <dd>Claude Code, Codex</dd>
-        </div>
-        <div class="next rise">
-          <dt>다음에 배우려는 것</dt>
-          <dd>셰이더. 지금은 URP와 언리얼 머티리얼로 화면을 다루는 수준이고, 셰이더를 직접 써서 표현의 폭을 넓히려 합니다.</dd>
+        <div>
+          <dt>전화</dt>
+          <dd><a class="contact__big" href="tel:01086163731">010-8616-3731</a></dd>
         </div>
       </dl>
-    </section>
-
-    <!-- ===== ABOUT ===== -->
-    <section id="about" class="about">
-      <div class="about-side">
-        <h2 class="rise">소개</h2>
+      <div class="actions c-6">
+        <a class="btn btn--primary" href="mailto:j03j03j03@naver.com">메일 보내기</a>
       </div>
-      <div class="about-body">
-        <div>
-          <h3 class="rise">가장 오래 붙잡았던 문제</h3>
-          <p class="rise">적 AI가 의도대로 움직이지 않던 문제를 로그와 공식 문서를 오가며 원인을 찾을 때까지 파고들어 고친 적이 있습니다.</p>
-          <ol class="steps rise">
-            <li>상태머신의 전이 조건을 하나씩 로그로 찍어 실제로 어느 상태에서 멈추는지부터 확인</li>
-            <li>조건을 바로 고치지 않고, Unity 공식 문서에서 해당 컴포넌트의 이벤트 호출 시점을 다시 확인</li>
-            <li>제가 가정한 호출 순서가 실제와 다르다는 걸 확인한 뒤에 조건문 수정</li>
-          </ol>
-          <p class="rise">증상만 보고 코드를 바꿨다면 같은 문제가 다른 상태에서 다시 나왔을 것입니다.</p>
-        </div>
-        <div class="about-two">
-          <div class="rise">
-            <h3>팀에서의 역할</h3>
-            <p>주로 개발을 맡습니다. 말수는 적은 편이지만 맡은 부분은 끝까지 책임지고, 팀원과 일정·구조를 맞추는 데 문제는 없었습니다.</p>
-          </div>
-          <div class="rise">
-            <h3>플레이해 본 게임</h3>
-            <p>Xbox·Steam 통합 351개 게임, 7,792.9시간입니다.</p>
-            <a href="game-history.html" class="go" style="margin-top:.75rem">플레이 이력 자세히 보기 →</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ===== FOOTER / CONTACT ===== -->
-  <footer id="contact" class="close">
-    <div class="close-top">
-      <div>
-        <h2 class="rise">연락처</h2>
-        <p class="rise">이력서와 자기소개서는 PDF로 받을 수 있습니다. 프로젝트 자료가 더 필요하면 연락 주세요.</p>
-        <a href="mailto:j03j03j03@naver.com" class="btn rise">메일 보내기</a>
-      </div>
-      <div class="close-links">
-        <div>
-          <h3>연락</h3>
-          <ul>
-            <li>이메일 <a href="mailto:j03j03j03@naver.com" class="link">j03j03j03@naver.com</a></li>
-            <li>전화 <a href="tel:01086163731" class="link">010-8616-3731</a></li>
-          </ul>
-        </div>
-        <div>
-          <h3>더 보기</h3>
-          <ul>
-            <li><a href="resume.pdf" target="_blank" rel="noopener" class="link">이력서 · 자기소개서 (PDF)</a></li>
-            <li><a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener" class="link">Rat-errible Climb · Stove Indie</a></li>
-            <li><a href="digestor.html" class="link">Digestor 개발 과정</a></li>
-            <li><a href="soulsync.html" class="link">SoulSync 개발 과정</a></li>
-            <li><a href="game-history.html" class="link">게임 플레이 이력</a></li>
-          </ul>
-        </div>
-      </div>
+      <ul class="contact__more c-6">
+        <li><a href="resume.pdf" target="_blank" rel="noopener">이력서, 자기소개서 (PDF)</a></li>
+        <li><a href="https://store.onstove.com/ko/games/104620" target="_blank" rel="noopener">Rat-errible Climb, Stove Indie</a></li>
+        <li><a href="digestor.html">Digestor 개발 과정</a></li>
+        <li><a href="soulsync.html">SoulSync 개발 과정</a></li>
+        <li><a href="game-history.html">게임 플레이 이력</a></li>
+      </ul>
     </div>
-    <div class="legal">
+  </section>
+  <div class="colophon container">
+    <p class="colophon__line">
       <span>© 2026 장성웅</span>
-      <span>Game Developer · Unity &amp; C#</span>
-      <span>마지막 업데이트: 2026-10-31</span>
-    </div>
-    <div class="wordmark" aria-hidden="true">장성웅</div>
-  </footer>
+      <span>Game Developer, Unity &amp; C#</span>
+      <span>마지막 업데이트: <time datetime="2026-10-31">2026-10-31</time></span>
+    </p>
+  </div>
+</footer>
 
 <script>
-  // 스크롤 시 상단 내비게이션 배경
+  // 현재 보고 있는 구역을 내비게이션에 표시
   var nav = document.getElementById("nav");
-  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hero = document.getElementById("hero");
-  var reel = document.getElementById("reel");
-  var ticking = false;
-  function onScroll() {
-    nav.classList.toggle("solid", window.scrollY > 20);
-    // 첫 화면 필름을 스크롤에 맞춰 한 칸씩 올림
-    if (reduced || innerWidth < 900) { reel.style.transform = ""; return; }
-    var run = hero.offsetHeight - innerHeight;
-    var p = Math.min(1, Math.max(0, window.scrollY / run));
-    var frame = reel.firstElementChild.offsetHeight + 24;
-    reel.style.transform = "translateY(" + (-frame / 2 + 12 - p * frame * 3) + "px)";
-  }
-  function queue() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { ticking = false; onScroll(); });
-  }
-  addEventListener("scroll", queue, { passive: true });
-  addEventListener("resize", queue);
-  addEventListener("load", onScroll);
-  onScroll();
-
-  // 현재 보고 있는 섹션을 내비게이션에 표시
-  var links = document.querySelectorAll(".nav-link");
-  var rises = document.querySelectorAll(".rise");
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var links = nav.querySelectorAll(".nav__links a");
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         links.forEach(function (a) {
-          a.setAttribute("aria-current", a.getAttribute("href") === "#" + e.target.id ? "true" : "false");
+          if (a.getAttribute("href") === "#" + e.target.id) a.setAttribute("aria-current", "true");
+          else a.removeAttribute("aria-current");
         });
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    ["work", "skills", "about", "contact"].forEach(function (id) {
-      io.observe(document.getElementById(id));
-    });
-
-    // 섹션 요소가 차례로 올라오는 입장 모션
-    var rio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var sibs = Array.prototype.filter.call(e.target.parentNode.children, function (c) { return c.classList.contains("rise"); });
-        e.target.style.transitionDelay = Math.min(sibs.indexOf(e.target), 4) * 70 + "ms";
-        e.target.classList.add("in");
-        rio.unobserve(e.target);
-      });
-    }, { rootMargin: "0px 0px -8% 0px" });
-    rises.forEach(function (el) { rio.observe(el); });
-  } else {
-    rises.forEach(function (el) { el.classList.add("in"); });
+    [hero, document.getElementById("work"), document.getElementById("skills"), document.getElementById("about"), document.getElementById("contact")].forEach(function (el) { io.observe(el); });
   }
 
   // One More Log: 실제 시간으로 타는 장작불. 자리를 비운 시간만큼 정직하게 줄어든다.
@@ -607,7 +727,9 @@
     var canvas = document.getElementById("fire");
     var ctx = canvas.getContext("2d");
     var state = document.getElementById("fire-state");
+    var pauseBtn = document.getElementById("fire-pause");
     var W = canvas.width, H = canvas.height;
+    var OX = Math.round((W - 64) / 2) - 4;   // 장작 더미를 칸 가운데에
     var heat = new Uint8Array(W * H);
     var img = ctx.createImageData(W, H);
     var LOG_MS = 12 * 60 * 1000;   // 장작 한 개가 타는 시간
@@ -625,6 +747,12 @@
     function save() {
       try { localStorage.setItem(KEY, JSON.stringify({ logs: logs, t: Date.now() })); } catch (e) {}
     }
+    // 실제 시간 계산: 그림이 멈춰도 늘 이 함수로 줄어든다
+    function burn() {
+      var t = Date.now();
+      logs = Math.max(0, logs - (t - last) / LOG_MS);
+      last = t;
+    }
 
     function palette(v) {
       // 재 → 숯불 → 주황 → 노랑 → 흰빛, 단계가 보이도록 끊어서
@@ -636,6 +764,9 @@
       if (v < 232) return [255, 188, 56];
       return [255, 236, 170];
     }
+    // 장작 색도 불꽃 팔레트처럼 숫자로: 그림의 일부라 페이지 색 토큰 밖
+    var WOOD = [43, 26, 16], DEAD = [23, 17, 13], EMBER = [214, 72, 12];
+    function rgb(c) { return "rgb(" + c[0] + "," + c[1] + "," + c[2] + ")"; }
     function minutes(ms) {
       var m = Math.round(ms / 60000);
       if (m < 60) return m + "분";
@@ -646,6 +777,11 @@
       var left = "남은 시간 " + (minutes(logs * LOG_MS) === "0분" ? "1분 미만" : minutes(logs * LOG_MS));
       if (away > 60000) return "자리를 비운 " + minutes(away) + " 동안 불이 줄었습니다. " + left;
       return left;
+    }
+    // 문구가 바뀔 때만 갱신해 화면 낭독기가 같은 문장을 되풀이하지 않게
+    function say() {
+      var s = label();
+      if (state.textContent !== s) state.textContent = s;
     }
     function step() {
       var source = Math.min(1, logs / 3);
@@ -674,48 +810,75 @@
       var n = Math.ceil(logs);
       for (var l = 0; l < n; l++) {
         var row = l % 2, y = H - 5 - (Math.floor(l / 2) + 1) * 5;
-        ctx.fillStyle = logs > 0 ? "#2b1a10" : "#17110d";
-        ctx.fillRect(16 + row * 32 + (l > 3 ? 8 : 0), y, 32, 4);
-        ctx.fillStyle = "#d6480c";
-        ctx.fillRect(16 + row * 32 + (l > 3 ? 8 : 0), y + 3, 32, 1);
+        ctx.fillStyle = rgb(logs > 0 ? WOOD : DEAD);
+        ctx.fillRect(OX + row * 32 + (l > 3 ? 8 : 0), y, 32, 4);
+        ctx.fillStyle = rgb(EMBER);
+        ctx.fillRect(OX + row * 32 + (l > 3 ? 8 : 0), y + 3, 32, 1);
       }
     }
-    function tick(now) {
-      var t = Date.now();
-      logs = Math.max(0, logs - (t - last) / LOG_MS);
-      last = t;
+    // 정지 프레임: 움직임 없이 지금 불 크기만 다시 그린다
+    function still() { for (var i = 0; i < H * 2; i++) step(); draw(); }
+
+    // 그림 루프: 화면 안 + 문서 보임 + 멈춤 아님 + 동작 줄이기 꺼짐일 때만. running 으로 루프 중복을 막는다
+    var visible = false, paused = false, running = false;
+    function shouldRun() { return visible && !paused && !reduced && !document.hidden; }
+    function tick() {
+      if (!shouldRun()) { running = false; return; }
+      burn();
       step(); draw();
-      if (visible && !reduced) requestAnimationFrame(tick);
+      requestAnimationFrame(tick);
+    }
+    function kick() {
+      if (running || !shouldRun()) return;
+      running = true;
+      requestAnimationFrame(tick);
     }
 
     var seconds = 0;
     setInterval(function () {
-      if (reduced) { logs = Math.max(0, logs - (Date.now() - last) / LOG_MS); last = Date.now(); }
-      state.textContent = label();
+      burn();
+      say();
       if (++seconds % 15 === 0) save();
     }, 1000);
 
     document.getElementById("log").addEventListener("click", function () {
+      burn();
       logs = Math.min(MAX_LOGS, logs + 1);
       away = 0;
-      state.textContent = label();
+      say();
       save();
-      if (reduced) { for (var i = 0; i < H * 2; i++) step(); draw(); }
+      if (!shouldRun()) still();
     });
-    addEventListener("pagehide", save);
 
-    var visible = false;
-    for (var i = 0; i < H * 2; i++) step();
-    draw();
-    state.textContent = label();
+    // 시각 효과만 멈춘다. 실제 시간 계산(burn)은 setInterval 이 계속한다
+    if (reduced) pauseBtn.hidden = true;
+    pauseBtn.addEventListener("click", function () {
+      paused = !paused;
+      pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
+      pauseBtn.textContent = paused ? "다시 움직이기" : "불 멈추기";
+      if (paused) still(); else kick();
+    });
+
+    addEventListener("pagehide", save);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) save(); else { burn(); say(); kick(); }
+    });
+
+    still();
+    say();
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) {
-        var was = visible;
-        visible = es[0].isIntersecting;
-        if (visible && !was && !reduced) requestAnimationFrame(tick);
+        visible = es[es.length - 1].isIntersecting;
+        if (visible) kick();
       }).observe(canvas);
-    } else if (!reduced) { visible = true; requestAnimationFrame(tick); }
+    } else { visible = true; kick(); }
   })();
+</script>
+<script>
+  // 모바일 메뉴: 링크를 누르면 닫는다
+  document.querySelectorAll(".nav__menu a").forEach(function (a) {
+    a.addEventListener("click", function () { a.closest("details").open = false; });
+  });
 </script>
 </body>
 </html>

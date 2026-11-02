@@ -13,619 +13,737 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.9/dist/web/static/pretendard-dynamic-subset.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add('js')</script>
-<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:#100f0e; --surface:#1d1b19; --surface-2:#2a2724;
-    --ink:#f5f2ec; --muted:#b5aea4; --accent:#ff6a1a; --accent-ink:#100f0e;
-    --step-small:clamp(.8125rem,.79rem + .1vw,.875rem);
-    --step-body:clamp(1.0625rem,1rem + .25vw,1.1875rem);
-    --step-lead:clamp(1.25rem,1.1rem + .7vw,1.625rem);
-    --step-head:clamp(2rem,1.3rem + 3.2vw,4rem);
-    --step-display:min(7.6vw,4rem);
-    --gutter:clamp(16px,2.4vw,32px);
-    --gap:clamp(96px,11vw,168px);
-    --ease:cubic-bezier(.2,.7,.2,1);
-  }
-  html { scroll-behavior:smooth; scroll-padding-top:4.5rem; }
-  html body { margin:0; background:var(--bg); color:var(--ink); font-family:"Schibsted Grotesk",Pretendard,"Apple SD Gothic Neo",system-ui,sans-serif; font-size:var(--step-body); line-height:1.55; word-break:keep-all; overflow-x:clip; -webkit-font-smoothing:antialiased; }
-  body h1, body h2, body h3 { margin:0; font-weight:800; letter-spacing:-.03em; line-height:1.02; text-wrap:balance; }
-  body h1 { font-size:var(--step-display); }
-  body h2 { font-size:var(--step-head); }
-  body h3 { font-size:var(--step-lead); line-height:1.2; }
-  body p, body figure, body dl, body dd, body ol { margin:0; padding:0; }
-  body ol { list-style:none; }
-  body img { display:block; max-width:100%; height:auto; }
-  .prose { max-width:62ch; }
-  .note { color:var(--muted); font-size:var(--step-small); }
+/* Hallmark · shape: Workbench · genre: playful · theme: Werkstatt (deal 3/3, seed 7a25·a181b94c·2026-11-02·r0) · redesign: full
+ * hero: Stage · nav: edge-aligned, name left, links and the resume button right, details menu under 60rem · footer: ink contact band and colophon · imagery: the product (real Digestor game screens, in colour) · signature: the play-order wall of real Digestor screens in ruled plates, with the server cell inked in the authority flow · werkstatt: putty
+ * axes: mid/geometric-sans/cool · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V3 · weakest: V, the detail pages share one locked system by design; this one leads with its real screens and a weekly commit chart the other pages lack */
+/* Hallmark · answered F4 · the ink contact band inverts the one primary to putty, Werkstatt's own control rule for an ink band */
+/* Hallmark · dropped https://cdn.tailwindcss.com, .rise, barlabels, bartable, 07-1307-2708-1008-2409-0709-2110-05, 07-134107-209207-279108-0311608-105108-173408-249108-3111109-0712709-149009-2111209-288910-0513310-123907-15 · Tailwind CDN and the scroll-in entrance motion are gone (FINAL-PLAN 11), and every week label now sits under its own bar in #bars instead of every other week in #barlabels, and each bar carries its own week and count label so the screen-reader copy in #bartable is no longer needed */
+/* Hallmark · reworded "보스 그로기 — 팀이 딜 창을 만든다" to "보스 그로기: 팀이 딜 창을 만든다" · 19 names the em dash inside the Digestor heading */
+/* Theme notes (not hallmark gates, 기록용): game art stays in colour, Werkstatt mono photo rule set aside because the Digestor screenshots are the work itself; nothing on this page moves, the weekly commit tips are plain CSS hover and focus with every value also printed under each bar */
+/* == SHARED v1 == */
+/* 공통 블록: 4페이지가 바이트 그대로 붙인다. 근거 theme.mjs scaffold werkstatt (putty). 수정은 코디네이터 ask 후 시스템 워커만. */
+:root {
+  color-scheme: light;
+  --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-md: 1.0625rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 3vw + 1rem, 3.5rem); --text-display: clamp(2.5rem, 4vw + 1rem, 4.5rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --text-contact: clamp(1.25rem, 2.5vw + 0.5rem, 2.441rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --nav-h: 64px; --control-h: 48px; --control-min: 44px; --measure: 65ch;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300;
+  --color-paper: oklch(84% 0.024 82); --color-paper-2: oklch(79.5% 0.028 80); --color-paper-3: oklch(89.5% 0.018 84);
+  --color-ink: oklch(18% 0.008 60); --color-ink-2: oklch(27% 0.01 60); --color-muted: oklch(39% 0.014 62);
+  --color-rule: oklch(18% 0.008 60); --color-rule-soft: oklch(79.5% 0.028 80);
+  --color-accent: oklch(46% 0.2 264); --color-accent-2-deep: oklch(50% 0.19 31); --color-accent-3: oklch(85% 0.165 92);
+  --color-accent-ink: oklch(96% 0.012 82); --color-focus: oklch(46% 0.2 264);
+  --color-band-ink: oklch(18% 0.008 60); --color-band-text: oklch(84% 0.024 82); --color-band-muted: oklch(79.5% 0.028 80); --color-band-focus: oklch(84% 0.024 82);
+  --color-status-released: oklch(50% 0.19 31); --color-status-released-ink: oklch(96% 0.012 82);
+  --color-status-dev: oklch(85% 0.165 92); --color-status-dev-ink: oklch(18% 0.008 60);
+  --font-display: "Jost", "Pretendard", "Apple SD Gothic Neo", sans-serif; --font-body: "Pretendard", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --font-code: ui-monospace, "SF Mono", Menlo, monospace; /* taste-skill-ignore: <code> 안의 실제 클래스명 전용 토큰 */
+  --weight-body: 400; --weight-strong: 700; --display-weight: 700; --tracking-display: -0.005em;
+  --radius-card: 0; --radius-pill: 0; --rule-bar: 2px; --rule-box: 3px;
+  --shadow-card: none;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+html { scrollbar-color: var(--color-muted) var(--color-paper); scroll-padding-top: calc(var(--nav-h) + var(--space-lg)); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-weight: var(--weight-body); font-size: var(--text-md); line-height: 1.6; word-break: keep-all; -webkit-font-smoothing: antialiased; caret-color: var(--color-accent); }
+::selection { background: var(--color-accent-3); color: var(--color-ink); }
+:focus-visible { outline: var(--rule-bar) solid var(--color-focus); outline-offset: var(--rule-bar); }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); font-synthesis: none; letter-spacing: var(--tracking-display); line-height: 1.1; text-transform: uppercase; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
+h1 { max-width: 20ch; font-size: var(--text-display); }
+h2 { max-width: 30ch; font-size: var(--text-section); }
+h3 { max-width: 40ch; font-size: var(--text-title); line-height: 1.2; }
+h4, h5, h6 { margin: 0; font-size: var(--text-md); font-weight: var(--weight-strong); }
+p { margin: 0; text-wrap: pretty; }
+p:not([class]) { max-width: var(--measure); }
+.lead { font-size: var(--text-lead); line-height: 1.5; max-width: 52ch; }
+.muted { color: var(--color-muted); }
+strong, b { font-weight: var(--weight-strong); }
+ul, ol, dl, dd, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; }
+img, video, canvas { max-width: 100%; height: auto; display: block; }
+svg { display: block; }
+[hidden] { display: none !important; }
+button, input, select, textarea { font: inherit; color: inherit; }
+code { font-family: var(--font-code); font-size: 0.9em; overflow-wrap: break-word; }
+.num { font-variant-numeric: tabular-nums; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip { position: absolute; left: var(--space-md); top: var(--space-xs); z-index: var(--z-sticky-nav); padding: var(--space-sm) var(--space-md); background: var(--color-ink); color: var(--color-paper); transform: translateY(-200%); }
+.skip:focus-visible { transform: none; }
 
-  a { transition:color .18s var(--ease),opacity .18s var(--ease),transform .18s var(--ease); }
-  a:active { transform:translateY(1px); opacity:.8; }
-  a:focus-visible, .bar:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+/* 칸: 컨테이너, 12열, 구역 */
+.container { width: 100%; max-width: var(--container); margin-left: auto; margin-right: auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+.g12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap-columns); }
+.c-4 { grid-column: span 4; } .c-5 { grid-column: span 5; } .c-6 { grid-column: span 6; } .c-7 { grid-column: span 7; } .c-8 { grid-column: span 8; } .c-12 { grid-column: 1 / -1; }
+.section { padding-top: var(--section-gap-s); padding-bottom: var(--section-gap-s); }
+.ruled { border-block: var(--rule-box) solid var(--color-rule); }
 
-  /* 입장 모션 */
-  .js .rise{opacity:0;transform:translateY(24px)}
-  .js .rise.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
-  @media (prefers-reduced-motion:reduce){.js .rise{opacity:1;transform:none} html{scroll-behavior:auto}}
+/* 링크 */
+a { color: inherit; text-decoration-line: underline; text-decoration-thickness: var(--rule-bar); text-decoration-color: var(--color-accent); text-underline-offset: 0.22em; }
+a:hover { text-decoration-thickness: var(--rule-box); }
+a:active { color: var(--color-ink-2); }
 
-  /* 내비 */
-  .nav { position:fixed; inset:0 0 auto; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:20px; height:56px; padding-inline:var(--gutter); transition:background-color .2s var(--ease); }
-  .nav.solid { background:var(--bg); }
-  .nav-name { font-weight:800; white-space:nowrap; background:var(--bg); padding:4px 10px; margin-left:-10px; }
-  @media (min-width:900px) { .nav-name { background:none; } }
-  .nav-links { background:var(--bg); padding:4px 10px; margin-right:-10px; display:flex; align-items:center; gap:clamp(16px,2vw,28px); font-size:var(--step-small); font-weight:600; white-space:nowrap; }
-  .nav-links a:hover { color:var(--accent); }
-  .nav-sec { display:none; }
-  @media (min-width:640px) { .nav-sec { display:inline; } }
+/* 버튼: 사각, 48px */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); min-height: var(--control-h); padding: var(--space-sm) var(--space-lg); border: var(--rule-bar) solid var(--color-ink); border-radius: 0; background: transparent; color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-sm); font-weight: var(--weight-strong); line-height: 1.2; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.btn:hover { background: var(--color-paper-3); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn--primary { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-paper); }
+.btn--primary:hover { background: var(--color-ink-2); border-color: var(--color-ink-2); }
+.actions { display: flex; flex-wrap: wrap; align-items: flex-start; align-content: flex-start; gap: var(--space-sm); }
 
-  /* 첫 화면 */
-  .hero { display:grid; grid-template-columns:minmax(0,1fr); }
-  .hero-fig { order:-1; }
-  .hero-pic { display:block; width:100%; aspect-ratio:1600/1001; object-fit:cover; object-position:0 50%; }
-  .hero-cap { padding:12px var(--gutter) 0; }
-  .hero-copy { display:flex; flex-direction:column; justify-content:space-between; gap:40px; padding:40px var(--gutter) 0; }
-  .hero-lede { margin-top:32px; }
-  .hero-sub { margin-top:12px; }
-  .hero-name { font-size:var(--step-lead); font-weight:800; line-height:1.2; letter-spacing:-.02em; }
-  .hero-name span { display:block; font-weight:400; color:var(--muted); letter-spacing:0; }
-  @media (min-width:900px) {
-    :root { --step-display:min(2.9vw,4rem); }
-    body h2 { font-size:min(2.6vw,3.5rem); }
-    .hero { grid-template-columns:38fr 62fr; min-height:min(100svh,64vw); }
-    .hero-fig { order:0; display:flex; flex-direction:column; min-height:100%; }
-    .hero-pic { flex:1 1 0; min-height:0; height:0; aspect-ratio:auto; }
-    .hero-cap { padding:12px var(--gutter) 16px 0; }
-    .hero-copy { padding:calc(56px + 6vh) var(--gutter) 16px; }
-  }
+/* 내비: 유일한 sticky. 60rem 미만은 <details> 메뉴 (JS 없이 동작) */
+.nav { position: sticky; top: 0; z-index: var(--z-sticky-nav); background: var(--color-paper); border-bottom: var(--rule-bar) solid var(--color-rule); }
+.nav__in { display: flex; align-items: center; gap: var(--space-lg); min-height: var(--nav-h); }
+.nav__brand { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--display-weight); text-decoration: none; white-space: nowrap; display: inline-flex; align-items: center; min-height: var(--control-min); }
+.nav__links { display: flex; align-items: center; gap: var(--space-lg); margin: 0 0 0 auto; list-style: none; }
+.nav__links a, .nav__menu a { display: inline-flex; align-items: center; min-height: var(--control-min); font-size: var(--text-sm); font-weight: var(--weight-strong); text-decoration-color: transparent; white-space: nowrap; }
+.nav__links a:hover, .nav__menu a:hover, .nav a[aria-current="page"] { text-decoration-color: var(--color-accent); }
+.nav__cta { flex-shrink: 0; }
+.nav__menu { display: none; }
+.nav__menu > summary { display: inline-flex; align-items: center; min-height: var(--control-min); padding: 0 var(--space-md); border: var(--rule-bar) solid var(--color-ink); font-size: var(--text-sm); font-weight: var(--weight-strong); list-style: none; cursor: pointer; white-space: nowrap; }
+.nav__menu > summary::-webkit-details-marker { display: none; }
+.nav__menu > summary:hover { background: var(--color-paper-3); }
+.nav__menu > summary:active { transform: translateY(1px); }
+.nav__menu[open] > summary { background: var(--color-ink); color: var(--color-paper); }
+.nav__menu ul { position: absolute; left: 0; right: 0; top: 100%; display: grid; gap: var(--space-2xs); padding: var(--space-sm) var(--gutter) var(--space-lg); list-style: none; background: var(--color-paper); border-bottom: var(--rule-box) solid var(--color-rule); }
+.nav__menu a { min-height: var(--control-h); font-size: var(--text-md); }
+.nav__menu:not([open]) > ul { display: none; }
 
-  /* 수치 */
-  .stats { margin-top:var(--gutter); background:var(--surface); padding:clamp(32px,4vw,56px) var(--gutter); }
-  .stats dl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:32px var(--gutter); }
-  .stats dl > div { display:flex; flex-direction:column-reverse; justify-content:flex-end; gap:8px; }
-  .stats dl > div:last-child { grid-column:1 / -1; }
-  .stats dt { color:var(--muted); font-size:var(--step-small); }
-  .stats dd { font-size:var(--step-head); font-weight:800; line-height:1; letter-spacing:-.03em; white-space:nowrap; }
-  .stats dd span { font-size:var(--step-lead); font-weight:400; color:var(--muted); letter-spacing:0; margin-left:2px; }
-  .stats .note { margin-top:32px; }
-  @media (min-width:600px) { .stats dl { grid-template-columns:repeat(3,auto); justify-content:space-between; } .stats dl > div:last-child { grid-column:auto; } }
-  @media (min-width:1100px) { .stats dl { grid-template-columns:repeat(5,auto); } }
+/* 데이터 표: 진짜 <table>. 60rem 미만은 .table--stack 이 칸을 쌓고 data-label 을 보인다 */
+.table-scroll { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; border-block: var(--rule-box) solid var(--color-rule); font-variant-numeric: tabular-nums; }
+.table caption { caption-side: bottom; padding: var(--space-sm) 0 0; text-align: left; font-size: var(--text-sm); color: var(--color-muted); }
+.table th, .table td { padding: var(--space-sm) var(--space-md); text-align: left; vertical-align: top; }
+.table thead th { border-bottom: var(--rule-bar) solid var(--color-rule); font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.table tbody th { font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.table tbody tr + tr > * { border-top: var(--rule-bar) solid var(--color-rule-soft); }
+.table tfoot > tr > * { border-top: var(--rule-bar) solid var(--color-rule); font-weight: var(--weight-strong); }
+.table .num, .table td.num { text-align: right; }
 
-  /* 구획 */
-  .sec { margin-top:var(--gap); padding-inline:var(--gutter); }
-  .field { background:var(--surface); padding-block:clamp(72px,8vw,128px); }
-  .g12 { display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(32px,4vw,56px) var(--gutter); }
-  .sec-lede { margin-top:24px; }
-  @media (min-width:900px) {
-    .g12 { grid-template-columns:repeat(12,minmax(0,1fr)); }
-    .c5 { grid-column:span 5; } .c6 { grid-column:span 6; } .c7 { grid-column:span 7; }
-  }
+/* 상태 칩: 원색은 출시 상태 축 하나. 글자 병기 필수 */
+.chip { display: inline-flex; align-items: center; padding: var(--space-xs) var(--space-sm); border: var(--rule-bar) solid var(--color-ink); background: transparent; color: var(--color-ink); font-size: var(--text-sm); font-weight: var(--weight-strong); line-height: 1.2; white-space: nowrap; }
+.chip--released { background: var(--color-status-released); color: var(--color-status-released-ink); }
+.chip--dev { background: var(--color-status-dev); color: var(--color-status-dev-ink); }
 
-  /* 게임 화면 */
-  .screens { display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(40px,5vw,72px) var(--gutter); margin-top:clamp(40px,5vw,72px); }
-  .cap { display:block; margin-top:12px; }
-  .cap b { display:block; font-weight:800; }
-  .cap span { display:block; color:var(--muted); font-size:var(--step-small); max-width:62ch; }
-  .wide img { width:calc(100% + var(--gutter)*2); max-width:none; margin-inline:calc(var(--gutter)*-1); }
-  .small img { width:100%; max-width:438px; }
-  @media (min-width:561px) {
-    .side figure { display:grid; grid-template-columns:minmax(0,438px) minmax(14ch,1fr); gap:var(--gutter); align-items:end; }
-    .side .cap { margin-top:0; }
-  }
-  @media (min-width:900px) {
-    .screens { grid-template-columns:repeat(12,minmax(0,1fr)); align-items:end; }
-    .s-lobby { grid-column:1 / span 8; }
-    .s-hub { grid-column:9 / span 4; }
-    .s-tut { grid-column:1 / span 5; }
-    .s-bat { grid-column:6 / span 7; }
-    .s-half { grid-column:span 6; }
-    .s-lobby img { width:calc(100% + var(--gutter)); margin-inline:calc(var(--gutter)*-1) 0; }
-    .s-bat img { width:calc(100% + var(--gutter)); margin-inline:0 calc(var(--gutter)*-1); }
-    .s-tut img { width:100%; margin:0; }
-    .s-hub figure { display:block; }
-    .s-hub .cap { margin-top:12px; }
-  }
+/* 띠: 페이지당 2개까지 */
+.band { padding-top: var(--section-gap-s); padding-bottom: var(--section-gap-s); }
+.band--paper { background: var(--color-paper-2); }
+.band--ink { background: var(--color-band-ink); color: var(--color-band-text); }
+.band--ink .muted, .band--ink .table caption { color: var(--color-band-muted); }
+.band--ink a { text-decoration-color: var(--color-band-text); }
+.band--ink a:active { color: var(--color-band-muted); }
+.band--ink :focus-visible { outline-color: var(--color-band-focus); }
+.band--ink ::selection { background: var(--color-accent-3); color: var(--color-ink); }
+.band--ink .btn { border-color: var(--color-band-text); color: var(--color-band-text); }
+.band--ink .btn:hover { background: var(--color-ink-2); }
+.band--ink .btn--primary { background: var(--color-band-text); border-color: var(--color-band-text); color: var(--color-band-ink); }
+.band--ink .btn--primary:hover { background: var(--color-paper-3); border-color: var(--color-paper-3); }
+.band--ink .table, .band--ink .table thead th, .band--ink .table tfoot > tr > * { border-color: var(--color-band-text); }
 
-  /* 핵심 시스템 */
-  .sys { margin-top:clamp(64px,8vw,120px); }
-  .sys h3 { margin-bottom:16px; }
-  .flow { display:flex; flex-direction:column; gap:8px; }
-  .flow-box { flex:1; min-width:0; background:var(--surface); padding:20px; }
-  .flow-box.on { background:var(--surface-2); }
-  .flow-k { color:var(--muted); font-size:var(--step-small); }
-  .flow-t { font-weight:800; margin-top:4px; }
-  .flow-d { color:var(--muted); font-size:var(--step-small); margin-top:4px; }
-  .flow-arrow { color:var(--muted); align-self:center; transform:rotate(90deg); }
-  .grog { display:grid; grid-template-columns:minmax(0,1fr); gap:8px; margin-top:clamp(32px,4vw,56px); }
-  .meter-t { color:var(--muted); font-size:var(--step-small); margin-bottom:12px; }
-  .meter { display:grid; gap:8px; font-size:var(--step-small); }
-  .meter-row { display:flex; align-items:center; gap:12px; }
-  .meter-row b { font-weight:400; color:var(--muted); flex:0 0 4.5em; }
-  .meter-row i { display:block; height:12px; background:var(--muted); }
-  .strip { margin-top:clamp(32px,4vw,56px); }
-  .strip img { width:calc(100% + var(--gutter)*2); max-width:none; margin-inline:calc(var(--gutter)*-1); }
-  .cos { margin-top:clamp(32px,4vw,56px); }
-  .cos img { width:100%; }
-  @media (min-width:900px) {
-    .flow { flex-direction:row; align-items:stretch; }
-    .flow-arrow { transform:none; }
-    .grog { grid-template-columns:1fr 1fr 1.5fr 1fr; }
-    .sys-after { align-self:end; }
-  }
+/* 연락처 띠 */
+.contact__grid { row-gap: var(--space-xl); }
+.contact__grid h2 { margin-bottom: var(--space-md); }
+.contact__lines { display: grid; gap: var(--space-md); }
+.contact__lines dt { font-size: var(--text-sm); color: var(--color-band-muted); }
+.contact__big { font-family: var(--font-display); font-size: var(--text-contact); font-weight: var(--display-weight); line-height: 1.15; overflow-wrap: break-word; min-width: 0; }
+.contact__more { display: grid; gap: var(--space-2xs); list-style: none; }
+.contact__more a { display: inline-flex; align-items: center; min-height: var(--control-min); }
 
-  /* 판단 */
-  .deck { display:grid; gap:clamp(56px,6vw,88px); margin-top:clamp(40px,5vw,72px); }
-  .dcols { display:grid; grid-template-columns:minmax(0,1fr); gap:24px var(--gutter); margin-top:24px; }
-  .dcols strong { display:block; font-weight:800; margin-bottom:4px; }
-  @media (min-width:900px) { .dcols { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+/* 판권 */
+.colophon { padding-top: var(--space-lg); padding-bottom: var(--space-xl); }
+.colophon__line { display: flex; flex-wrap: wrap; column-gap: var(--space-lg); row-gap: var(--space-2xs); max-width: none; font-size: var(--text-sm); color: var(--color-muted); }
 
-  /* 개발 방식 */
-  .chain { display:flex; flex-direction:column; gap:8px; }
-  .chain .flow-box { display:grid; gap:4px 24px; padding:24px; }
-  .chain .flow-t { font-size:var(--step-lead); line-height:1.2; margin:0; }
-  .chain .flow-d, .chain .flow-k { margin:0; }
-  @media (min-width:600px) { .chain .flow-box { grid-template-columns:minmax(0,1fr) minmax(0,1.4fr); } .chain .flow-t { grid-row:span 2; align-self:center; } }
+/* 그림 칸 */
+.plate { min-width: 0; border: var(--rule-bar) solid var(--color-rule); background: var(--color-paper-3); }
+.plate > img, .plate > canvas { width: 100%; height: auto; aspect-ratio: var(--plate-ratio, auto); object-fit: cover; }
+.plate > figcaption { padding: var(--space-sm) var(--space-md); border-top: var(--rule-bar) solid var(--color-rule); font-size: var(--text-sm); color: var(--color-muted); }
+.plate-grid { --plate-ratio: 16 / 10; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--rule-box); padding: var(--rule-box); background: var(--color-rule); }
+.plate-grid > .plate { border: 0; }
 
-  /* 주간 커밋 막대 */
-  .week { margin-top:clamp(40px,5vw,72px); background:var(--surface); padding:clamp(20px,3vw,40px); margin-inline:calc(var(--gutter)*-1); padding-inline:var(--gutter); }
-  .week-t { font-weight:800; }
-  .week .note { margin-bottom:48px; }
-  .bars-wrap { height:clamp(176px,22vw,280px); }
-  .bars { display:flex; align-items:flex-end; gap:clamp(2px,.6vw,8px); height:100%; }
-  .bar { position:relative; flex:1; display:flex; flex-direction:column; justify-content:flex-end; height:100%; cursor:default; }
-  .bar i { display:block; background:var(--accent); min-height:2px; transition:opacity .15s; }
-  .bars:hover .bar i { opacity:.45; }
-  .bars .bar:hover i, .bars .bar:focus i { opacity:1; }
-  .bar .tip { position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%); white-space:nowrap; background:var(--surface-2); color:var(--ink); font-size:var(--step-small); padding:4px 8px; opacity:0; pointer-events:none; transition:opacity .12s; z-index:2; }
-  .bar.tip-l .tip { left:0; transform:none; }
-  .bar.tip-r .tip { left:auto; right:0; transform:none; }
-  .bar:hover .tip, .bar:focus .tip { opacity:1; }
-  .barlabels { display:flex; gap:clamp(2px,.6vw,8px); margin-top:8px; color:var(--muted); font-size:var(--step-small); }
-  .barlabels span { flex:1; min-width:0; display:flex; justify-content:center; white-space:nowrap; }
-  .barlabels span:first-child { justify-content:flex-start; }
-  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+@media (max-width: 60rem) {
+  :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
+  .g12 > * { grid-column: 1 / -1; }
+  .nav__links { display: none; }
+  .nav__menu { display: block; }
+  .nav__cta { margin-left: auto; padding-left: var(--space-md); padding-right: var(--space-md); }
+  .table--stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .table--stack, .table--stack tbody, .table--stack tfoot, .table--stack tr, .table--stack th, .table--stack td { display: block; width: 100%; }
+  .table--stack tbody tr + tr > * { border-top: 0; }
+  .table--stack tr + tr { border-top: var(--rule-bar) solid var(--color-rule); }
+  .table--stack tbody th { padding-top: var(--space-md); font-size: var(--text-md); }
+  .table--stack caption { display: block; }
+  .table--stack td { display: grid; grid-template-columns: minmax(0, 8rem) minmax(0, 1fr); justify-items: start; align-items: start; gap: var(--space-md); padding-top: var(--space-xs); padding-bottom: var(--space-xs); }
+  .table--stack td::before { content: attr(data-label); font-size: var(--text-sm); font-weight: var(--weight-strong); color: var(--color-muted); }
+  .band--ink .table--stack td::before { color: var(--color-band-muted); }
+  .table--stack .num, .table--stack td.num { text-align: left; }
+}
+@media (max-width: 40rem) {
+  :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; }
+  .plate-grid--fold { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *:not(.keep-motion), *:not(.keep-motion)::before, *:not(.keep-motion)::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .btn:active, .nav__menu > summary:active { transform: none; }
+}
+/* == /SHARED == */
+/* 페이지 전용 규칙: digestor */
+.dg-hero { padding-top: var(--space-2xl); padding-bottom: var(--space-2xl); }
+.dg-hero__grid { align-items: center; }
+.dg-hero__h { margin-bottom: var(--space-lg); }
+@media (min-width: 60rem) { .dg-hero__h span { display: block; white-space: nowrap; } }
+.dg-hero__text { display: grid; gap: var(--space-lg); justify-items: start; }
+.dg-hero__plate, .dg-screens, .dg-mile__pics { --plate-ratio: 16 / 10; }
 
-  /* 마일스톤 */
-  .miles { display:grid; grid-template-columns:minmax(0,1fr); gap:48px var(--gutter); margin-top:clamp(56px,7vw,96px); }
-  .m-date { font-size:var(--step-lead); font-weight:800; line-height:1.2; letter-spacing:-.02em; white-space:nowrap; }
-  .m-title { font-weight:800; margin-top:4px; }
-  .m-body { margin-top:4px; }
-  .m-pics { margin-top:20px; display:grid; gap:12px; }
-  .m-pics.two { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .m-pics img { width:100%; }
-  .m-pics.one { max-width:384px; }
-  .key { background:var(--surface); padding:20px; }
-  .m.key { margin-inline:calc(var(--gutter)*-1); padding:32px var(--gutter); }
-  @media (min-width:900px) {
-    .miles { grid-template-columns:repeat(12,minmax(0,1fr)); gap:clamp(56px,6vw,88px) var(--gutter); align-items:start; }
-    .m { grid-column:span 12; display:grid; grid-template-columns:subgrid; align-items:start; }
-    .m-date { grid-column:span 3; }
-    .m-text { grid-column:span 4; }
-    .m-title { margin-top:0; }
-    .m-pics { grid-column:span 5; margin-top:0; }
-    .mt { grid-column:span 3; }
-    .mt .m-title { margin-top:4px; }
-    .m.key .m-text { grid-column:span 9; }
-  }
+.dg-head { display: grid; gap: var(--space-md); margin-bottom: var(--space-2xl); }
 
-  /* 연락처 */
-  .foot { margin-top:var(--gap); background:var(--surface); padding:clamp(64px,8vw,120px) var(--gutter) 32px; }
-  .foot-links { display:grid; gap:12px; font-size:var(--step-lead); line-height:1.3; align-content:end; }
-  .foot-links > span > span { display:block; color:var(--muted); font-size:var(--step-small); }
-  .foot-links a { color:var(--accent); font-weight:600; overflow-wrap:anywhere; }
-  .foot-links a:hover { color:var(--ink); }
-  .foot-meta { display:flex; flex-wrap:wrap; gap:4px 24px; margin-top:clamp(48px,6vw,88px); color:var(--muted); font-size:var(--step-small); }
+.dg-spec { align-items: start; }
+.dg-spec__head { display: grid; gap: var(--space-lg); justify-items: start; }
+.dg-spec__was { display: block; margin-top: var(--space-xs); font-family: var(--font-body); font-size: var(--text-lg); font-weight: var(--weight-body); text-transform: none; color: var(--color-muted); }
+.dg-facts { list-style: none; width: 100%; border-top: var(--rule-bar) solid var(--color-rule); }
+.dg-facts li { padding-top: var(--space-sm); padding-bottom: var(--space-sm); border-bottom: var(--rule-bar) solid var(--color-rule-soft); }
+.dg-spec__table td.num { font-family: var(--font-display); font-size: var(--text-xl); line-height: 1.2; font-variant-numeric: tabular-nums; }
+
+.dg-screens { grid-template-columns: repeat(6, minmax(0, 1fr)); list-style: none; }
+.dg-screens > li { grid-column: span 3; display: grid; min-width: 0; }
+.dg-screens > .dg-screens__wide { grid-column: span 4; }
+.dg-screens > .dg-screens__side { grid-column: span 2; }
+.dg-shot { border: 0; }
+.dg-shot b { display: block; color: var(--color-ink); }
+
+.dg-sys + .dg-sys { margin-top: var(--space-4xl); }
+.dg-sys h3 { margin-bottom: var(--space-md); }
+.dg-sys__text { display: grid; gap: var(--space-md); align-content: start; }
+.dg-sys__wide { margin-top: var(--space-xl); }
+
+.dg-flow { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); align-items: stretch; }
+.dg-cell { display: grid; gap: var(--space-2xs); align-content: start; padding: var(--space-md); border: var(--rule-bar) solid var(--color-rule); }
+.dg-cell__t { font-weight: var(--weight-strong); font-size: var(--text-lg); line-height: 1.3; }
+.dg-cell__k { font-size: var(--text-sm); font-weight: var(--weight-strong); }
+.dg-cell__d { font-size: var(--text-sm); color: var(--color-muted); }
+.dg-cell--on { background: var(--color-ink); color: var(--color-paper); }
+.dg-cell--on .dg-cell__d { color: var(--color-band-muted); }
+.dg-flow > .dg-cell { position: relative; }
+.dg-cell__arrow { position: absolute; left: 100%; top: 50%; width: var(--space-lg); height: var(--space-lg); margin-left: var(--space-xs); margin-top: calc(var(--space-lg) / -2); color: var(--color-ink); }
+
+.dg-steps { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-sm); margin-top: var(--space-xl); }
+.dg-steps ul { list-style: none; display: grid; gap: var(--space-2xs); }
+
+.dg-meter { width: 100%; }
+.dg-meter td.dg-meter__bar { width: 60%; vertical-align: middle; }
+.dg-fill { display: block; height: var(--space-sm); background: var(--color-ink); }
+
+.dg-strip { margin-top: var(--space-xl); }
+
+.dg-calls { list-style: none; display: grid; gap: var(--space-3xl); }
+.dg-call { align-items: start; padding-top: var(--space-lg); border-top: var(--rule-box) solid var(--color-rule); }
+.dg-call dl { display: grid; gap: var(--space-md); }
+.dg-call dl > div { display: grid; grid-template-columns: minmax(0, 5rem) minmax(0, 1fr); gap: var(--space-md); padding-bottom: var(--space-md); border-bottom: var(--rule-bar) solid var(--color-rule-soft); }
+.dg-call dl > div:last-child { border-bottom: 0; padding-bottom: 0; }
+.dg-call dt { font-size: var(--text-sm); font-weight: var(--weight-strong); padding-top: var(--space-2xs); }
+.dg-call dd { max-width: var(--measure); }
+
+.dg-how { align-items: start; }
+.dg-how .dg-flow { margin-top: var(--space-xl); }
+
+.dg-week { margin-bottom: var(--space-3xl); }
+.dg-week__t { font-weight: var(--weight-strong); font-size: var(--text-lg); }
+.dg-week .muted { font-size: var(--text-sm); margin-top: var(--space-2xs); margin-bottom: var(--space-lg); }
+.dg-bars { list-style: none; display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: var(--space-xs); height: 18rem; border-bottom: var(--rule-box) solid var(--color-rule); }
+.dg-bars > li { position: relative; display: grid; grid-template-rows: minmax(0, 1fr); min-width: 0; height: 100%; }
+.dg-bars__col { display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; min-height: 0; height: 100%; }
+.dg-bars__col b { font-size: var(--text-xs); text-align: center; line-height: 1.6; }
+.dg-bars__col i { display: block; height: var(--v); background: var(--color-ink); color: var(--color-paper); }
+.dg-bars__w { position: absolute; left: 0; right: 0; top: 100%; padding-top: var(--space-xs); font-size: var(--text-xs); color: var(--color-muted); text-align: center; white-space: nowrap; }
+.dg-bars > li:hover .dg-bars__col i, .dg-bars > li:focus-visible .dg-bars__col i { background: var(--color-ink-2); }
+.dg-tip { display: none; position: absolute; left: 50%; bottom: 100%; z-index: var(--z-raised); padding: var(--space-xs) var(--space-sm); transform: translateX(-50%); background: var(--color-ink); color: var(--color-paper); font-size: var(--text-sm); font-weight: var(--weight-strong); white-space: nowrap; }
+.dg-bars > li:hover .dg-tip, .dg-bars > li:focus-visible .dg-tip { display: block; }
+.dg-bars > li:first-child .dg-tip, .dg-bars > li:nth-child(2) .dg-tip { left: 0; transform: none; }
+.dg-bars > li:last-child .dg-tip, .dg-bars > li:nth-last-child(2) .dg-tip { left: auto; right: 0; transform: none; }
+.dg-week__foot { height: var(--space-xl); }
+
+.dg-miles { list-style: none; }
+.dg-mile { align-items: start; padding-top: var(--space-lg); padding-bottom: var(--space-xl); border-top: var(--rule-bar) solid var(--color-rule-soft); }
+.dg-mile--key { border-top: var(--rule-box) solid var(--color-rule); }
+.dg-mile__date { font-family: var(--font-display); font-weight: var(--display-weight); font-size: var(--text-xl); line-height: 1.2; font-variant-numeric: tabular-nums; }
+.dg-mile__text { display: grid; gap: var(--space-xs); }
+.dg-mile__title { font-weight: var(--weight-strong); font-size: var(--text-lg); line-height: 1.3; }
+.dg-mile__pics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-xs); }
+
+.dg-mile__pics img { width: 100%; height: auto; aspect-ratio: var(--plate-ratio); object-fit: cover; border: var(--rule-bar) solid var(--color-rule); }
+
+@media (min-width: 60.0625rem) {
+  .dg-hero { display: grid; align-items: center; min-height: calc(100svh - var(--nav-h)); }
+  .dg-mile__date { grid-column: span 3; }
+}
+@media (max-width: 60rem) {
+  .dg-hero__plate { order: -1; }
+  .dg-screens > li, .dg-screens > .dg-screens__wide, .dg-screens > .dg-screens__side { grid-column: span 3; }
+  .dg-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dg-flow { grid-template-columns: minmax(0, 1fr); }
+  .dg-cell__arrow { left: 50%; top: 100%; margin-left: calc(var(--space-lg) / -2); margin-top: var(--space-xs); transform: rotate(90deg); }
+  .dg-sys + .dg-sys { margin-top: var(--space-3xl); }
+}
+@media (max-width: 40rem) {
+  .dg-screens > li, .dg-screens > .dg-screens__wide, .dg-screens > .dg-screens__side { grid-column: 1 / -1; }
+  .dg-steps { grid-template-columns: minmax(0, 1fr); }
+  .dg-bars { grid-template-columns: minmax(0, 1fr); height: auto; gap: var(--space-2xs); border-bottom: 0; }
+  .dg-bars > li { grid-template-columns: minmax(0, 3.5rem) minmax(0, 1fr); align-items: center; height: auto; }
+  .dg-bars__w { position: static; order: -1; padding-top: 0; text-align: left; }
+  .dg-bars__col { flex-direction: row-reverse; justify-content: flex-end; align-items: center; gap: var(--space-xs); height: auto; }
+  .dg-bars__col i { height: var(--space-md); width: var(--v); }
+  .dg-bars__col b { line-height: 1.2; }
+  .dg-tip, .dg-bars > li:hover .dg-tip, .dg-bars > li:focus-visible .dg-tip { display: none; }
+  .dg-week__foot { display: none; }
+  .dg-call dl > div { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); }
+}
+/* 첫 화면 한 장 안에: 데스크톱에서 히어로 그림을 2:1로 */
+@media (min-width: 60rem) { .dg-hero__plate { --plate-ratio: 2 / 1; } }
 </style>
 </head>
 <body>
+<a class="skip" href="#top">본문으로 건너뛰기</a>
+<nav id="nav" class="nav" aria-label="주 메뉴">
+  <div class="nav__in container">
+    <a class="nav__brand" href="plety.html">장성웅</a>
+    <ul class="nav__links">
+      <li><a href="#screens">게임 화면</a></li>
+      <li><a href="#systems">핵심 시스템</a></li>
+      <li><a href="#timeline">개발 기록</a></li>
+      <li><a href="plety.html">포트폴리오</a></li>
+    </ul>
+    <a class="btn btn--primary nav__cta" href="resume.pdf" target="_blank" rel="noopener">이력서 PDF</a>
+    <details class="nav__menu">
+      <summary>메뉴</summary>
+      <ul>
+        <li><a href="#screens">게임 화면</a></li>
+        <li><a href="#systems">핵심 시스템</a></li>
+        <li><a href="#timeline">개발 기록</a></li>
+        <li><a href="plety.html">포트폴리오</a></li>
+      </ul>
+    </details>
+  </div>
+</nav>
 
-  <!-- ===== NAV ===== -->
-  <nav id="nav" class="nav">
-    <a href="plety.html" class="nav-name">장성웅</a>
-    <div class="nav-links">
-      <a href="#screens" class="nav-sec">게임 화면</a>
-      <a href="#systems" class="nav-sec">핵심 시스템</a>
-      <a href="#timeline" class="nav-sec">개발 기록</a>
-      <a href="plety.html">← 포트폴리오</a>
-    </div>
-  </nav>
+<main id="top">
 
-  <main>
-
-    <!-- ===== HERO ===== -->
-    <section class="hero">
-      <div class="hero-copy">
-        <div>
-          <h1 class="rise">위산이 차오르는 몸속에서 살아남는 2~4인 협동 액션</h1>
-          <p class="hero-lede prose rise">
-            위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 동료와 함께 탈출구까지 살아남는 온라인 협동 게임입니다.
-          </p>
-          <p class="hero-sub prose note rise">
-            기획·설계 1인(구현은 AI 도구 위주) · 모델링 1인 협업 · Unity 6 · URP · Netcode for GameObjects + Relay
-          </p>
+  <!-- 첫 화면: Stage -->
+  <section class="dg-hero" aria-labelledby="hero-h">
+    <div class="container g12 dg-hero__grid">
+      <h1 id="hero-h" class="c-12 dg-hero__h"><span>위산이 차오르는 몸속에서</span> <span>살아남는 2~4인 협동 액션</span></h1>
+      <div class="c-5 dg-hero__text">
+        <p class="lead">위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 동료와 함께 탈출구까지 살아남는 온라인 협동 게임입니다.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="#screens">게임 화면 보기</a>
         </div>
-        <p class="hero-name rise">Digestor · 개발 과정 <span>(이전 이름 Pill Agents)</span></p>
       </div>
-      <figure class="hero-fig">
-        <img class="hero-pic" src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 — 약장 선반 위의 3D 타이틀과 메뉴" width="1600" height="1001">
-        <figcaption class="hero-cap note">메인 메뉴 — 약장 선반에 놓인 3D 타이틀. 메뉴도 화면 UI가 아니라 공간 안에 있습니다.</figcaption>
+      <figure class="c-7 plate dg-hero__plate">
+        <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 — 약장 선반 위의 3D 타이틀과 메뉴" width="1600" height="1001" fetchpriority="high">
+        <figcaption>메인 메뉴: 약장 선반에 놓인 3D 타이틀. 메뉴도 화면 UI가 아니라 공간 안에 있습니다.</figcaption>
       </figure>
-    </section>
+    </div>
+  </section>
 
-    <section class="stats">
-      <dl>
-        <div class="rise"><dt>구현</dt><dd>AI 위주</dd></div>
-        <div class="rise"><dt>C# 코드</dt><dd>155,469<span>줄</span></dd></div>
-        <div class="rise"><dt>커밋</dt><dd>1,217<span>회</span></dd></div>
-        <div class="rise"><dt>자동 테스트</dt><dd>689<span>건</span></dd></div>
-        <div class="rise"><dt>개발 기간</dt><dd>93<span>일</span></dd></div>
-      </dl>
-      <p class="note">git 저장소 기준, 2026-10-15 집계. 개발 중(버전 0.4.63).</p>
-    </section>
+  <!-- 사양표 -->
+  <section class="section ruled" aria-labelledby="spec-h">
+    <div class="container g12 dg-spec">
+      <div class="c-5 dg-spec__head">
+        <h2 id="spec-h">Digestor 개발 과정 <span class="dg-spec__was">(이전 이름 Pill Agents)</span></h2>
+        <span class="chip chip--dev">개발 중</span>
+        <ul class="dg-facts">
+          <li>기획·설계 1인(구현은 AI 도구 위주)</li>
+          <li>모델링 1인 협업</li>
+          <li>Unity 6, URP</li>
+          <li>Netcode for GameObjects + Relay</li>
+        </ul>
+      </div>
+      <div class="c-7">
+        <table class="table dg-spec__table">
+          <caption>git 저장소 기준, 2026-10-15 집계. 개발 중(버전 0.4.63).</caption>
+          <tbody>
+            <tr><th scope="row">구현</th><td class="num">AI 위주</td></tr>
+            <tr><th scope="row">C# 코드</th><td class="num">155,469줄</td></tr>
+            <tr><th scope="row">커밋</th><td class="num">1,217회</td></tr>
+            <tr><th scope="row">자동 테스트</th><td class="num">689건</td></tr>
+            <tr><th scope="row">개발 기간</th><td class="num">93일</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-    <!-- ===== SCREENS ===== -->
-    <section id="screens" class="sec">
-      <h2 class="rise">게임 화면</h2>
-      <p class="sec-lede prose rise">한 판의 흐름 순서로 놓았습니다. 아직 그레이박스 단계라 일부 재질과 조명은 임시입니다.</p>
-
-      <ol class="screens">
-        <li class="wide s-lobby rise"><figure>
+  <!-- 게임 화면 -->
+  <section id="screens" class="section" aria-labelledby="screens-h">
+    <div class="container">
+      <div class="dg-head">
+        <h2 id="screens-h">게임 화면</h2>
+        <p>한 판의 흐름 순서로 놓았습니다. 아직 그레이박스 단계라 일부 재질과 조명은 임시입니다.</p>
+      </div>
+      <ol class="plate-grid dg-screens">
+        <li class="dg-screens__wide"><figure class="plate dg-shot">
           <img src="assets/digestor/lobby.jpg" alt="약국 카운터 로비와 방 만들기·초대 코드 창" width="1600" height="1000" loading="lazy">
-          <figcaption class="cap"><b>로비</b> <span>약국 카운터에서 방을 만들고 초대 코드(Relay)로 참가합니다. 참가자는 스툴에 한 명씩 앉습니다.</span></figcaption>
+          <figcaption><b>로비</b> <span>약국 카운터에서 방을 만들고 초대 코드(Relay)로 참가합니다. 참가자는 스툴에 한 명씩 앉습니다.</span></figcaption>
         </figure></li>
-        <li class="small side s-hub rise"><figure>
+        <li class="dg-screens__side"><figure class="plate dg-shot">
           <img src="assets/digestor/hub.jpg" alt="3D 메타 허브 — 약국 카운터와 작업대, 캡슐 포드" width="438" height="274" loading="lazy">
-          <figcaption class="cap"><b>메타 허브</b> <span>약국 카운터·작업대·캡슐 포드를 3D 공간에서 조작해 처방·모듈·코스메틱을 해금합니다.</span></figcaption>
+          <figcaption><b>메타 허브</b> <span>약국 카운터·작업대·캡슐 포드를 3D 공간에서 조작해 처방·모듈·코스메틱을 해금합니다.</span></figcaption>
         </figure></li>
-        <li class="wide s-tut rise"><figure>
+        <li><figure class="plate dg-shot">
           <img src="assets/digestor/tutorial.jpg" alt="튜토리얼 훈련실 — 도구를 든 1인칭 시점과 햄버거 음식물 더미" width="1600" height="1000" loading="lazy">
-          <figcaption class="cap"><b>튜토리얼 훈련실</b> <span>메인 메뉴 옆 훈련실에서 도구 사용과 음식물 처리를 익힙니다(버전 0.4.0).</span></figcaption>
+          <figcaption><b>튜토리얼 훈련실</b> <span>메인 메뉴 옆 훈련실에서 도구 사용과 음식물 처리를 익힙니다(버전 0.4.0).</span></figcaption>
         </figure></li>
-        <li class="wide s-bat rise"><figure>
+        <li><figure class="plate dg-shot">
           <img src="assets/digestor/battery.jpg" alt="정전 튜토리얼 — 배터리 랙과 HUD" width="1600" height="1000" loading="lazy">
-          <figcaption class="cap"><b>정전 · 배터리</b> <span>손전등·무전·스캐너가 배터리 1개를 공유합니다. 랙에서 배터리를 집어 교체하는 단계입니다.</span></figcaption>
+          <figcaption><b>정전, 배터리</b> <span>손전등·무전·스캐너가 배터리 1개를 공유합니다. 랙에서 배터리를 집어 교체하는 단계입니다.</span></figcaption>
         </figure></li>
-        <li class="small side s-half rise"><figure>
+        <li><figure class="plate dg-shot">
           <img src="assets/digestor/stomach.jpg" alt="위 속 본게임 — 위벽과 위산 웅덩이, 음식물 더미" width="438" height="274" loading="lazy">
-          <figcaption class="cap"><b>위 속 본게임</b> <span>위산 파도를 피하며 음식물 더미를 부수고 미션을 완수합니다.</span></figcaption>
+          <figcaption><b>위 속 본게임</b> <span>위산 파도를 피하며 음식물 더미를 부수고 미션을 완수합니다.</span></figcaption>
         </figure></li>
-        <li class="small side s-half rise"><figure>
+        <li><figure class="plate dg-shot">
           <img src="assets/digestor/boss.jpg" alt="기생충 보스 — 몸에 붙은 구슬이 발광하는 장면" width="438" height="274" loading="lazy">
-          <figcaption class="cap"><b>기생충 보스</b> <span>몸에 붙은 구슬(흡반·가스낭)이 빛나면 열린 상태입니다. 구슬을 때려 그로기를 만듭니다.</span></figcaption>
+          <figcaption><b>기생충 보스</b> <span>몸에 붙은 구슬(흡반·가스낭)이 빛나면 열린 상태입니다. 구슬을 때려 그로기를 만듭니다.</span></figcaption>
         </figure></li>
       </ol>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== SYSTEMS ===== -->
-    <section id="systems" class="sec">
-      <h2 class="rise">핵심 시스템</h2>
+  <!-- 핵심 시스템 -->
+  <section id="systems" class="section" aria-labelledby="systems-h">
+    <div class="container">
+      <div class="dg-head">
+        <h2 id="systems-h">핵심 시스템</h2>
+      </div>
 
       <!-- 서버 권위 -->
-      <div class="sys g12">
-        <div class="c5 rise">
+      <div class="dg-sys g12">
+        <div class="c-5 dg-sys__text">
           <h3>서버 권위 네트워킹</h3>
-          <p class="prose">
-            Netcode for GameObjects와 Unity Relay로 서버가 게임 상태를 판정하고, 이동만 오너 클라이언트가 냅니다.
-            판정은 물리 콜백(OnTriggerEnter 계열)을 하나도 쓰지 않고 SphereCast·OverlapSphere로 매 프레임 검사해, 네트워크 동기화와 콜백 타이밍이 어긋나는 버그를 설계 단계에서 막았습니다.
-          </p>
+          <p>Netcode for GameObjects와 Unity Relay로 서버가 게임 상태를 판정하고, 이동만 오너 클라이언트가 냅니다.
+            판정은 물리 콜백(OnTriggerEnter 계열)을 하나도 쓰지 않고 SphereCast·OverlapSphere로 매 프레임 검사해, 네트워크 동기화와 콜백 타이밍이 어긋나는 버그를 설계 단계에서 막았습니다.</p>
         </div>
-        <div class="flow c7 rise" role="img" aria-label="클라이언트 입력에서 서버 판정을 거쳐 모든 클라이언트로 결과가 동기화되는 흐름">
-          <div class="flow-box">
-            <p class="flow-k">클라이언트 (오너)</p>
-            <p class="flow-t">입력 · 이동</p>
-            <p class="flow-d">도구 사용은 요청만 보냄</p>
-          </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box on">
-            <p class="flow-k">서버 (Relay 호스트)</p>
-            <p class="flow-t">판정 · 상태 결정</p>
-            <p class="flow-d">SphereCast·OverlapSphere 매 프레임 검사</p>
-          </div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-box">
-            <p class="flow-k">모든 클라이언트</p>
-            <p class="flow-t">결과 동기화 · 연출</p>
-            <p class="flow-d">2~4인이 같은 결과를 봄</p>
-          </div>
-        </div>
+        <ol class="c-7 dg-flow" aria-label="클라이언트 입력에서 서버 판정을 거쳐 모든 클라이언트로 결과가 동기화되는 흐름">
+          <li class="dg-cell">
+            <svg class="dg-cell__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 12h16M13 6l6 6-6 6"/></svg>
+            <p class="dg-cell__k">클라이언트 (오너)</p>
+            <p class="dg-cell__t">입력, 이동</p>
+            <p class="dg-cell__d">도구 사용은 요청만 보냄</p>
+          </li>
+          <li class="dg-cell dg-cell--on">
+            <svg class="dg-cell__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 12h16M13 6l6 6-6 6"/></svg>
+            <p class="dg-cell__k">서버 (Relay 호스트)</p>
+            <p class="dg-cell__t">판정, 상태 결정</p>
+            <p class="dg-cell__d">SphereCast·OverlapSphere 매 프레임 검사</p>
+          </li>
+          <li class="dg-cell">
+            <p class="dg-cell__k">모든 클라이언트</p>
+            <p class="dg-cell__t">결과 동기화, 연출</p>
+            <p class="dg-cell__d">2~4인이 같은 결과를 봄</p>
+          </li>
+        </ol>
       </div>
 
       <!-- 그로기 -->
-      <div class="sys">
+      <div class="dg-sys">
         <div class="g12">
-          <div class="c7 rise">
-            <h3>보스 그로기 — 팀이 딜 창을 만든다</h3>
-            <p class="prose">
-              코어가 열리는 시간을 보스 스케줄에만 맡기면 팀이 할 수 있는 건 기다리는 것뿐입니다.
-              그래서 몸에 붙은 구슬을 두들겨 그로기 게이지를 깎으면 보스가 무너지는 구조를 설계했습니다. 기생충 보스는 3페이즈 상태머신으로 돌아갑니다.
-            </p>
+          <div class="c-7 dg-sys__text">
+            <h3>보스 그로기: 팀이 딜 창을 만든다</h3>
+            <p>코어가 열리는 시간을 보스 스케줄에만 맡기면 팀이 할 수 있는 건 기다리는 것뿐입니다.
+              그래서 몸에 붙은 구슬을 두들겨 그로기 게이지를 깎으면 보스가 무너지는 구조를 설계했습니다. 기생충 보스는 3페이즈 상태머신으로 돌아갑니다.</p>
           </div>
-          <div class="c5 sys-after rise">
-            <p class="meter-t">부위별 그로기 축적 효율 — 구슬을 노리면 몸통보다 5배 이득</p>
-            <div class="meter">
-              <div class="meter-row"><b>구슬</b><i style="width:60%"></i><span>1</span></div>
-              <div class="meter-row"><b>코어</b><i style="width:30%"></i><span>0.5</span></div>
-              <div class="meter-row"><b>몸통</b><i style="width:12%"></i><span>0.2</span></div>
-            </div>
+          <div class="c-5">
+            <table class="table dg-meter">
+              <caption>부위별 그로기 축적 효율: 구슬을 노리면 몸통보다 5배 이득</caption>
+              <tbody>
+                <tr><th scope="row">구슬</th><td class="dg-meter__bar"><span class="dg-fill" style="width:60%"></span></td><td class="num">1</td></tr>
+                <tr><th scope="row">코어</th><td class="dg-meter__bar"><span class="dg-fill" style="width:30%"></span></td><td class="num">0.5</td></tr>
+                <tr><th scope="row">몸통</th><td class="dg-meter__bar"><span class="dg-fill" style="width:12%"></span></td><td class="num">0.2</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <ol class="grog">
-          <li class="flow-box rise"><p class="flow-t">구슬 타격</p><p class="flow-d">흡반 4 · 가스낭 3</p></li>
-          <li class="flow-box rise"><p class="flow-t">그로기 게이지 감소</p><p class="flow-d">부위가 닫혀 있어도 쌓임</p></li>
-          <li class="flow-box on rise"><p class="flow-t">9초간 무너짐</p><p class="flow-d">코어 상시 노출 · 받는 피해 ×1.5 · 패턴 정지</p></li>
-          <li class="flow-box rise"><p class="flow-t">필요량 증가</p><p class="flow-d">반복할수록 어려워져 무한 반복 차단</p></li>
+        <ol class="dg-steps" aria-label="그로기 순서">
+          <li class="dg-cell"><p class="dg-cell__t">구슬 타격</p><p class="dg-cell__d">흡반 4, 가스낭 3</p></li>
+          <li class="dg-cell"><p class="dg-cell__t">그로기 게이지 감소</p><p class="dg-cell__d">부위가 닫혀 있어도 쌓임</p></li>
+          <li class="dg-cell dg-cell--on"><p class="dg-cell__t">9초간 무너짐</p>
+            <ul class="dg-cell__d"><li>코어 상시 노출</li><li>받는 피해 ×1.5</li><li>패턴 정지</li></ul></li>
+          <li class="dg-cell"><p class="dg-cell__t">필요량 증가</p><p class="dg-cell__d">반복할수록 어려워져 무한 반복 차단</p></li>
         </ol>
       </div>
 
       <!-- 아트 파이프라인 -->
-      <div class="sys">
-        <h3 class="rise">폴백 세이프 아트 파이프라인</h3>
-        <p class="prose rise">
-          지형·소품은 코드가 절차 생성한 로우폴리 메시를 기본으로 두고, 블렌더 모델이 준비되면 슬롯에서 교체합니다. 모델이 없어도 게임은 항상 돌아갑니다.
-          들여온 음식·액세서리 모델은 아래처럼 단계별로 캡처해 확인했습니다.
-        </p>
-        <figure class="strip rise">
+      <div class="dg-sys">
+        <div class="g12">
+          <div class="c-8 dg-sys__text">
+            <h3>폴백 세이프 아트 파이프라인</h3>
+            <p>지형·소품은 코드가 절차 생성한 로우폴리 메시를 기본으로 두고, 블렌더 모델이 준비되면 슬롯에서 교체합니다. 모델이 없어도 게임은 항상 돌아갑니다.
+              들여온 음식·액세서리 모델은 아래처럼 단계별로 캡처해 확인했습니다.</p>
+          </div>
+        </div>
+        <figure class="plate dg-strip">
           <img src="assets/digestor/food-fracture.jpg" alt="햄버거 음식물 모델의 원본·손상·파괴 단계 비교" width="1600" height="415" loading="lazy">
-          <figcaption class="note cap">음식물 파괴 단계 — 원본 → 손상 → 조각</figcaption>
+          <figcaption>음식물 파괴 단계: 원본 → 손상 → 조각</figcaption>
         </figure>
       </div>
 
       <!-- 코드 구성 -->
-      <div class="sys g12">
-        <figure class="c6 rise">
+      <div class="dg-sys g12">
+        <figure class="c-6 plate">
           <img src="assets/digestor/cosmetics.jpg" alt="알약 요원 캐릭터에 배지 액세서리를 붙인 모습" width="1400" height="700" loading="lazy">
-          <figcaption class="note cap">코스메틱 액세서리 부착 확인</figcaption>
+          <figcaption>코스메틱 액세서리 부착 확인</figcaption>
         </figure>
-        <div class="c6">
-          <h3 class="rise">코드 구성</h3>
-          <p class="prose rise">
-            런타임·에디터·테스트를 세 어셈블리(IntoStomach.Runtime / .Editor / .Tests)로 나눴습니다. 게임 코드 449개 파일, 테스트 76개 파일입니다.
-            체력·타이머·도구 위력 같은 수치는 GameBalanceConfig 한 파일에서만 읽고, 코드에 수치를 직접 박으면 정합 검사에서 걸립니다.
-          </p>
-          <div class="rise" style="margin-top:32px">
-            <p class="meter-t">폴더별 게임 코드 파일 수</p>
-            <div class="meter" id="folders"></div>
-          </div>
+        <div class="c-6 dg-sys__text">
+          <h3>코드 구성</h3>
+          <p>런타임·에디터·테스트를 세 어셈블리(IntoStomach.Runtime / .Editor / .Tests)로 나눴습니다. 게임 코드 449개 파일, 테스트 76개 파일입니다.
+            체력·타이머·도구 위력 같은 수치는 GameBalanceConfig 한 파일에서만 읽고, 코드에 수치를 직접 박으면 정합 검사에서 걸립니다.</p>
+          <table class="table dg-meter dg-sys__wide">
+            <caption>폴더별 게임 코드 파일 수</caption>
+            <tbody id="folders">
+              <tr><th scope="row">Editor</th><td class="dg-meter__bar"><span class="dg-fill" style="width:100%"></span></td><td class="num">98</td></tr>
+              <tr><th scope="row">World</th><td class="dg-meter__bar"><span class="dg-fill" style="width:92.9%"></span></td><td class="num">91</td></tr>
+              <tr><th scope="row">Core</th><td class="dg-meter__bar"><span class="dg-fill" style="width:76.5%"></span></td><td class="num">75</td></tr>
+              <tr><th scope="row">UI</th><td class="dg-meter__bar"><span class="dg-fill" style="width:69.4%"></span></td><td class="num">68</td></tr>
+              <tr><th scope="row">Player</th><td class="dg-meter__bar"><span class="dg-fill" style="width:44.9%"></span></td><td class="num">44</td></tr>
+              <tr><th scope="row">Enemies</th><td class="dg-meter__bar"><span class="dg-fill" style="width:34.7%"></span></td><td class="num">34</td></tr>
+              <tr><th scope="row">Tools</th><td class="dg-meter__bar"><span class="dg-fill" style="width:10.2%"></span></td><td class="num">10</td></tr>
+              <tr><th scope="row">Voice</th><td class="dg-meter__bar"><span class="dg-fill" style="width:4.1%"></span></td><td class="num">4</td></tr>
+              <tr><th scope="row">기타</th><td class="dg-meter__bar"><span class="dg-fill" style="width:3.1%"></span></td><td class="num">3</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== DECISIONS ===== -->
-    <section class="sec field">
-      <h2 class="rise">개발 중 내린 엔지니어링 판단 세 가지</h2>
-
-      <ol class="deck">
-        <li><article>
-          <h3 class="rise">물리 콜백 0건 원칙에 예외를 하나만 둔 이유</h3>
-          <div class="dcols">
-            <p class="rise"><strong>문제</strong>부서진 음식 조각(FoodPieceDebris)에 손수 만든 낙하 로직을 적용하자 조각이 공중에 멈추고, 바닥에서는 서로 파고드는 버그가 실제로 났습니다.</p>
-            <p class="rise"><strong>대안</strong>레이캐스트와 반경 겹침 해소 로직을 계속 보완해 원칙을 지킬지, 문제가 난 음식 조각만 동적 리지드바디에 맡길지를 비교했습니다.</p>
-            <p class="rise"><strong>선택</strong>실제로 동작하는 결과를 우선하되, 예외가 번지지 않도록 FoodPieceDebris 한 경우에만 동적 리지드바디를 허용했습니다. 이 조각은 NetworkObject가 아니고 서버가 위치를 정하지 않아 금지의 근거가 해당하지 않습니다.</p>
-          </div>
-        </article></li>
-
-        <li><article>
-          <h3 class="rise">보스 크기를 높이가 아니라 몸 길이로 역산한 이유</h3>
-          <div class="dcols">
-            <p class="rise"><strong>문제</strong>보스는 기어가는 바인드 포즈에서 4.0m, 몸을 세운 자세에서 6.4m로 높이가 달라, 한 자세를 기준으로 잡으면 다른 자세의 크기가 어긋났습니다.</p>
-            <p class="rise"><strong>대안</strong>4.0m의 기어가는 자세와 6.4m의 세운 자세 중 하나를 높이 기준으로 삼는 방법과, 자세에 덜 흔들리는 몸 길이를 기준으로 삼는 방법을 비교했습니다.</p>
-            <p class="rise"><strong>선택</strong>높이 대신 몸 길이를 기준으로 잡고, 납품 규격 전장 20m를 아레나에서 존재감이 나오는 40m로 키운 값에서 스케일을 역산했습니다. 자세가 바뀌어도 크기가 일관되게 보입니다.</p>
-          </div>
-        </article></li>
-
-        <li><article>
-          <h3 class="rise">임포터 캐시로 코드 수정이 조용히 안 먹던 문제를 잡은 과정</h3>
-          <div class="dcols">
-            <p class="rise"><strong>문제</strong>스케일 커브 규칙을 고친 뒤에도 임포터 버전이 그대로여서 며칠간 캐시된 옛 결과가 쓰였고, 캐릭터 애니메이션 클립 43개가 모두 낡은 상태였습니다.</p>
-            <p class="rise"><strong>대안</strong>필요할 때마다 강제 재임포트를 기억해서 실행할지, 임포터 코드가 바뀔 때 버전 번호도 함께 올려 캐시를 무효화할지를 비교했습니다.</p>
-            <p class="rise"><strong>선택</strong>AI 도구와 함께 강제 재임포트 때 유니티가 낸 불일치 경고를 따라가 원인을 찾았고, 같은 문제가 조용히 반복되지 않도록 임포터를 고치면 버전 번호를 반드시 올리는 규칙을 AI 도구가 매번 읽는 프로젝트 지침 문서에 적었습니다.</p>
-          </div>
-        </article></li>
-      </ol>
-    </section>
-
-    <!-- ===== HOW ===== -->
-    <section class="sec g12">
-      <div class="c6">
-        <h2 class="rise">설계·구현·검증을 나눈 개발 방식</h2>
-        <p class="sec-lede prose rise">
-          한 에이전트에 모든 판단을 맡기지 않고 구현 전후의 검토 역할을 나눴습니다. 이 에이전트들은 사람 팀원이 아니라 기획·프로그래밍 작업에서 쓴 도구입니다.
-        </p>
+  <!-- 엔지니어링 판단 -->
+  <section class="section band band--paper" aria-labelledby="calls-h">
+    <div class="container">
+      <div class="dg-head">
+        <h2 id="calls-h">개발 중 내린 엔지니어링 판단 세 가지</h2>
       </div>
-      <ol class="chain c6">
-        <li class="flow-box rise">
-          <p class="flow-t">Claude Code</p>
-          <p class="flow-k">설계 · 통합 · 최종 검토</p>
-          <p class="flow-d">전체 설계를 세우고 결과를 통합</p>
+      <ol class="dg-calls">
+        <li><article class="dg-call g12">
+          <h3 class="c-4">물리 콜백 0건 원칙에 예외를 하나만 둔 이유</h3>
+          <dl class="c-8">
+            <div><dt>문제</dt><dd>부서진 음식 조각(FoodPieceDebris)에 손수 만든 낙하 로직을 적용하자 조각이 공중에 멈추고, 바닥에서는 서로 파고드는 버그가 실제로 났습니다.</dd></div>
+            <div><dt>대안</dt><dd>레이캐스트와 반경 겹침 해소 로직을 계속 보완해 원칙을 지킬지, 문제가 난 음식 조각만 동적 리지드바디에 맡길지를 비교했습니다.</dd></div>
+            <div><dt>선택</dt><dd>실제로 동작하는 결과를 우선하되, 예외가 번지지 않도록 FoodPieceDebris 한 경우에만 동적 리지드바디를 허용했습니다. 이 조각은 NetworkObject가 아니고 서버가 위치를 정하지 않아 금지의 근거가 해당하지 않습니다.</dd></div>
+          </dl>
+        </article></li>
+        <li><article class="dg-call g12">
+          <h3 class="c-4">보스 크기를 높이가 아니라 몸 길이로 역산한 이유</h3>
+          <dl class="c-8">
+            <div><dt>문제</dt><dd>보스는 기어가는 바인드 포즈에서 4.0m, 몸을 세운 자세에서 6.4m로 높이가 달라, 한 자세를 기준으로 잡으면 다른 자세의 크기가 어긋났습니다.</dd></div>
+            <div><dt>대안</dt><dd>4.0m의 기어가는 자세와 6.4m의 세운 자세 중 하나를 높이 기준으로 삼는 방법과, 자세에 덜 흔들리는 몸 길이를 기준으로 삼는 방법을 비교했습니다.</dd></div>
+            <div><dt>선택</dt><dd>높이 대신 몸 길이를 기준으로 잡고, 납품 규격 전장 20m를 아레나에서 존재감이 나오는 40m로 키운 값에서 스케일을 역산했습니다. 자세가 바뀌어도 크기가 일관되게 보입니다.</dd></div>
+          </dl>
+        </article></li>
+        <li><article class="dg-call g12">
+          <h3 class="c-4">임포터 캐시로 코드 수정이 조용히 안 먹던 문제를 잡은 과정</h3>
+          <dl class="c-8">
+            <div><dt>문제</dt><dd>스케일 커브 규칙을 고친 뒤에도 임포터 버전이 그대로여서 며칠간 캐시된 옛 결과가 쓰였고, 캐릭터 애니메이션 클립 43개가 모두 낡은 상태였습니다.</dd></div>
+            <div><dt>대안</dt><dd>필요할 때마다 강제 재임포트를 기억해서 실행할지, 임포터 코드가 바뀔 때 버전 번호도 함께 올려 캐시를 무효화할지를 비교했습니다.</dd></div>
+            <div><dt>선택</dt><dd>AI 도구와 함께 강제 재임포트 때 유니티가 낸 불일치 경고를 따라가 원인을 찾았고, 같은 문제가 조용히 반복되지 않도록 임포터를 고치면 버전 번호를 반드시 올리는 규칙을 AI 도구가 매번 읽는 프로젝트 지침 문서에 적었습니다.</dd></div>
+          </dl>
+        </article></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 설계·구현·검증 -->
+  <section class="section" aria-labelledby="how-h">
+    <div class="container g12 dg-how">
+      <div class="c-7 dg-sys__text">
+        <h2 id="how-h">설계·구현·검증을 나눈 개발 방식</h2>
+        <p>한 에이전트에 모든 판단을 맡기지 않고 구현 전후의 검토 역할을 나눴습니다. 이 에이전트들은 사람 팀원이 아니라 기획·프로그래밍 작업에서 쓴 도구입니다.</p>
+      </div>
+      <ol class="c-12 dg-flow" aria-label="설계에서 구현을 거쳐 검증으로 넘어가는 역할 분담">
+        <li class="dg-cell">
+            <svg class="dg-cell__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 12h16M13 6l6 6-6 6"/></svg>
+          <p class="dg-cell__t">Claude Code</p>
+          <p class="dg-cell__k">설계, 통합, 최종 검토</p>
+          <p class="dg-cell__d">전체 설계를 세우고 결과를 통합</p>
         </li>
-        <li class="flow-arrow" aria-hidden="true">→</li>
-        <li class="flow-box rise">
-          <p class="flow-t">Codex</p>
-          <p class="flow-k">구현</p>
-          <p class="flow-d">범위를 좁힌 쓰기 권한만 부여</p>
+        <li class="dg-cell">
+            <svg class="dg-cell__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 12h16M13 6l6 6-6 6"/></svg>
+          <p class="dg-cell__t">Codex</p>
+          <p class="dg-cell__k">구현</p>
+          <p class="dg-cell__d">범위를 좁힌 쓰기 권한만 부여</p>
         </li>
-        <li class="flow-arrow" aria-hidden="true">→</li>
-        <li class="flow-box rise">
-          <p class="flow-t">verifier</p>
-          <p class="flow-k">구현 후 검증</p>
-          <p class="flow-d">구현자와 검증자를 나눠 같은 맹점 차단</p>
+        <li class="dg-cell">
+          <p class="dg-cell__t">verifier</p>
+          <p class="dg-cell__k">구현 후 검증</p>
+          <p class="dg-cell__d">구현자와 검증자를 나눠 같은 맹점 차단</p>
         </li>
       </ol>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== TIMELINE ===== -->
-    <section id="timeline" class="sec">
-      <h2 class="rise">개발 기록</h2>
-      <p class="sec-lede prose rise">
-        2026-07-15 첫 커밋부터 10-15까지 93일간 1,217커밋. 최다 커밋일은 09-21의 48건이고, 커밋이 없는 날은 13일이었습니다.
-      </p>
+  <!-- 개발 기록 -->
+  <section id="timeline" class="section ruled" aria-labelledby="timeline-h">
+    <div class="container">
+      <div class="dg-head">
+        <h2 id="timeline-h">개발 기록</h2>
+        <p>2026-07-15 첫 커밋부터 10-15까지 93일간 1,217커밋. 최다 커밋일은 09-21의 48건이고, 커밋이 없는 날은 13일이었습니다.</p>
+      </div>
 
-      <!-- 주간 커밋 차트 -->
-      <figure class="week rise">
-        <figcaption class="week-t">주별 커밋 수</figcaption>
-        <p class="note">막대에 마우스를 올리면 주와 커밋 수가 보입니다. 마지막 주는 10-15까지.</p>
-        <div class="bars-wrap">
-          <div class="bars" id="bars"></div>
-        </div>
-        <div class="barlabels" id="barlabels"></div>
-        <table class="sr-only">
-          <caption>주별 커밋 수</caption>
-          <tbody id="bartable"></tbody>
-        </table>
+      <figure class="dg-week">
+        <figcaption>
+          <p class="dg-week__t">주별 커밋 수</p>
+          <p class="muted">막대에 마우스를 올리면 주와 커밋 수가 보입니다. 마지막 주는 10-15까지.</p>
+        </figcaption>
+        <ol class="dg-bars" id="bars" aria-label="주별 커밋 수">
+          <li tabindex="0" aria-label="07-13 주 41커밋" style="--v:26.2%"><span class="dg-bars__col"><b>41</b><i></i></span><span class="dg-bars__w">07-13</span><span class="dg-tip" aria-hidden="true">07-13 주 41커밋</span></li>
+          <li tabindex="0" aria-label="07-20 주 92커밋" style="--v:58.8%"><span class="dg-bars__col"><b>92</b><i></i></span><span class="dg-bars__w">07-20</span><span class="dg-tip" aria-hidden="true">07-20 주 92커밋</span></li>
+          <li tabindex="0" aria-label="07-27 주 91커밋" style="--v:58.2%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">07-27</span><span class="dg-tip" aria-hidden="true">07-27 주 91커밋</span></li>
+          <li tabindex="0" aria-label="08-03 주 116커밋" style="--v:74.1%"><span class="dg-bars__col"><b>116</b><i></i></span><span class="dg-bars__w">08-03</span><span class="dg-tip" aria-hidden="true">08-03 주 116커밋</span></li>
+          <li tabindex="0" aria-label="08-10 주 51커밋" style="--v:32.6%"><span class="dg-bars__col"><b>51</b><i></i></span><span class="dg-bars__w">08-10</span><span class="dg-tip" aria-hidden="true">08-10 주 51커밋</span></li>
+          <li tabindex="0" aria-label="08-17 주 34커밋" style="--v:21.7%"><span class="dg-bars__col"><b>34</b><i></i></span><span class="dg-bars__w">08-17</span><span class="dg-tip" aria-hidden="true">08-17 주 34커밋</span></li>
+          <li tabindex="0" aria-label="08-24 주 91커밋" style="--v:58.2%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">08-24</span><span class="dg-tip" aria-hidden="true">08-24 주 91커밋</span></li>
+          <li tabindex="0" aria-label="08-31 주 111커밋" style="--v:70.9%"><span class="dg-bars__col"><b>111</b><i></i></span><span class="dg-bars__w">08-31</span><span class="dg-tip" aria-hidden="true">08-31 주 111커밋</span></li>
+          <li tabindex="0" aria-label="09-07 주 127커밋" style="--v:81.2%"><span class="dg-bars__col"><b>127</b><i></i></span><span class="dg-bars__w">09-07</span><span class="dg-tip" aria-hidden="true">09-07 주 127커밋</span></li>
+          <li tabindex="0" aria-label="09-14 주 90커밋" style="--v:57.5%"><span class="dg-bars__col"><b>90</b><i></i></span><span class="dg-bars__w">09-14</span><span class="dg-tip" aria-hidden="true">09-14 주 90커밋</span></li>
+          <li tabindex="0" aria-label="09-21 주 112커밋" style="--v:71.6%"><span class="dg-bars__col"><b>112</b><i></i></span><span class="dg-bars__w">09-21</span><span class="dg-tip" aria-hidden="true">09-21 주 112커밋</span></li>
+          <li tabindex="0" aria-label="09-28 주 89커밋" style="--v:56.9%"><span class="dg-bars__col"><b>89</b><i></i></span><span class="dg-bars__w">09-28</span><span class="dg-tip" aria-hidden="true">09-28 주 89커밋</span></li>
+          <li tabindex="0" aria-label="10-05 주 133커밋" style="--v:85.0%"><span class="dg-bars__col"><b>133</b><i></i></span><span class="dg-bars__w">10-05</span><span class="dg-tip" aria-hidden="true">10-05 주 133커밋</span></li>
+          <li tabindex="0" aria-label="10-12 주 39커밋" style="--v:24.9%"><span class="dg-bars__col"><b>39</b><i></i></span><span class="dg-bars__w">10-12</span><span class="dg-tip" aria-hidden="true">10-12 주 39커밋</span></li>
+        </ol>
+        <div class="dg-week__foot" aria-hidden="true"></div>
       </figure>
 
-      <!-- 마일스톤 -->
-      <ol class="miles">
-        <li class="m rise">
-          <p class="m-date">07-15</p>
-          <div class="m-text">
-            <p class="m-title">프로젝트 시작</p>
-            <p class="m-body prose">첫 커밋. 다음 날 블렌더 모델을 인스펙터에서 끼워 넣는 드롭인 교체 구조를 전 엔티티로 확장해, 모델이 없어도 돌아가는 폴백 세이프 아트의 기반을 만들었습니다.</p>
+      <ol class="dg-miles">
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">07-15</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">프로젝트 시작</p>
+            <p>첫 커밋. 다음 날 블렌더 모델을 인스펙터에서 끼워 넣는 드롭인 교체 구조를 전 엔티티로 확장해, 모델이 없어도 돌아가는 폴백 세이프 아트의 기반을 만들었습니다.</p>
           </div>
         </li>
-        <li class="m rise">
-          <p class="m-date">07-23 ~ 07-25</p>
-          <div class="m-text">
-            <p class="m-title">3D 메뉴 허브 · 다이어제틱 로비</p>
-            <p class="m-body prose">평면 메뉴를 약국·연구실 3D 공간으로 바꾸고, 약국 카운터에 참가자가 앉는 대기실을 만들었습니다.</p>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">07-23 ~ 07-25</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">3D 메뉴 허브, 다이어제틱 로비</p>
+            <p>평면 메뉴를 약국·연구실 3D 공간으로 바꾸고, 약국 카운터에 참가자가 앉는 대기실을 만들었습니다.</p>
           </div>
-          <div class="m-pics two">
+          <div class="c-4 dg-mile__pics">
             <img src="assets/digestor/hub.jpg" alt="3D 메뉴 허브" width="438" height="274" loading="lazy">
             <img src="assets/digestor/lobby.jpg" alt="약국 카운터 로비" width="1600" height="1000" loading="lazy">
           </div>
         </li>
-        <li class="m rise">
-          <p class="m-date">07-26 ~ 07-28</p>
-          <div class="m-text">
-            <p class="m-title">기생충 보스 실물 모델 · 그로기 시스템</p>
-            <p class="m-body prose">절차 생성 보스를 실물 모델로 교체하고, 팀이 구슬을 때려 딜 창을 만드는 그로기 시스템을 넣었습니다.</p>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">07-26 ~ 07-28</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">기생충 보스 실물 모델, 그로기 시스템</p>
+            <p>절차 생성 보스를 실물 모델로 교체하고, 팀이 구슬을 때려 딜 창을 만드는 그로기 시스템을 넣었습니다.</p>
           </div>
-          <div class="m-pics one">
+          <div class="c-4 dg-mile__pics dg-mile__pics--one">
             <img src="assets/digestor/boss.jpg" alt="기생충 보스" width="438" height="274" loading="lazy">
           </div>
         </li>
-        <li class="mt">
-          <p class="m-date">09-03</p>
-          <p class="m-title">배터리 · 서바이벌 호러 레이어</p>
-          <p class="m-body prose">맵을 완전 암전으로 바꾸고, 손전등·무전·스캐너가 배터리 하나를 나눠 쓰는 자원 관리를 더했습니다. 스펙 문서를 먼저 쓰고 단계별로 구현했습니다.</p>
-        </li>
-        <li class="mt">
-          <p class="m-date">09-14</p>
-          <p class="m-title">특수 스테이지 「화끈한 매운 위」</p>
-          <p class="m-body prose">위 전체가 끓는 위산에 잠겨 식재료 발판 위에서만 사는 스테이지. 설계 문서와 공용 계약을 먼저 정한 뒤 하루 만에 A~H 단계를 완료했습니다.</p>
-        </li>
-        <li class="mt">
-          <p class="m-date">09-19</p>
-          <p class="m-title">네트워크 안정화</p>
-          <p class="m-body prose">자동 재연결이 실제로 재시도하도록 고치고, 진행 중인 판 참가 로딩과 네트워크 프리팹 해시 검사 가드를 추가했습니다.</p>
-        </li>
-        <li class="mt key">
-          <p class="m-date">09-29</p>
-          <p class="m-title">버전 0.3.0 — 첫 버전 기준점</p>
-        </li>
-        <li class="m">
-          <p class="m-date">10-02</p>
-          <div class="m-text">
-            <p class="m-title">이름 확정 — Pill Agents → Digestor</p>
-            <p class="m-body prose">문서·UI·번역·빌드 이름을 바꾸고, 메인 메뉴 타이틀을 약장 선반 위의 3D 글자로 만들었습니다.</p>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">09-03</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">배터리, 서바이벌 호러 레이어</p>
+            <p>맵을 완전 암전으로 바꾸고, 손전등·무전·스캐너가 배터리 하나를 나눠 쓰는 자원 관리를 더했습니다. 스펙 문서를 먼저 쓰고 단계별로 구현했습니다.</p>
           </div>
-          <div class="m-pics one">
+        </li>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">09-14</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">특수 스테이지 「화끈한 매운 위」</p>
+            <p>위 전체가 끓는 위산에 잠겨 식재료 발판 위에서만 사는 스테이지. 설계 문서와 공용 계약을 먼저 정한 뒤 하루 만에 A~H 단계를 완료했습니다.</p>
+          </div>
+        </li>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">09-19</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">네트워크 안정화</p>
+            <p>자동 재연결이 실제로 재시도하도록 고치고, 진행 중인 판 참가 로딩과 네트워크 프리팹 해시 검사 가드를 추가했습니다.</p>
+          </div>
+        </li>
+        <li class="dg-mile dg-mile--key g12">
+          <p class="dg-mile__date">09-29</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">버전 0.3.0: 첫 버전 기준점</p>
+          </div>
+        </li>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">10-02</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">이름 확정: Pill Agents → Digestor</p>
+            <p>문서·UI·번역·빌드 이름을 바꾸고, 메인 메뉴 타이틀을 약장 선반 위의 3D 글자로 만들었습니다.</p>
+          </div>
+          <div class="c-4 dg-mile__pics dg-mile__pics--one">
             <img src="assets/digestor/title.jpg" alt="Digestor 3D 타이틀" width="1600" height="1001" loading="lazy">
           </div>
         </li>
-        <li class="m">
-          <p class="m-date">10-06</p>
-          <div class="m-text">
-            <p class="m-title">버전 0.4.0 — 허브 튜토리얼</p>
-            <p class="m-body prose">메인 메뉴 옆 훈련실에서 바로 조작을 배우는 튜토리얼. 이후 진입 끊김을 실측해 0으로 줄였습니다.</p>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">10-06</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">버전 0.4.0: 허브 튜토리얼</p>
+            <p>메인 메뉴 옆 훈련실에서 바로 조작을 배우는 튜토리얼. 이후 진입 끊김을 실측해 0으로 줄였습니다.</p>
           </div>
-          <div class="m-pics two">
+          <div class="c-4 dg-mile__pics">
             <img src="assets/digestor/tutorial.jpg" alt="튜토리얼 훈련실" width="1600" height="1000" loading="lazy">
             <img src="assets/digestor/battery.jpg" alt="정전 튜토리얼" width="1600" height="1000" loading="lazy">
           </div>
         </li>
-        <li class="m key">
-          <p class="m-date">10-14</p>
-          <div class="m-text">
-            <p class="m-title">STOVE PC SDK 연동 (현재 0.4.63)</p>
-            <p class="m-body prose">STOVE 런처 연동과 도전과제 39개를 넣고, 클라우드 세이빙이 동기화할 수 있도록 진행 저장을 파일로 바꿨습니다.</p>
+        <li class="dg-mile dg-mile--key g12">
+          <p class="dg-mile__date">10-14</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">STOVE PC SDK 연동 (현재 0.4.63)</p>
+            <p>STOVE 런처 연동과 도전과제 39개를 넣고, 클라우드 세이빙이 동기화할 수 있도록 진행 저장을 파일로 바꿨습니다.</p>
           </div>
         </li>
       </ol>
-    </section>
+    </div>
+  </section>
 
-  </main>
+</main>
 
-  <!-- ===== FOOTER ===== -->
-  <footer id="contact" class="foot">
-    <div class="g12">
-      <div class="c7">
-        <h2>연락처</h2>
-        <p class="sec-lede prose">Digestor나 게임 개발 작업에 관해 연락 주세요.</p>
+<footer id="contact">
+  <section class="band band--ink" aria-labelledby="contact-h">
+    <div class="container g12 contact__grid">
+      <div class="c-6">
+        <h2 id="contact-h">연락처</h2>
+        <p class="lead">Digestor나 게임 개발 작업에 관해 연락 주세요.</p>
       </div>
-      <div class="foot-links c5">
-        <span><span>이메일</span> <a href="mailto:j03j03j03@naver.com">j03j03j03@naver.com</a></span>
-        <span><span>전화</span> <a href="tel:01086163731">010-8616-3731</a></span>
-        <a href="plety.html">← 포트폴리오로 돌아가기</a>
+      <dl class="contact__lines c-6">
+        <div>
+          <dt>이메일</dt>
+          <dd><a class="contact__big" href="mailto:j03j03j03@naver.com">j03j03j03@naver.com</a></dd>
+        </div>
+        <div>
+          <dt>전화</dt>
+          <dd><a class="contact__big" href="tel:01086163731">010-8616-3731</a></dd>
+        </div>
+      </dl>
+      <div class="actions c-6">
+        <a class="btn btn--primary" href="mailto:j03j03j03@naver.com">메일 보내기</a>
+        <a class="btn" href="plety.html">포트폴리오로 돌아가기</a>
       </div>
     </div>
-    <div class="foot-meta">
+  </section>
+  <div class="colophon container">
+    <p class="colophon__line">
       <span>© 2026 장성웅</span>
-      <span>Game Developer · Unity &amp; C#</span>
-      <span>마지막 업데이트: 2026-10-15</span>
-    </div>
-  </footer>
-
+      <span>Game Developer, Unity &amp; C#</span>
+      <span>마지막 업데이트: <time datetime="2026-10-15">2026-10-15</time></span>
+    </p>
+  </div>
+</footer>
 <script>
-  var nav = document.getElementById("nav");
-  function onScroll() {
-    nav.classList.toggle("solid", window.scrollY > 20);
-  }
-  addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
-  // 주별 커밋 (git log, ISO 주 기준 · 주 시작 월요일)
-  var weeks = [["07-13",41],["07-20",92],["07-27",91],["08-03",116],["08-10",51],["08-17",34],["08-24",91],["08-31",111],["09-07",127],["09-14",90],["09-21",112],["09-28",89],["10-05",133],["10-12",39]];
-  var max = 133, bars = document.getElementById("bars"), labels = document.getElementById("barlabels"), table = document.getElementById("bartable");
-  weeks.forEach(function (w, i) {
-    var b = document.createElement("div");
-    b.className = "bar" + (i < 2 ? " tip-l" : i > weeks.length - 3 ? " tip-r" : ""); b.tabIndex = 0;
-    b.setAttribute("aria-label", w[0] + " 주 " + w[1] + "커밋");
-    b.innerHTML = '<span class="tip">' + w[0] + ' 주 · ' + w[1] + '커밋</span><i style="height:' + (w[1] / max * 100) + '%"></i>';
-    bars.appendChild(b);
-    var l = document.createElement("span");
-    l.textContent = i % 2 === 0 ? w[0] : "";
-    labels.appendChild(l);
-    table.insertAdjacentHTML("beforeend", "<tr><th>" + w[0] + "</th><td>" + w[1] + "</td></tr>");
+  // 모바일 메뉴: 링크를 누르면 닫는다
+  document.querySelectorAll(".nav__menu a").forEach(function (a) {
+    a.addEventListener("click", function () { a.closest("details").open = false; });
   });
-
-  // 폴더별 파일 수
-  var folders = [["Editor",98],["World",91],["Core",75],["UI",68],["Player",44],["Enemies",34],["Tools",10],["Voice",4],["기타",3]];
-  var fEl = document.getElementById("folders");
-  folders.forEach(function (f) {
-    fEl.insertAdjacentHTML("beforeend",
-      '<div class="meter-row"><b>' + f[0] + '</b>' +
-      '<i style="width:' + (f[1] / 98 * 70) + '%"></i>' +
-      '<span>' + f[1] + '</span></div>');
-  });
-
-  // 입장 모션
-  var rises = document.querySelectorAll(".rise");
-  rises.forEach(function (el) {
-    var i = Array.prototype.filter.call(el.parentNode.children, function (c) { return c.classList.contains("rise"); }).indexOf(el);
-    el.style.transitionDelay = Math.min(i, 4) * 70 + "ms";
-  });
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-      });
-    });
-    rises.forEach(function (el) { io.observe(el); });
-  } else {
-    rises.forEach(function (el) { el.classList.add("in"); });
-  }
 </script>
 </body>
 </html>
