@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Digestor 개발 과정 · 장성웅</title>
-<meta name="description" content="2~4인 온라인 협동 3D 액션 Digestor의 개발 과정. 3인 팀에서 개발·세부 기획·연출을 맡았고, 구현은 AI 도구 위주로 C# 155,469줄·1,217커밋. 서버 권위 네트워킹, 보스 그로기 시스템, 직접 내린 엔지니어링 판단을 게임 화면과 함께 정리했습니다.">
+<meta name="description" content="2~4인 온라인 협동 3D 액션 Digestor의 개발 과정. 3인 팀에서 개발·세부 기획·연출을 맡았고, 구현은 AI 도구 위주로 C# 218,741줄·1,608커밋, Stove 출시. 서버 권위 네트워킹, 보스 그로기 시스템, 직접 내린 엔지니어링 판단을 게임 화면과 함께 정리했습니다.">
 <meta property="og:title" content="Digestor 개발 과정 · 장성웅">
-<meta property="og:description" content="3인 팀, 개발·세부 기획·연출 담당 + AI 도구 구현, 93일간 1,217커밋. 서버 권위 네트워킹과 보스 그로기 시스템.">
+<meta property="og:description" content="Stove 출시. 3인 팀, 개발·세부 기획·연출 담당 + AI 도구 구현, 112일간 1,608커밋. 서버 권위 네트워킹과 보스 그로기 시스템.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="assets/digestor/title.jpg">
 <script>document.documentElement.classList.add('js')</script>
@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@700&display=swap" rel="stylesheet">
 <style>
+/* Hallmark · reworded "155,469" to "218,741", "1,217" to "1,608" · kept · Stove 출시, 2026-11-03 재집계 */
 /* Hallmark · shape: Workbench · genre: playful · theme: Werkstatt (deal 3/3, seed 7a25·a181b94c·2026-11-02·r0) · redesign: full
  * hero: Stage · nav: edge-aligned, name left, links and the resume button right, details menu under 60rem · footer: ink contact band and colophon · imagery: the product (real Digestor game screens, in colour) · signature: the play-order wall of real Digestor screens in ruled plates, with the server cell inked in the authority flow · werkstatt: putty
  * axes: mid/geometric-sans/cool · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
@@ -267,7 +268,7 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
 .dg-week { margin-bottom: var(--space-3xl); }
 .dg-week__t { font-weight: var(--weight-strong); font-size: var(--text-lg); }
 .dg-week .muted { font-size: var(--text-sm); margin-top: var(--space-2xs); margin-bottom: var(--space-lg); }
-.dg-bars { list-style: none; display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: var(--space-xs); height: 18rem; border-bottom: var(--rule-box) solid var(--color-rule); }
+.dg-bars { list-style: none; display: grid; grid-template-columns: repeat(17, minmax(0, 1fr)); gap: var(--space-xs); height: 18rem; border-bottom: var(--rule-box) solid var(--color-rule); }
 .dg-bars > li { position: relative; display: grid; grid-template-rows: minmax(0, 1fr); min-width: 0; height: 100%; }
 .dg-bars__col { display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; min-height: 0; height: 100%; }
 .dg-bars__col b { font-size: var(--text-xs); text-align: center; line-height: 1.6; }
@@ -360,7 +361,8 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
       <div class="c-5 dg-hero__text">
         <p class="lead">위 속에 투입된 알약 요원이 되어 세균과 기생충 보스를 뚫고 동료와 함께 탈출구까지 살아남는 온라인 협동 게임입니다.</p>
         <div class="actions">
-          <a class="btn btn--primary" href="#screens">게임 화면 보기</a>
+          <a class="btn btn--primary" href="https://store.onstove.com/ko/games/106202" target="_blank" rel="noopener">Stove에서 보기</a>
+          <a class="btn" href="#screens">게임 화면 보기</a>
         </div>
       </div>
       <figure class="c-7 plate dg-hero__plate">
@@ -375,7 +377,7 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
     <div class="container g12 dg-spec">
       <div class="c-5 dg-spec__head">
         <h2 id="spec-h">Digestor 개발 과정 <span class="dg-spec__was">(이전 이름 Pill Agents)</span></h2>
-        <span class="chip chip--dev">개발 중</span>
+        <span class="chip chip--released">Stove 출시</span>
         <ul class="dg-facts">
           <li>3인 팀: 본인은 개발·세부 기획·연출(구현은 AI 도구 위주)</li>
           <li>팀원 1명: 큰 틀의 기획·모델링</li>
@@ -386,13 +388,13 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
       </div>
       <div class="c-7">
         <table class="table dg-spec__table">
-          <caption>git 저장소 기준, 2026-10-15 집계. 개발 중(버전 0.4.63).</caption>
+          <caption>git 저장소 기준, 2026-11-03 집계. Stove 출시(버전 0.6.21).</caption>
           <tbody>
             <tr><th scope="row">구현</th><td class="num">AI 위주</td></tr>
-            <tr><th scope="row">C# 코드</th><td class="num">155,469줄</td></tr>
-            <tr><th scope="row">커밋</th><td class="num">1,217회</td></tr>
-            <tr><th scope="row">자동 테스트</th><td class="num">689건</td></tr>
-            <tr><th scope="row">개발 기간</th><td class="num">93일</td></tr>
+            <tr><th scope="row">C# 코드</th><td class="num">218,741줄</td></tr>
+            <tr><th scope="row">커밋</th><td class="num">1,608회</td></tr>
+            <tr><th scope="row">자동 테스트</th><td class="num">1,287건</td></tr>
+            <tr><th scope="row">개발 기간</th><td class="num">112일</td></tr>
           </tbody>
         </table>
       </div>
@@ -611,29 +613,32 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
     <div class="container">
       <div class="dg-head">
         <h2 id="timeline-h">개발 기록</h2>
-        <p>2026-07-15 첫 커밋부터 10-15까지 93일간 1,217커밋. 최다 커밋일은 09-21의 48건이고, 커밋이 없는 날은 13일이었습니다.</p>
+        <p>2026-07-15 첫 커밋부터 11-03까지 112일간 1,608커밋. 최다 커밋일은 09-21의 48건이고, 커밋이 없는 날은 14일이었습니다.</p>
       </div>
 
       <figure class="dg-week">
         <figcaption>
           <p class="dg-week__t">주별 커밋 수</p>
-          <p class="muted">막대에 마우스를 올리면 주와 커밋 수가 보입니다. 마지막 주는 10-15까지.</p>
+          <p class="muted">막대에 마우스를 올리면 주와 커밋 수가 보입니다. 마지막 주는 11-03까지.</p>
         </figcaption>
         <ol class="dg-bars" id="bars" aria-label="주별 커밋 수">
-          <li tabindex="0" aria-label="07-13 주 41커밋" style="--v:26.2%"><span class="dg-bars__col"><b>41</b><i></i></span><span class="dg-bars__w">07-13</span><span class="dg-tip" aria-hidden="true">07-13 주 41커밋</span></li>
-          <li tabindex="0" aria-label="07-20 주 92커밋" style="--v:58.8%"><span class="dg-bars__col"><b>92</b><i></i></span><span class="dg-bars__w">07-20</span><span class="dg-tip" aria-hidden="true">07-20 주 92커밋</span></li>
-          <li tabindex="0" aria-label="07-27 주 91커밋" style="--v:58.2%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">07-27</span><span class="dg-tip" aria-hidden="true">07-27 주 91커밋</span></li>
-          <li tabindex="0" aria-label="08-03 주 116커밋" style="--v:74.1%"><span class="dg-bars__col"><b>116</b><i></i></span><span class="dg-bars__w">08-03</span><span class="dg-tip" aria-hidden="true">08-03 주 116커밋</span></li>
-          <li tabindex="0" aria-label="08-10 주 51커밋" style="--v:32.6%"><span class="dg-bars__col"><b>51</b><i></i></span><span class="dg-bars__w">08-10</span><span class="dg-tip" aria-hidden="true">08-10 주 51커밋</span></li>
-          <li tabindex="0" aria-label="08-17 주 34커밋" style="--v:21.7%"><span class="dg-bars__col"><b>34</b><i></i></span><span class="dg-bars__w">08-17</span><span class="dg-tip" aria-hidden="true">08-17 주 34커밋</span></li>
-          <li tabindex="0" aria-label="08-24 주 91커밋" style="--v:58.2%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">08-24</span><span class="dg-tip" aria-hidden="true">08-24 주 91커밋</span></li>
-          <li tabindex="0" aria-label="08-31 주 111커밋" style="--v:70.9%"><span class="dg-bars__col"><b>111</b><i></i></span><span class="dg-bars__w">08-31</span><span class="dg-tip" aria-hidden="true">08-31 주 111커밋</span></li>
-          <li tabindex="0" aria-label="09-07 주 127커밋" style="--v:81.2%"><span class="dg-bars__col"><b>127</b><i></i></span><span class="dg-bars__w">09-07</span><span class="dg-tip" aria-hidden="true">09-07 주 127커밋</span></li>
-          <li tabindex="0" aria-label="09-14 주 90커밋" style="--v:57.5%"><span class="dg-bars__col"><b>90</b><i></i></span><span class="dg-bars__w">09-14</span><span class="dg-tip" aria-hidden="true">09-14 주 90커밋</span></li>
-          <li tabindex="0" aria-label="09-21 주 112커밋" style="--v:71.6%"><span class="dg-bars__col"><b>112</b><i></i></span><span class="dg-bars__w">09-21</span><span class="dg-tip" aria-hidden="true">09-21 주 112커밋</span></li>
-          <li tabindex="0" aria-label="09-28 주 89커밋" style="--v:56.9%"><span class="dg-bars__col"><b>89</b><i></i></span><span class="dg-bars__w">09-28</span><span class="dg-tip" aria-hidden="true">09-28 주 89커밋</span></li>
-          <li tabindex="0" aria-label="10-05 주 133커밋" style="--v:85.0%"><span class="dg-bars__col"><b>133</b><i></i></span><span class="dg-bars__w">10-05</span><span class="dg-tip" aria-hidden="true">10-05 주 133커밋</span></li>
-          <li tabindex="0" aria-label="10-12 주 39커밋" style="--v:24.9%"><span class="dg-bars__col"><b>39</b><i></i></span><span class="dg-bars__w">10-12</span><span class="dg-tip" aria-hidden="true">10-12 주 39커밋</span></li>
+          <li tabindex="0" aria-label="07-13 주 41커밋" style="--v:22.1%"><span class="dg-bars__col"><b>41</b><i></i></span><span class="dg-bars__w">07-13</span><span class="dg-tip" aria-hidden="true">07-13 주 41커밋</span></li>
+          <li tabindex="0" aria-label="07-20 주 92커밋" style="--v:49.5%"><span class="dg-bars__col"><b>92</b><i></i></span><span class="dg-bars__w">07-20</span><span class="dg-tip" aria-hidden="true">07-20 주 92커밋</span></li>
+          <li tabindex="0" aria-label="07-27 주 91커밋" style="--v:49.0%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">07-27</span><span class="dg-tip" aria-hidden="true">07-27 주 91커밋</span></li>
+          <li tabindex="0" aria-label="08-03 주 116커밋" style="--v:62.4%"><span class="dg-bars__col"><b>116</b><i></i></span><span class="dg-bars__w">08-03</span><span class="dg-tip" aria-hidden="true">08-03 주 116커밋</span></li>
+          <li tabindex="0" aria-label="08-10 주 51커밋" style="--v:27.4%"><span class="dg-bars__col"><b>51</b><i></i></span><span class="dg-bars__w">08-10</span><span class="dg-tip" aria-hidden="true">08-10 주 51커밋</span></li>
+          <li tabindex="0" aria-label="08-17 주 34커밋" style="--v:18.3%"><span class="dg-bars__col"><b>34</b><i></i></span><span class="dg-bars__w">08-17</span><span class="dg-tip" aria-hidden="true">08-17 주 34커밋</span></li>
+          <li tabindex="0" aria-label="08-24 주 91커밋" style="--v:49.0%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">08-24</span><span class="dg-tip" aria-hidden="true">08-24 주 91커밋</span></li>
+          <li tabindex="0" aria-label="08-31 주 111커밋" style="--v:59.7%"><span class="dg-bars__col"><b>111</b><i></i></span><span class="dg-bars__w">08-31</span><span class="dg-tip" aria-hidden="true">08-31 주 111커밋</span></li>
+          <li tabindex="0" aria-label="09-07 주 127커밋" style="--v:68.3%"><span class="dg-bars__col"><b>127</b><i></i></span><span class="dg-bars__w">09-07</span><span class="dg-tip" aria-hidden="true">09-07 주 127커밋</span></li>
+          <li tabindex="0" aria-label="09-14 주 90커밋" style="--v:48.4%"><span class="dg-bars__col"><b>90</b><i></i></span><span class="dg-bars__w">09-14</span><span class="dg-tip" aria-hidden="true">09-14 주 90커밋</span></li>
+          <li tabindex="0" aria-label="09-21 주 112커밋" style="--v:60.3%"><span class="dg-bars__col"><b>112</b><i></i></span><span class="dg-bars__w">09-21</span><span class="dg-tip" aria-hidden="true">09-21 주 112커밋</span></li>
+          <li tabindex="0" aria-label="09-28 주 89커밋" style="--v:47.9%"><span class="dg-bars__col"><b>89</b><i></i></span><span class="dg-bars__w">09-28</span><span class="dg-tip" aria-hidden="true">09-28 주 89커밋</span></li>
+          <li tabindex="0" aria-label="10-05 주 133커밋" style="--v:71.6%"><span class="dg-bars__col"><b>133</b><i></i></span><span class="dg-bars__w">10-05</span><span class="dg-tip" aria-hidden="true">10-05 주 133커밋</span></li>
+          <li tabindex="0" aria-label="10-12 주 91커밋" style="--v:49.0%"><span class="dg-bars__col"><b>91</b><i></i></span><span class="dg-bars__w">10-12</span><span class="dg-tip" aria-hidden="true">10-12 주 91커밋</span></li>
+          <li tabindex="0" aria-label="10-19 주 158커밋" style="--v:85.0%"><span class="dg-bars__col"><b>158</b><i></i></span><span class="dg-bars__w">10-19</span><span class="dg-tip" aria-hidden="true">10-19 주 158커밋</span></li>
+          <li tabindex="0" aria-label="10-26 주 143커밋" style="--v:76.9%"><span class="dg-bars__col"><b>143</b><i></i></span><span class="dg-bars__w">10-26</span><span class="dg-tip" aria-hidden="true">10-26 주 143커밋</span></li>
+          <li tabindex="0" aria-label="11-02 주 38커밋" style="--v:20.4%"><span class="dg-bars__col"><b>38</b><i></i></span><span class="dg-bars__w">11-02</span><span class="dg-tip" aria-hidden="true">11-02 주 38커밋</span></li>
         </ol>
         <div class="dg-week__foot" aria-hidden="true"></div>
       </figure>
@@ -718,8 +723,36 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
         <li class="dg-mile dg-mile--key g12">
           <p class="dg-mile__date">10-14</p>
           <div class="c-5 dg-mile__text">
-            <p class="dg-mile__title">STOVE PC SDK 연동 (현재 0.4.63)</p>
+            <p class="dg-mile__title">STOVE PC SDK 연동 (0.4.63)</p>
             <p>STOVE 런처 연동과 도전과제 39개를 넣고, 클라우드 세이빙이 동기화할 수 있도록 진행 저장을 파일로 바꿨습니다.</p>
+          </div>
+        </li>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">10-22</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">버전 0.4.114: STOVE 심사 대응</p>
+            <p>SDK를 상시 연동하고, 초기화에 실패하면 종료하도록 바꿨습니다.</p>
+          </div>
+        </li>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">10-24</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">버전 0.5.0: 보스전 핵심 루프 개편</p>
+            <p>보스 지렁이 모션을 절차 척추로 만들고, 등장·페이즈 포효, 면역, 천장 이슬, 보스 조명을 더했습니다.</p>
+          </div>
+        </li>
+        <li class="dg-mile g12">
+          <p class="dg-mile__date">10-29</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">버전 0.6.0: 사진 모드</p>
+            <p>봉 끝 디스플레이로 찍는 셀카와 PNG 저장, 머리·몸 분리 회전을 넣었습니다.</p>
+          </div>
+        </li>
+        <li class="dg-mile dg-mile--key g12">
+          <p class="dg-mile__date">출시</p>
+          <div class="c-5 dg-mile__text">
+            <p class="dg-mile__title">Stove 출시 (11-03 기준 0.6.21)</p>
+            <p>STOVE 스토어에 출시했습니다. 로비·결과 화면 이름을 STOVE 닉네임으로 바꾸는 등 버전 업데이트를 이어가고 있습니다. <a href="https://store.onstove.com/ko/games/106202" target="_blank" rel="noopener">Stove 스토어 페이지</a></p>
           </div>
         </li>
       </ol>
@@ -755,7 +788,7 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
     <p class="colophon__line">
       <span>© 2026 장성웅</span>
       <span>Game Developer, Unity &amp; C#</span>
-      <span>마지막 업데이트: <time datetime="2026-10-15">2026-10-15</time></span>
+      <span>마지막 업데이트: <time datetime="2026-11-03">2026-11-03</time></span>
     </p>
   </div>
 </footer>
