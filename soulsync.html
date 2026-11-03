@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@700&display=swap" rel="stylesheet">
 <style>
+/* Hallmark · dropped soulsync.jpg · kept · 컨셉아트를 실제 게임 화면(assets/soulsync)으로 교체 */
 /* Hallmark · shape: Spec sheet · genre: playful · theme: Werkstatt (deal 3/3, seed 7a25·a181b94c·2026-11-02·r0) · redesign: full
  * hero: Stage · nav: edge-aligned, name left, links and the resume button right, details menu under 60rem · footer: ink contact band and colophon · imagery: the product (colour game art) · signature: a ruled 2x2 table of the four classes, fire and ice by sword and bow · werkstatt: putty
  * axes: mid/geometric-sans/cool · posture: full-palette · contrast: pass · fold: pass · v2.0.0 */
@@ -210,7 +211,11 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
 @media (min-width: 60rem) { .ss-hero__h span { display: block; white-space: nowrap; } }
 .ss-hero__text { display: grid; gap: var(--space-lg); }
 .ss-hero__plate { --plate-ratio: 4 / 3; }
-.ss-hero__img { object-position: 64% 60%; }
+.ss-hero__img { object-position: 50% 50%; }
+.ss-head { display: grid; gap: var(--space-sm); margin-bottom: var(--space-xl); }
+.ss-screens { list-style: none; }
+.ss-screens > li { display: grid; min-width: 0; }
+.ss-screens figcaption b { display: block; color: var(--color-ink); }
 
 .ss-role__grid { align-items: start; row-gap: var(--space-xl); }
 .ss-role__text { display: grid; gap: var(--space-lg); }
@@ -255,12 +260,14 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
   <div class="nav__in container">
     <a class="nav__brand" href="plety.html">장성웅</a>
     <ul class="nav__links">
+      <li><a href="#screens">게임 화면</a></li>
       <li><a href="plety.html">포트폴리오</a></li>
     </ul>
     <a class="btn btn--primary nav__cta" href="resume.pdf" target="_blank" rel="noopener">이력서 PDF</a>
     <details class="nav__menu">
       <summary>메뉴</summary>
       <ul>
+        <li><a href="#screens">게임 화면</a></li>
         <li><a href="plety.html">포트폴리오</a></li>
       </ul>
     </details>
@@ -279,9 +286,36 @@ h2.rule-in::after { content: ""; display: block; width: 4rem; height: var(--rule
         </div>
       </div>
       <figure class="c-7 plate ss-hero__plate">
-        <img class="ss-hero__img" src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" fetchpriority="high">
-        <figcaption>컨셉아트, 실제 게임 화면은 정리해서 추가할 예정</figcaption>
+        <img class="ss-hero__img" src="assets/soulsync/combat.jpg" alt="SoulSync 플레이 화면, 검을 든 플레이어가 덤불 몬스터 무리와 싸우는 장면" width="1600" height="1000" fetchpriority="high">
+        <figcaption>실제 플레이 화면: 몬스터 웨이브 속 전투. 플레이 영상은 추가할 예정</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <section id="screens" class="section" aria-labelledby="screens-h">
+    <div class="container">
+      <div class="ss-head">
+        <h2 id="screens-h">게임 화면</h2>
+        <p>실제 게임에서 찍은 화면을 한 판의 흐름 순서로 놓았습니다.</p>
+      </div>
+      <ol class="plate-grid ss-screens">
+        <li><figure class="plate">
+          <img src="assets/soulsync/lobby.jpg" alt="로비 화면, 방 코드 MWTQF9와 검·활, 불·얼음 원소 고르기 버튼" width="1600" height="1000" loading="lazy">
+          <figcaption><b>로비</b> <span>방 코드로 두 사람이 모이고, 각자 무기(검·활)와 원소(불·얼음)를 고릅니다.</span></figcaption>
+        </figure></li>
+        <li><figure class="plate">
+          <img src="assets/soulsync/map.jpg" alt="맵 선택 화면, 가시 덤불 숲과 잠긴 다음 맵 두 칸" width="1600" height="1000" loading="lazy">
+          <figcaption><b>맵 고르기</b> <span>가시 덤불 숲은 불 원소에 추가 피해를 줍니다. 다음 맵은 이전 맵을 깨면 열립니다.</span></figcaption>
+        </figure></li>
+        <li><figure class="plate">
+          <img src="assets/soulsync/levelup.jpg" alt="전투 화면, 체력이 낮아 가장자리가 붉어지고 TAB 레벨업 안내가 뜬 장면" width="1600" height="1000" loading="lazy">
+          <figcaption><b>전투와 레벨업</b> <span>체력이 낮으면 화면 가장자리가 붉어집니다. 경험치가 차면 TAB으로 레벨업합니다.</span></figcaption>
+        </figure></li>
+        <li><figure class="plate">
+          <img src="assets/soulsync/shop.jpg" alt="솔로 상점, 처치 수로 공격력·쿨타임·최대 체력 등을 올리는 업그레이드 목록" width="1600" height="1000" loading="lazy">
+          <figcaption><b>솔로 상점</b> <span>솔로 모드의 영구 업그레이드 상점. 처치한 몬스터 수로 능력치를 올립니다.</span></figcaption>
+        </figure></li>
+      </ol>
     </div>
   </section>
 

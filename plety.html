@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@700&display=swap" rel="stylesheet">
 <style>
+/* Hallmark · dropped onlyuprat.jpg, soulsync.jpg · kept · 컨셉아트를 실제 게임 화면(assets/rat, soulsync, oml)으로 교체 */
 /* Hallmark · reworded "211,269" to "274,541", "1,403" to "1,794", "155,469" to "218,741", "1,217" to "1,608" · kept · Digestor Stove 출시, 2026-11-03 재집계 */
 /* Hallmark · shape: Map/Diagram (draw fc0aea) · genre: playful · theme: Werkstatt (deal 3/3, seed 7a25·a181b94c·2026-11-02·r0) · redesign: full
  * hero: Stage · nav: edge-aligned, name left, links and the resume button right, details menu under 60rem · footer: ink contact band and colophon · imagery: the product (colour game art) · signature: a ruled 2x2 plate of the four games with the live One More Log fire · werkstatt: putty
@@ -260,6 +261,8 @@ html:not(.js) .home-fire > canvas, html:not(.js) .home-fire__controls { display:
 .home-sheet__more { display: inline-flex; align-items: center; min-height: var(--control-min); font-weight: var(--weight-strong); }
 .home-sheet__proof { display: grid; gap: var(--space-lg); align-content: start; }
 .home-pair { --plate-ratio: 16 / 10; }
+.home-pair > img { width: 100%; aspect-ratio: var(--plate-ratio); object-fit: cover; }
+.home-pair--wide { --plate-ratio: 16 / 9; }
 .home-pair > figcaption { grid-column: 1 / -1; padding: var(--space-sm) var(--space-md); background: var(--color-paper-3); font-size: var(--text-sm); color: var(--color-muted); }
 
 .home-note { padding: var(--space-xl) var(--space-lg); border: var(--rule-box) solid var(--color-rule); background: var(--color-paper-3); display: grid; gap: var(--space-sm); }
@@ -350,15 +353,15 @@ html:not(.js) .home-states__ctl .btn { display: none; }
       <div class="c-6 plate-grid home-plate">
         <figure class="plate">
           <img src="assets/digestor/title.jpg" alt="Digestor 메인 메뉴 화면" width="1600" height="1001" fetchpriority="high">
-          <figcaption><b>Digestor</b>, Stove 출시</figcaption>
+          <figcaption><b>Digestor</b>, Stove 출시(11-04부터 다운로드)</figcaption>
         </figure>
         <figure class="plate">
-          <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" style="object-position:64% 50%">
-          <figcaption><b>Rat-errible Climb</b>, 컨셉아트</figcaption>
+          <img src="assets/rat/sewer.jpg" alt="Rat-errible Climb 플레이 화면, 하수구 벽돌 구간에서 점프하는 쥐" width="860" height="483">
+          <figcaption><b>Rat-errible Climb</b>, 실제 플레이 화면</figcaption>
         </figure>
         <figure class="plate">
-          <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" style="object-position:62% 50%">
-          <figcaption><b>SoulSync</b>, 컨셉아트</figcaption>
+          <img src="assets/soulsync/combat.jpg" alt="SoulSync 플레이 화면, 검을 든 플레이어가 덤불 몬스터 무리와 싸우는 장면" width="1600" height="1000">
+          <figcaption><b>SoulSync</b>, 실제 플레이 화면</figcaption>
         </figure>
         <figure class="plate home-fire keep-motion">
           <canvas id="fire" width="172" height="108" role="img" aria-label="장작불 모형. 시간이 지나면 줄어들고 장작을 넣으면 커집니다."></canvas>
@@ -477,6 +480,11 @@ html:not(.js) .home-states__ctl .btn { display: none; }
             </div>
           </div>
           <div class="c-5 home-sheet__proof">
+            <figure class="plate-grid home-pair home-pair--wide">
+              <img src="assets/oml/fire.jpg" alt="One More Log 게임 화면, 돌로 두른 화덕에서 장작이 타고 왼쪽에 남은 시간 3:26이 보인다" width="1600" height="900" loading="lazy">
+              <img src="assets/oml/stars.jpg" alt="One More Log 게임 화면, 나뭇가지 사이로 보이는 밤하늘의 별" width="1600" height="900" loading="lazy">
+              <figcaption>실제 게임 화면(프로토타입): 장작불과 게임 안에서 올려다보는 밤하늘</figcaption>
+            </figure>
             <div class="home-note">
               <p>게임의 규칙을 웹으로 옮긴 작은 모형입니다. 이 페이지를 나가도 불은 계속 줄어듭니다.</p>
               <p class="muted">프로토타입, Unreal Engine 5.8</p>
@@ -569,9 +577,10 @@ html:not(.js) .home-states__ctl .btn { display: none; }
               </ol>
               <figcaption class="home-states__ctl"><code>TrapBase</code><button type="button" class="btn" id="states-toggle" aria-pressed="false">순환 멈추기</button></figcaption>
             </figure>
-            <figure class="plate">
-              <img src="assets/onlyuprat.jpg" alt="Rat-errible Climb 컨셉아트" width="2000" height="1116" loading="lazy" style="object-position:64% 50%">
-              <figcaption>컨셉아트</figcaption>
+            <figure class="plate-grid home-pair home-pair--wide">
+              <img src="assets/rat/sewer.jpg" alt="Rat-errible Climb 플레이 화면, 하수구 벽돌 구간" width="860" height="483" loading="lazy">
+              <img src="assets/rat/pipe.jpg" alt="Rat-errible Climb 플레이 화면, 꺾인 배관 경사를 오르는 쥐" width="860" height="483" loading="lazy">
+              <figcaption>실제 플레이 화면: 하수구 구간과 배관 경사</figcaption>
             </figure>
             <table class="table home-sheet__spec">
               <tbody>
@@ -607,9 +616,10 @@ html:not(.js) .home-states__ctl .btn { display: none; }
             <a class="home-sheet__more" href="soulsync.html">개발 과정 자세히 보기</a>
           </div>
           <div class="c-5 home-sheet__proof">
-            <figure class="plate">
-              <img src="assets/soulsync.jpg" alt="SoulSync 컨셉아트" width="1690" height="931" loading="lazy" style="object-position:62% 50%">
-              <figcaption>컨셉아트</figcaption>
+            <figure class="plate-grid home-pair">
+              <img src="assets/soulsync/lobby.jpg" alt="SoulSync 로비, 방 코드와 무기·원소 고르기 버튼" width="1600" height="1000" loading="lazy">
+              <img src="assets/soulsync/levelup.jpg" alt="SoulSync 플레이 화면, 체력이 낮아 화면 가장자리가 붉어지고 레벨업 안내가 뜬 장면" width="1600" height="1000" loading="lazy">
+              <figcaption>실제 게임 화면: 방 코드 로비에서 무기·원소 고르기, 전투 중 레벨업 안내</figcaption>
             </figure>
             <table class="table home-sheet__spec">
               <tbody>
@@ -626,7 +636,7 @@ html:not(.js) .home-states__ctl .btn { display: none; }
 
       <p class="home-work__foot">
         코드·커밋 수치는 각 게임의 git 저장소 기준입니다(2026-10-15 집계, Digestor만 2026-11-03 집계). 외부 에셋 코드는 뺐습니다. 직접 작성 비율은 AI 도구로 보조한 부분을 뺀 본인 추정치입니다.<br>
-        실제 플레이 화면은 정리해서 추가할 예정이고, 컨셉아트로 표시된 이미지는 실제 게임 화면이 아닙니다.
+        플레이 영상은 추가할 예정입니다. 컨셉아트로 표시된 이미지는 실제 게임 화면이 아닙니다.
       </p>
     </div>
   </section>
