@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>니케 35위에서 5위로</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;600;700&display=swap">
+<style>
+/* 한 줄 문서형 보고서: 결론, 순위 그래프, 원인 순서로 읽는다 */
+:root {
+  --bg: #f3f6f8; --panel: #e6ecf0; --fg: #16222b; --muted: #52636f; --line: #c3ced6;
+  --accent: #b3122f; --link: #0b5c8a;
+  --sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11181e; --panel: #1b252d; --fg: #e7edf1; --muted: #9fb0bb; --line: #33434f;
+  --accent: #ff6d7f; --link: #7cc4ee; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11181e; --panel: #1b252d; --fg: #e7edf1; --muted: #9fb0bb; --line: #33434f;
+  --accent: #ff6d7f; --link: #7cc4ee; color-scheme: dark }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 16.5px/1.75 var(--sans); word-break: keep-all; overflow-wrap: anywhere; }
+main { max-width: 760px; margin: 0 auto; padding-block: 44px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 40px; }
+main > * { min-width: 0; }
+a { color: var(--link); }
+a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+.meta { font: 500 13px/1.6 var(--mono); color: var(--muted); margin: 0 0 10px; }
+h1 { font-size: clamp(30px, 6vw, 44px); line-height: 1.25; margin: 0; text-wrap: balance; }
+h1 em { font-style: normal; color: var(--accent); }
+.lead { font-size: 19px; line-height: 1.7; margin: 16px 0 0; }
+h2 { font-size: 22px; line-height: 1.4; margin: 0 0 12px; text-wrap: balance; }
+h3 { font-size: 17px; line-height: 1.5; margin: 0 0 4px; }
+p { margin: 0; max-width: 68ch; }
+section { display: grid; gap: 12px; }
+section > * { min-width: 0; }
+figure { margin: 0; }
+figure svg { display: block; width: 100%; height: auto; }
+figcaption, .small { font-size: 14px; line-height: 1.65; color: var(--muted); }
+.chart text { fill: var(--muted); font: 500 12px var(--mono); }
+.chart .pt { fill: var(--fg); font-size: 14px; }
+.chart .hot { fill: var(--accent); font-size: 18px; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .ln { fill: none; stroke: var(--fg); stroke-width: 2.5; }
+.chart .up { fill: none; stroke: var(--accent); stroke-width: 3; stroke-dasharray: 7 5; }
+.chart .mark { stroke: var(--accent); stroke-width: 1.5; }
+.chart .dot { fill: var(--fg); }
+.chart .dot-hot { fill: var(--accent); }
+.cause { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.cause li { display: grid; grid-template-columns: 4.6em minmax(0, 1fr); gap: 14px; }
+.tag { font: 500 12.5px/1.5 var(--mono); padding-top: 3px; color: var(--muted); }
+.tag b { display: block; font-weight: 500; color: var(--accent); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 520px; font-size: 15px; line-height: 1.55; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px 9px 0; border-bottom: 1px solid var(--line); }
+th { font-size: 13px; color: var(--muted); font-weight: 600; }
+td:first-child { font: 500 13.5px/1.6 var(--mono); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.rebut { min-width: 600px; }
+.rebut td:first-child { font: 600 15px/1.55 var(--sans); white-space: normal; width: 26%; }
+.key { background: var(--panel); padding: 16px 18px; display: grid; gap: 8px; }
+.key p { max-width: none; }
+.v { font-weight: 600; white-space: nowrap; }
+.v-no { color: var(--muted); }
+.v-yes { color: var(--accent); }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; }
+.sources { font-size: 14.5px; line-height: 1.6; }
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .cause li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .tag b { display: inline; margin-right: 8px; }
+  .chart text { font-size: 15px; }
+  .chart .pt { font-size: 17px; }
+  .chart .hot { font-size: 21px; }
+}
+</style>
+</head>
+<body>
+
+<main>
+<header>
+  <p class="meta">모바일 게임 매출 순위 조사 · 2026-11-05 · 자료 조사와 작성: 장성웅, Claude</p>
+  <h1>승리의 여신: 니케는 왜 <em>35위에서 5위</em>로 올랐나</h1>
+  <p class="lead">가장 유력한 원인은 10월 29일 4주년 업데이트입니다. 35위는 업데이트의 매출이 순위에 반영되기 전 값으로 보입니다. PC 런처 해킹은 상승의 원인이 아닙니다.</p>
+</header>
+
+<section aria-labelledby="h-chart">
+  <h2 id="h-chart">기록된 순위 변화</h2>
+  <figure class="chart">
+    <svg viewBox="0 0 720 306" role="img" aria-label="구글플레이 순위 변화. 9월 3일 16위, 9월 17일 34위, 10월 1일 15위, 10월 29일 35위, 이후 5위.">
+      <line class="grid" x1="44" x2="680" y1="20" y2="20"/><text x="34" y="24" text-anchor="end">1</text>
+      <line class="grid" x1="44" x2="680" y1="69.1" y2="69.1"/><text x="34" y="73" text-anchor="end">10</text>
+      <line class="grid" x1="44" x2="680" y1="123.6" y2="123.6"/><text x="34" y="128" text-anchor="end">20</text>
+      <line class="grid" x1="44" x2="680" y1="178.2" y2="178.2"/><text x="34" y="182" text-anchor="end">30</text>
+      <line class="grid" x1="44" x2="680" y1="232.7" y2="232.7"/><text x="34" y="237" text-anchor="end">40</text>
+      <line class="mark" x1="577.3" x2="577.3" y1="20" y2="262"/>
+      <text x="569" y="38" text-anchor="end" style="fill:var(--accent)">10/29 4주년 업데이트</text>
+      <polyline class="ln" points="44,101.8 177.3,200 310.7,96.4 577.3,205.5"/>
+      <polyline class="up" points="577.3,205.5 644,41.8"/>
+      <circle class="dot" cx="44" cy="101.8" r="5"/><circle class="dot" cx="177.3" cy="200" r="5"/>
+      <circle class="dot" cx="310.7" cy="96.4" r="5"/><circle class="dot" cx="577.3" cy="205.5" r="5"/>
+      <circle class="dot-hot" cx="644" cy="41.8" r="6.5"/>
+      <text class="pt" x="52" y="90">16위</text>
+      <text class="pt" x="177" y="225" text-anchor="middle">34위</text>
+      <text class="pt" x="310" y="84" text-anchor="middle">15위</text>
+      <text class="pt" x="566" y="228" text-anchor="end">35위</text>
+      <text class="hot" x="656" y="48">5위</text>
+      <text x="44" y="290">9/3</text><text x="177" y="290" text-anchor="middle">9/17</text>
+      <text x="310" y="290" text-anchor="middle">10/1</text><text x="577" y="290" text-anchor="middle">10/29</text>
+      <text x="676" y="290" text-anchor="end">이후</text>
+    </svg>
+    <figcaption>구글플레이로 가정. 10/29까지는 모바일인덱스 실시간 순위 수기 정리본입니다. 10/29 캡처에는 순위 종류 표시가 없어 매출 순위로 보았고, 정리본이 만들어진 오전 9시 26분 이전에 찍힌 값입니다. 5위는 과제에 주어진 수치로 측정 시각이 없어 점선입니다. 앱스토어는 9/3 41위, 10/1 45위였고 9/17과 10/29 기록에는 없습니다.</figcaption>
+  </figure>
+  <p>네 시점만 보면 니케는 15위권과 35위권을 오갔습니다. 9월 3일은 드레이크 픽업 시작일과 맞지만, 10월 1일 15위의 원인은 찾지 못했습니다. 따라서 35위에서 15위까지는 최근 변동폭 안에 있고, 이번 행사의 고유한 효과는 15위에서 5위로 올라선 부분으로 봅니다.</p>
+</section>
+
+<section aria-labelledby="h-cause">
+  <h2 id="h-cause">상승 원인</h2>
+  <ol class="cause">
+    <li><span class="tag"><b>주원인</b>인과는 강한 추정</span><div>
+      <h3>4주년 업데이트</h3>
+      <p>10월 29일에 신규 SSR 3종, 메인 스토리 49·50챕터, 한정 코스튬 4종이 들어왔습니다. 모바일인덱스를 인용한 게임뷰는 10월 마지막 주 주간 매출 순위가 전주보다 37계단 올랐다고 보도했습니다. 같은 기간 구글 주간 순위는 4위였습니다. 추가 시기가 맞고 순위가 여러 시장에서 함께 올랐다는 점이 근거입니다. 업데이트 외에 같은 시기 대형 협업이나 결제 프로모션은 찾지 못했습니다.</p>
+    </div></li>
+    <li><span class="tag"><b>측정 요인</b>추정</span><div>
+      <h3>35위는 매출이 반영되기 전 값</h3>
+      <p>당일 점검은 0시부터 7시까지로 예고됐고, 캡처는 늦어도 9시 26분 이전입니다. 점검이 예정대로 끝났다면 업데이트 후 2시간 남짓이었습니다. 2024년 2주년에도 구글 4위는 업데이트 다음 날 저녁에 나왔습니다. 그래서 35위는 업데이트 효과가 없다는 뜻이 아니라, 효과가 잡히기 전의 값으로 봅니다. 37계단 보도가 같은 지표라면 직전 주도 40위 안팎이어서 하락세가 며칠 이어졌다는 뜻이 됩니다.</p>
+    </div></li>
+    <li><span class="tag"><b>규모</b>금액 미공개</span><div>
+      <h3>이용자 증가보다 큰 매출 증가</h3>
+      <p>주간 이용자는 6.7%, 플레이 시간은 2.2% 늘었습니다. 순위와 이용자 수는 단위가 달라 직접 비교할 수는 없지만, 5위권 진입에는 이보다 훨씬 큰 매출 증가가 필요했을 것입니다. 다만 결제자가 늘었는지, 1인당 결제액이 늘었는지는 구분할 수 없습니다.</p>
+    </div></li>
+    <li><span class="tag"><b>추가 요인</b>가능성</span><div>
+      <h3>11월 5일 2차 업데이트</h3>
+      <p>홍련: 신살 모집과 마리안 코스튬 모집이 이날 시작됐습니다. 게임메카는 마리안을 한 장만 뽑고 홍련에 재화를 아끼라고 권했습니다. 5위가 11월 5일 이후 값이면 이 영향이 섞였을 수 있고, 이전 값이면 무관합니다.</p>
+    </div></li>
+    <li><span class="tag"><b>보조 요인</b>효과 미확인</span><div>
+      <h3>복귀 혜택과 오프라인 홍보</h3>
+      <p>무료 모집은 자료에 따라 최대 230회 또는 259회로 다르게 소개됩니다. 라푼젤: 생츄어리 무료 지급, 서울 용산 행사(10/30~11/1), 도쿄와 뉴욕 옥외 광고도 있었습니다. 복귀에는 기여했을 수 있으나 매출과의 관계는 확인할 수 없습니다.</p>
+    </div></li>
+  </ol>
+</section>
+
+<section aria-labelledby="h-hack">
+  <h2 id="h-hack">PC 런처 해킹과 순위의 관계</h2>
+  <div class="key">
+    <p><strong>35위에서 상위권으로 오른 원인이 아닙니다.</strong> 11월 4일 이후 순위에 미친 영향은 아직 알 수 없습니다.</p>
+  </div>
+  <p>11월 4일 운영진은 PC 런처 스크립트가 제3자에게 변조됐을 가능성을 공지했습니다. 이용자에게는 9월 27일 오후 3시 41분 이후 런처를 실행한 경우 보안 점검이 권고됐습니다. 감염 규모는 아직 공개되지 않았습니다.</p>
+  <ul>
+    <li><strong>시점이 맞지 않습니다.</strong> 구글 주간 4위(10/26~11/1)와 퍼블리셔의 1위 발표(11/2)는 사건 공지보다 먼저입니다.</li>
+    <li><strong>범위가 다릅니다.</strong> 사건은 PC 런처에서 일어났고 모바일 버전에는 영향이 없다고 보도됐습니다. 차트는 모바일 앱마켓 순위입니다.</li>
+    <li><strong>35위 하락의 원인으로도 보기 어렵습니다.</strong> 변조가 시작됐다는 9월 27일 뒤인 10월 1일에 15위였고, 10월 29일에는 이용자들이 사건을 몰랐습니다.</li>
+    <li><strong>남은 변수가 있습니다.</strong> PC 이용자가 모바일로 옮기면 모바일 결제가 늘 수 있고, 신뢰 하락으로 결제가 줄 수도 있습니다. 둘 다 근거 자료는 없고, 11월 5일 홍련 출시와 겹쳐 분리도 어렵습니다.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="h-rebut">
+  <h2 id="h-rebut">반론 검토</h2>
+  <div class="scroll"><table class="rebut">
+    <thead><tr><th>반론</th><th>검토</th><th>판정</th></tr></thead>
+    <tbody>
+      <tr><td>경쟁작이 빠져서 올랐다</td><td>5위까지 30개 게임을 넘어야 합니다. 10/29 상위권은 도깨비의세계, 제우스, WOS, 킹샷, 가십하버였습니다. 이들이 모두 무너졌다는 자료는 없으나 11월 초 전체 순위표는 확보하지 못했습니다.</td><td><span class="v v-no">대체로 기각</span></td></tr>
+      <tr><td>시기만 겹친 우연이다</td><td>퍼블리셔와 게임뷰는 한국·대만 앱스토어와 일본 구글 1위를 제시합니다. 여러 시장의 동시 상승은 우연으로 보기 어렵습니다. 다만 발표 자료라는 한계가 있습니다.</td><td><span class="v v-no">대체로 기각</span></td></tr>
+      <tr><td>원래 15위권 게임이라 업데이트 효과가 과장됐다</td><td>맞는 지적입니다. 30계단 전체를 업데이트 효과로 볼 수 없어 15위에서 5위 구간을 고유 효과로 정리했습니다.</td><td><span class="v v-yes">수용</span></td></tr>
+      <tr><td>35위는 업데이트 전 저점이 아니다</td><td>점검 일정상 업데이트 뒤에 찍혔을 가능성이 큽니다. 초안의 "직전" 표현을 고쳤고, 네 시점뿐이라 "저점"도 "최저 기록"으로만 말할 수 있습니다.</td><td><span class="v v-yes">수용</span></td></tr>
+      <tr><td>한정 캐릭터 효과라는 설명은 틀렸다</td><td>게임메카는 마리안: 퀸이 비한정이며 일반 모집에 편입된다고 보도했습니다. 초안의 한정 모집 설명을 뺐습니다. 무엇이 매출을 만들었는지는 모집, 코스튬, 패키지로 나눠 알 수 없습니다.</td><td><span class="v v-yes">수용</span></td></tr>
+      <tr><td>기념일 패턴은 사례가 적다</td><td>2주년과 3.5주년만 확인했고, 3주년은 믿을 만한 전후 수치를 찾지 못했습니다. 패턴이 아니라 비슷한 사례로만 씁니다.</td><td><span class="v v-yes">수용</span></td></tr>
+      <tr><td>해킹 때문에 순위가 움직였다</td><td>위 절의 시점과 범위 근거로 상승 원인에서는 제외합니다. 11월 4일 이후 영향만 열어 둡니다.</td><td><span class="v v-no">기각</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="h-time">
+  <h2 id="h-time">날짜별 흐름</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>날짜</th><th>일어난 일</th><th>순위</th></tr></thead>
+    <tbody>
+      <tr><td>10-01</td><td>모바일인덱스 기록</td><td>구글 15위, 앱스토어 45위</td></tr>
+      <tr><td>10-29 00~07시</td><td>4주년 업데이트 점검(예고 기준)</td><td></td></tr>
+      <tr><td>10-29 09시 이전</td><td>모바일인덱스 기록</td><td>구글 35위</td></tr>
+      <tr><td>10-26~11-01</td><td>베타뉴스 주간 집계</td><td>구글 4위</td></tr>
+      <tr><td>11-02</td><td>퍼블리셔 발표</td><td>한국 앱스토어·일본 구글 1위</td></tr>
+      <tr><td>11-04</td><td>PC 런처 변조 공지, 02시 30분경 수정</td><td></td></tr>
+      <tr><td>11-05</td><td>홍련: 신살, 마리안 코스튬 모집 시작</td><td></td></tr>
+      <tr><td>시각 미표기</td><td>과제에 주어진 수치</td><td>5위</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section aria-labelledby="h-prev">
+  <h2 id="h-prev">비슷한 과거 사례</h2>
+  <p>2024년 2주년에는 10월 31일 업데이트 뒤 11월 1일 저녁에 구글 4위, 그 주 주간 집계 3위를 기록했습니다. 2026년 4월 3.5주년에는 업데이트 당일 한국 앱스토어 1위가 보도됐습니다. 두 사례 모두 큰 업데이트 직후 순위가 뛰었지만, 이후 얼마나 유지됐는지는 찾지 못했습니다.</p>
+</section>
+
+<section aria-labelledby="h-limits">
+  <h2 id="h-limits">조사의 한계</h2>
+  <ul>
+    <li>5위의 측정 시각과 스토어를 알 수 없습니다.</li>
+    <li>매출 금액은 공개된 자료에 없습니다. 모바일인덱스 값도 추정치입니다.</li>
+    <li>실제 점검 종료 시각과 차트 반영 시차는 확인하지 못했습니다.</li>
+    <li>한국 앱스토어 1위는 발표 자료이고, 37계단은 기사에 스토어 표시가 없습니다.</li>
+    <li>앱마켓 순위에는 PC나 웹 결제가 잡히지 않는 것으로 보고 판단했습니다. 이 점은 별도 자료로 확인하지 않았습니다.</li>
+    <li>해킹 관련 내용은 조사 중인 사건이라 날짜가 보도마다 다르며, 달라질 수 있습니다.</li>
+  </ul>
+</section>
+
+<section aria-labelledby="h-src">
+  <h2 id="h-src">출처</h2>
+  <ul class="sources">
+    <li>모바일인덱스 실시간 순위 수기 정리본 (2026-09-03, 09-17, 10-01, 10-29)</li>
+    <li><a href="https://www.gamevu.co.kr/news/articleView.html?idxno=61965">게임뷰, 4주년 맞은 니케 글로벌 매출 역주행 (11-03)</a></li>
+    <li><a href="https://www.betanews.net/article/view/beta202611020005">베타뉴스, 주간 모바일 순위 (11-02)</a></li>
+    <li><a href="https://www.inven.co.kr/webzine/news/?news=322864">인벤, 세계 도심서 4주년 축제, 보도자료 (11-02)</a></li>
+    <li><a href="https://www.inven.co.kr/webzine/news/?news=322698">인벤, 4주년 업데이트 실시, 보도자료 (10-29)</a></li>
+    <li><a href="https://zdnet.co.kr/view/?no=20261029130120">지디넷코리아, 4주년 업데이트 (10-29)</a></li>
+    <li><a href="https://bbs.ruliweb.com/mobile/board/1004/read/2296183">루리웹, 10월 29일 업데이트 사전 안내 (점검 시간)</a></li>
+    <li><a href="https://www.gamemeca.com/en/view.php?gid=1782587">게임메카, 마리안: 퀸 모집 안내 (10-29)</a></li>
+    <li><a href="https://www.invenglobal.com/articles/27659/up-to-230-pulls-goddess-of-victory-nikke-4th-anniversary-special-broadcast-final-battle">Inven Global, Up to 230 Pulls</a></li>
+    <li><a href="https://playday.one/2026/10/30/goddess-of-victory-nikke-major-4th-anni-update-now-live-up-to-259-free-pulls/">Playday, Up to 259 Free Pulls (10-30)</a></li>
+    <li><a href="https://x.com/NIKKE_kr/status/2115280012475814083">니케 공식 X, 마리안: 퀸 코스튬 소개</a></li>
+    <li><a href="https://gamemarket.gg/news/goddess-of-victory-nikke/nikke-s-drake-great-villain-banner-dates-and-what-s-known">GameMarket, 드레이크 픽업 일정</a></li>
+    <li><a href="https://www.g-enews.com/article/ICT/2024/11/202411011059426450c5fa75ef86_1">글로벌이코노믹, 2주년 매출 역주행 (2024-11-02)</a></li>
+    <li><a href="https://m.betanews.net/article/view/beta202411040002">베타뉴스, 2주년 주간 순위 (2024-11-04)</a></li>
+    <li><a href="https://www.hankyung.com/article/202604279738g">한국경제, 3.5주년 순위 (2026-04-27)</a></li>
+    <li><a href="https://www.mt.co.kr/index.php/amp/tech/2026/11/04/2026110416424066973">머니투데이, PC 런처 해킹 의혹 (11-04)</a></li>
+    <li><a href="https://www.digitaltoday.co.kr/news/articleView.html?idxno=712785">디지털투데이, PC 런처 변조와 보안 점검 권고</a></li>
+    <li><a href="https://www.boannews.com/news/articleView.html?idxno=147009">보안뉴스, 공급망 공격</a></li>
+    <li><a href="https://www.bleepingcomputer.com/news/security/nikke-pc-game-launcher-hacked-to-spread-remote-access-data-stealing-malware/">BleepingComputer, NIKKE PC launcher hacked (11-04)</a></li>
+    <li><a href="https://www.invenglobal.com/articles/28143/shift-up-ceo-kim-hyung-tae-apologizes-for-nikke-pc-launcher-issue-mobilizing-all-resources-to-find-solution">Inven Global, 시프트업 대표 사과</a></li>
+  </ul>
+</section>
+</main>
+</body>
+</html>
